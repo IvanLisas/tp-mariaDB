@@ -4,8 +4,6 @@ import { MainRoutes } from '../routes/routes'
 import { Providers } from '../context/context'
 
 export default function App() {
-
-
   return (
     <Providers>
       <BrowserRouter>

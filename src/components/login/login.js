@@ -15,28 +15,10 @@ export const Login = (props) => {
   // const { updateLoggedUser } = useContext(Context)
   // const [username, setUsername] = useState('')
   // const [password, setPassword] = useState('')
-  // const [apiResponse, setApiResponse] = useState('')
-
 
   const [test, setTest] = useState('')
 
   useEffect(async () => setTest(await testService.testCall()), [])
-
-
-  // useEffect(async () => callAPI(), [])
-
-  // const callTest = async () => await testService.testCall()
-
-  // const hitBackend = () => {
-  //   axios.get(`${REST_SERVER_URL}/test`)
-  //     .then((response) => {
-  //       console.log(response.data)
-  //     })
-  // }
-
-  // const hitBackend = async () => {
-  //   await testService.testCall()
-  // }
 
   return (
     <div className="login">
@@ -46,7 +28,7 @@ export const Login = (props) => {
             storage
           </span>
           {/* Maria DB */}
-          {test}
+          {test.value}
         </div>
         <TextField
           variant="outlined"
