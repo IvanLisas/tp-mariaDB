@@ -4,8 +4,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import java.time.LocalDateTime
 
 @Accessors
-class User {
-	int userID
+class User  {
 	String username = ""
 	String surname = ""
 	LocalDateTime registrationDate
