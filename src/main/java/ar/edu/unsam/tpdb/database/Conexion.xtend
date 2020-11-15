@@ -29,24 +29,14 @@ class Conexion {
 	def void desconectar() {
 		try {
 			cx.close()
-
 		} catch (SQLException ex) {
-			println("No se pudo desconectar")
+			println("No se pudo desconectar " + ex)
 		}
 	}
 
 	def static void main(String[] args) {
 		val Conexion c = new Conexion() // crea la conexion
 		c.conectar() // se conecta
-		val query = "SELECT * FROM clientes"
-		val Statement stmt = c.cx.createStatement()
-		val ResultSet rs = stmt.executeQuery(query)
-		rs.next()
-		rs.next()
-//		println(rs.getString("apellido"))
-		val nombre = rs.getString("apellido")
-		Repositorio.users.create(new User() => [username = nombre])
-		println(Repositorio.users.objetos.get(0).username)
 	}
 
 	def consulta() {
