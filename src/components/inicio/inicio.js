@@ -24,7 +24,7 @@ export const Inicio = (props) => {
     // }
         // <Button className={"reproducciones" ? this.props.history.push('/reproducciones') : <Button className="descargas" ?
         // this.props.history.push('/descargas') 
-    }
+    // }
  
   
     return (
