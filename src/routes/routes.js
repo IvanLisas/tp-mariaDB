@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Login } from '../components/login/login'
+import { Inicio} from '../components/inicio/inicio'
 import { Context } from '../context/context'
 
 export const MainRoutes = () => {
@@ -12,7 +13,9 @@ export const MainRoutes = () => {
     <Router>
       {/* {loggedUser && <Route component={NavBar} />} */}
       <Switch>
-        {!loggedUser && <Route path="/" component={Login} />}
+      {!loggedUser && <Route path="/inicio" component={Inicio} />}
+      {!loggedUser && <Route path="/" component={Login} />}
+     
       </Switch>
     </Router>)
 

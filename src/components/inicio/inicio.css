@@ -1,0 +1,57 @@
+ .inicio{
+
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 3rem 1rem 3rem;
+    border-style: solid;
+    height:500px;
+    align-items: center;
+ }
+
+.inicio-container{
+
+    border-style: solid;
+    border-color: salmon;
+    display: flex;  
+    justify-content: space-around;
+    flex-direction: column;
+    height:300px;
+    width:370px;
+    
+    
+}
+
+ 
+.ladoDerecho, .ladoIzquierdo{
+    border-style: solid;
+    display: flex;
+    flex-direction: column;
+    height:150px;
+
+
+}
+
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+  
+    
+}
+ 
+.button, .salir, .descargas, .reproducciones, .perfil {
+    border-style: solid;
+    border-color: salmon;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.title{
+    font-size: calc(10px + 2vmin);
+    display: flex;
+    justify-content: center;
+    font-family: "Lobster";
+    
+}
