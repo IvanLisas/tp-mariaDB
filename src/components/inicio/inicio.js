@@ -8,10 +8,10 @@ import Checkbox from '@material-ui/core/Checkbox'
 
 export const Inicio = (props) => {
 
-    redirigirA = () => {
-        // <Button className={"reproducciones" ? this.props.history.push('/') : 'fa fa-envelope'></Button>
-        // in production :p
-      }
+    // redirigirA = () => {
+    //     // <Button className={"reproducciones" ? this.props.history.push('/') : 'fa fa-envelope'></Button>
+    //     // in production :p
+    //   }
  
   
     return (
