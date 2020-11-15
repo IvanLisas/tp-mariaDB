@@ -4,7 +4,9 @@ import { Test } from '../domain/testClass'
 class TestService {
   async testCall() {
     const testJSON = await axios.get(`${REST_SERVER_URL}/test`)
-    return Test.fromJSON(testJSON.data)
+    // return Test.fromJSON(testJSON.data)
+    console.log(testJSON.data)
+    return testJSON.data
   }
 }
 

@@ -28,7 +28,7 @@ export const Login = (props) => {
             storage
           </span>
           {/* Maria DB */}
-          {test.value}
+          {test}
         </div>
         <TextField
           variant="outlined"
