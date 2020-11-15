@@ -2,11 +2,9 @@ package ar.edu.unsam.tpdb.database
 
 import java.sql.Connection
 import java.sql.DriverManager
-import java.sql.SQLException
 import java.sql.ResultSet
+import java.sql.SQLException
 import java.sql.Statement
-import ar.edu.unsam.tpdb.domain.Repositorio
-import ar.edu.unsam.tpdb.domain.User
 
 class Conexion {
 	Connection cx
