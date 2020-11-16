@@ -5,10 +5,12 @@ import java.sql.DriverManager
 import java.sql.ResultSet
 import java.sql.SQLException
 import java.sql.Statement
+import ar.edu.unsam.tpdb.domain.User
+import java.sql.PreparedStatement
 
 class Conexion {
 	Connection cx
-	String db = "clientes"
+	String db = "mariadb"
 	String url = "jdbc:mysql://localhost:3306/" + db
 	String user = "root"
 	String password = "1234"
@@ -38,16 +40,31 @@ class Conexion {
 	}
 
 	def consulta() {
-		val Conexion c = new Conexion() // crea la conexion
-		c.conectar() // se conecta
-		val query = "SELECT * FROM clientes"
-		val Statement stmt = c.cx.createStatement()
+//		val Conexion c = new Conexion() 
+//		c.conectar()
+		val query = "SELECT * FROM user"
+		val Statement stmt = conectar().createStatement()
 		val ResultSet rs = stmt.executeQuery(query)
-		rs.next()
-		rs.next()
-//		println(rs.getString("apellido"))
-		return (rs.getString("apellido"))
 
+		rs.next()
+		println(rs)
+//		println(rs.getString("apellido"))
+		return (rs.getString("username"))
+
+	}
+
+	def crearUsuario() {
+		var PreparedStatement stmt = conectar.prepareStatement("INSERT INTO user
+ 		(`name`, `surname`, `username`, `password`, `dni`, `email`) 
+		VALUES (?, ?, ?, ?, ?, ?)")
+		stmt.setString(1, 'Nombre del usuario')
+		stmt.setString(2, 'Apellio del usuario')
+		stmt.setString(3, 'username ')
+		stmt.setString(4, 'Contraseña')
+		stmt.setInt(5, 123456)
+		stmt.setString(6, 'asds')
+		
+		stmt.executeUpdate
 	}
 
 }

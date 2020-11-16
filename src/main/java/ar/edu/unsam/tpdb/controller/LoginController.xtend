@@ -14,11 +14,10 @@ import org.springframework.web.bind.annotation.RestController
 class LoginController {
 	@GetMapping("/test")
 	def verificarUserPass() {
-		println(new Conexion().consulta())
+//		println(new Conexion().consulta())
 		
-		val apellido = new Conexion().consulta()
-		
-		ResponseEntity.ok(mapper.writeValueAsString(apellido))
+//		val apellido = new Conexion().consulta()
+		ResponseEntity.ok(mapper.writeValueAsString(new Conexion().crearUsuario))
 	}
 
 	static def mapper() {

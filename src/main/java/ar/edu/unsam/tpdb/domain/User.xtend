@@ -5,8 +5,9 @@ import java.time.LocalDateTime
 
 @Accessors
 class User  {
-	String username = ""
-	String surname = ""
+	String name
+	String username
+	String surname
 	LocalDateTime registrationDate
 	int dni
 	String email
