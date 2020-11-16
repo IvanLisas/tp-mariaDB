@@ -8,7 +8,6 @@ class User  {
 	String name
 	String username
 	String surname
-	LocalDateTime registrationDate
 	int dni
 	String email
 	String password

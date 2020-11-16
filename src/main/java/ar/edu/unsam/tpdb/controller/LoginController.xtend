@@ -1,6 +1,5 @@
 package ar.edu.unsam.tpdb.controller
 
-import ar.edu.unsam.tpdb.database.Conexion
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
@@ -8,16 +7,25 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
+import ar.edu.unsam.tpdb.database.ConexionMariaDB
+import ar.edu.unsam.tpdb.domain.User
+import ar.edu.unsam.tpdb.formularios.UserQuery
 
 @RestController
 @CrossOrigin
 class LoginController {
 	@GetMapping("/test")
 	def verificarUserPass() {
-//		println(new Conexion().consulta())
-		
-//		val apellido = new Conexion().consulta()
-		ResponseEntity.ok(mapper.writeValueAsString(new Conexion().crearUsuario))
+		val user = new User() =>[
+			name = "Pepe"
+			surname = "Apellido"
+			password= "asasas"
+			username = "Pepe2"
+			dni= 123444
+			email = "jajjaj@jaja.cc"	
+		]
+		new UserQuery().insertUser(user)
+		ResponseEntity.ok(mapper.writeValueAsString("ok"))
 	}
 
 	static def mapper() {
