@@ -24,26 +24,28 @@
 
  
 .ladoDerecho, .ladoIzquierdo{
-    border-style: solid;
+  
     display: flex;
-    flex-direction: column;
-    height:150px;
-
-
+    flex-direction: row;
+    justify-content: center;
+     
+ 
 }
 
-
+ 
 .button-container {
     display: flex;
-    justify-content: space-around;
-  
+    justify-content: space-between;
+    
+     
     
 }
- 
-.button, .salir, .descargas, .reproducciones, .perfil {
+.salir, .descargas, .reproducciones, .miperfil {
     border-style: solid;
     border-color: salmon;
+    font-family: "Lobster";
     display: flex;
+    margin:2em;
     flex-direction: column;
     
 }
@@ -52,6 +54,7 @@
     font-size: calc(10px + 2vmin);
     display: flex;
     justify-content: center;
+    background-color: blanchedalmond;
     font-family: "Lobster";
-    
+    font-size: 2rem;
 }

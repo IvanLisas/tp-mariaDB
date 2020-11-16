@@ -1,53 +1,50 @@
 import './inicio.css'
 import React, { useEffect, useState, useContext } from 'react'
- 
-import Button from '@material-ui/core/Button'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
+
+import { Button } from 'primereact/button'
  
 
 export const Inicio = (props) => {
-
-    // redirigirA = () => {
-    //     if(className="reproducciones"){
-    //         this.props.history.push('/reproducciones') 
-    //     }else
-    //     if(className="descargas"){
-    //         this.props.history.push('/descargas') 
-
-    //     }else
-    //     if(className="perfil"){
-    //      this.props.history.push('/perfil') 
-
-    //     }else  this.props.history.push('/') 
-
-    // }
-        // <Button className={"reproducciones" ? this.props.history.push('/reproducciones') : <Button className="descargas" ?
-        // this.props.history.push('/descargas') 
-    // }
  
+  const irADescargas =() =>{
+    props.history.push('/descargas')
+  }
+
+   const irAReproducciones = () => {
+    props.history.push('/reproducciones')
+
+  }
+
+  const salir = () => {
+    props.history.push('/login')
+
+  }
+
+  const irAPerfil =() =>{
+    props.history.push('/miperfil')
+  }
   
     return (
+       
         <div className="inicio">
           <div className="inicio-container">
             <div className="title"> Inicio </div>
-            <div className='lado-derecho'>
+            <div className='ladoDerecho'>
             <div className='button-container'> 
-            <Button className ="reproducciones"type="submit" variant="outlined" color="secondary"  >Reproducciones  </Button>
-            <Button className ="descargas"type="submit"   variant="outlined" color="secondary"   >  Descargas</Button></div></div>
-            {/* <Button className ="reproducciones"type="submit" variant="outlined" color="secondary" onClick={this.redirigirA()} >Reproducciones  </Button>
-            <Button className ="descargas"type="submit"   variant="outlined" color="secondary" onClick={this.redirigirA()}  >  Descargas</Button></div></div> */}
-            <div className='lado-izquierdo'>
-                 <div className="button-container">
-                  <Button className ="perfil" type="submit" variant="outlined" color="secondary" > Mi Perfil </Button>
-                  <Button className ="salir" type="submit"variant="outlined" color="secondary"  > Salir</Button>
-                  {/* <Button className ="perfil" type="submit" variant="outlined" color="secondary"onClick={this.redirigirA() > Mi Perfil </Button>
-                  <Button className ="salir" type="submit"variant="outlined" color="secondary" onClick={this.redirigirA() > Salir</Button> */}
-                  </div>
-           </div>
-            {/* <Button icon={passwordIconEye()} onClick={() => setshowPassword(!showPassword)} /> */} 
+               <Button className ="reproducciones"type="info" variant="outlined" label="Mis descargas" onClick ={() => irADescargas()} ></Button>
+                <Button className ="descargas"type="info"   variant="outlined"  label="Mis reproducciones"onClick = {() => irAReproducciones()} ></Button>
+                   </div>
+                      </div>
+                      <div className='ladoIzquierdo'>
+            <div className='button-container'> 
+               <Button className ="miperfil"type="info" variant="outlined" label="Mi Perfil" onClick ={() => irAPerfil()} ></Button>
+                <Button className ="salir"type="info" variant="outlined" label="Salir" onClick = {() => salir()} ></Button>
+                   </div>
+                      </div>
+            
           </div>
         </div>
+       
       )
 
 }
