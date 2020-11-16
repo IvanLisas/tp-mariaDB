@@ -4,12 +4,9 @@ import java.time.LocalDateTime
 import org.eclipse.xtend.lib.annotations.Accessors
 
 @Accessors
-class History {
-	int historyID
-	String author
-	int fileID
-	int userID
+class Accion {
+	int id
+	LocalDateTime date_init
+	LocalDateTime date_end
 	String type
-	String title
-	LocalDateTime date
 }

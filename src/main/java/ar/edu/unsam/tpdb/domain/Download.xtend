@@ -4,8 +4,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 @Accessors
 class Download {
-	int historyID
-	int transferSpeed
-	int downloadID
-	String user
+	int id
+	int speed
+	int accion_id
+	int archive_id
 }

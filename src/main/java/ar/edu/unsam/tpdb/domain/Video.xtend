@@ -5,9 +5,5 @@ import java.time.LocalDateTime
 
 @Accessors
 class Video {
-	int fileID
-	String title =""
-	String type =""
-	LocalDateTime date 
-	String author =""
+	int file_id
 }
