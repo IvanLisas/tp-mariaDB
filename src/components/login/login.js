@@ -6,29 +6,27 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import TextField from '@material-ui/core/TextField'
 import { testService } from '../../services/testService'
+import Link from '@material-ui/core/Link'
 
-
-import axios from 'axios'
-import { REST_SERVER_URL } from '../../services/constants'
 
 export const Login = (props) => {
-  // const { updateLoggedUser } = useContext(Context)
-  // const [username, setUsername] = useState('')
-  // const [password, setPassword] = useState('')
 
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   const [test, setTest] = useState('')
 
   useEffect(async () => setTest(await testService.testCall()), [])
 
   return (
     <div className="login">
+      <div className="background-login"></div>
       <div className="login-container">
         <div className='logo-container'>
           <span className="material-icons" id='logo'>
             storage
           </span>
-          {/* Maria DB */}
-          {test}
+          Maria DB
+
         </div>
         <TextField
           variant="outlined"
@@ -60,6 +58,10 @@ export const Login = (props) => {
           color="primary">
           Ingresar
         </Button>
+        <Link className="link" href="#" variant="body2">
+          {'No tienes cuenta? Registrate aqui'}
+        </Link>
+        {/* {test} */}
       </div>
 
 

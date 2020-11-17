@@ -1,54 +1,37 @@
+.perfil {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem 3rem 1rem 3rem;
+  border-style: solid;
+  height: 500px;
+  align-items: center;
+}
 
- .perfil{
-
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    gap: 1rem;
-    margin: 1rem 3rem 1rem 3rem;
-    border-style: solid;
-    height:500px;
-    align-items: center;
- }
-.perfil-container{
-
-    border-style: solid;
-    border-color: salmon;
-    display: flex;  
-    justify-content: space-around;
-    flex-direction: column;
-    height:400px;
-    width:370px;
-    
-    
-    
+.perfil-container {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  height: 400px;
+  width: 370px
 }
 
 .linea {
-    display: flex;  
-    justify-content: space-around;
-    flex-direction: column;
-    
-  }
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+}
 
-  .button-container{
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-  }
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
 
-  .boton{
-   
-      border-style: solid;
-      border-color: salmon;
-      font-family: "Lobster";
-      display: flex;
-      margin:2em;
-      flex-direction: column;
-      
-  
-
-  }
-  
-
- 
+.boton {
+  border-style: solid;
+  display: flex;
+  margin: 2em;
+  flex-direction: column;
+}
