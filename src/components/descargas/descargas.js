@@ -27,9 +27,5 @@ export const Descargas = (props) => {
       <Button className="p-button-raised buton" label="Volver" onClick={() => volver()} />
       </div>
     </Panel>
-    
-   
-     
-
   )
 }
