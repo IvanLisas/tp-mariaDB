@@ -4,10 +4,13 @@ export const Context = createContext()
 
 export const Providers = ({ children }) => {
   const [loggedUser, setLoggedUser] = useState()
+  const [log, setLog] = useState()
 
   const value = {
     loggedUser,
-    updateLoggedUser: (user) => setLoggedUser(user)
+    updateLoggedUser: (user) => setLoggedUser(user),
+    log,
+    updateLog: (log) => setLog(log)
   }
 
   return (
