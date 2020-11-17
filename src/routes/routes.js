@@ -2,12 +2,12 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Login } from '../components/login/login'
-import { Inicio} from '../components/inicio/inicio'
-import { Miperfil} from '../components/miperfil/miperfil'
-import { Descargas} from '../components/descargas/descargas'
-import { Reproducciones} from '../components/reproducciones/reproducciones'
+import { Inicio } from '../components/inicio/inicio'
+import { Miperfil } from '../components/miperfil/miperfil'
+import { Descargas } from '../components/descargas/descargas'
+import { Reproducciones } from '../components/reproducciones/reproducciones'
 import { Context } from '../context/context'
- 
+import { NavBar } from '../components/nav-bar/nav-bar'
 
 export const MainRoutes = () => {
 
@@ -15,13 +15,14 @@ export const MainRoutes = () => {
 
   return (
     <Router>
-      {/* {loggedUser && <Route component={NavBar} />} */}
+      {loggedUser && <Route component={NavBar} />}
       <Switch>
-      {!loggedUser && <Route path="/miperfil" component={Miperfil} />}
-      {!loggedUser && <Route path="/descargas" component={Descargas} />}
-      {!loggedUser && <Route path="/reproducciones" component={Reproducciones} />}
-      {!loggedUser && <Route path="/inicio" component={Inicio} />}
-      {!loggedUser && <Route path="/" component={Login} />}
+        {loggedUser && <Route path="/miperfil" component={Miperfil} />}
+        {loggedUser && <Route path="/descargas" component={Descargas} />}
+        {loggedUser && <Route path="/reproducciones" component={Reproducciones} />}
+        {loggedUser && <Route path="/inicio" component={Inicio} />}
+        {loggedUser && <Route path="/" component={Inicio} />}
+        {!loggedUser && <Route path="/" component={Login} />}
       </Switch>
     </Router>)
 

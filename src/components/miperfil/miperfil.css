@@ -3,31 +3,55 @@
   justify-content: center;
   flex-direction: column;
   gap: 1rem;
-  margin: 1rem 3rem 1rem 3rem;
-  border-style: solid;
-  height: 500px;
   align-items: center;
+  /* border-style: solid; */
 }
 
 .perfil-container {
   display: flex;
   justify-content: space-around;
   flex-direction: column;
-  height: 400px;
-  width: 370px
+  width: 100%;
+  max-width: 500px;
+  padding-top: 1rem;
+  box-sizing: border-box;
 }
+
+.datos-container {
+  /* display: grid;
+  grid-template-columns: 1fr 1fr; */
+  padding: 1rem 0rem 1rem 0rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tittle {
+  font-family: "Roboto";
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+#icon-profile, .tittle {
+  font-size: 2rem;
+  color: rgba(0, 0, 0, 0.623);
+}
+
+.button-container-perfil {
+  display: flex;
+  gap: 0.5rem;
+  align-self: flex-end;
+}
+
+/* ///////////////////// */
 
 .linea {
   display: flex;
-  justify-content: space-around;
   flex-direction: column;
 }
 
-.button-container {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-}
+.button-container {}
 
 .boton {
   border-style: solid;

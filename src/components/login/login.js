@@ -5,17 +5,30 @@ import Button from '@material-ui/core/Button'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import TextField from '@material-ui/core/TextField'
+import { SnackbarCustom } from '../snackbar/snackbarCustom'
 import { testService } from '../../services/testService'
+import { userService } from '../../services/userService'
 import Link from '@material-ui/core/Link'
-
 
 export const Login = (props) => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [test, setTest] = useState('')
+  const { updateLoggedUser } = useContext(Context)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
+  // const [test, setTest] = useState('')
+  // useEffect(async () => setTest(await testService.testCall()), [])
 
-  useEffect(async () => setTest(await testService.testCall()), [])
+  const login = async () => {
+    try {
+      updateLoggedUser(await userService.login(username, password))
+      props.history.push('/inicio')
+    } catch (errorMessage) {
+      setErrorMessage('Usuario o contraseña incorrecto ' + errorMessage)
+      setSnackbarOpen(true)
+    }
+  }
 
   return (
     <div className="login">
@@ -36,6 +49,7 @@ export const Login = (props) => {
           label="Usuario"
           name="user"
           autoFocus
+          onChange={(event) => setUsername(event.target.value)}
         />
         <TextField
           variant="outlined"
@@ -45,6 +59,7 @@ export const Login = (props) => {
           label="Contraseña"
           type="password"
           id="password"
+          onChange={(event) => setPassword(event.target.value)}
         />
         {/* <Button icon={passwordIconEye()} onClick={() => setshowPassword(!showPassword)} /> */}
         <FormControlLabel
@@ -55,7 +70,9 @@ export const Login = (props) => {
           type="submit"
           fullWidth
           variant="contained"
-          color="primary">
+          color="primary"
+          onClick={() => login()}
+        >
           Ingresar
         </Button>
         <Link className="link" href="#" variant="body2">
@@ -63,7 +80,13 @@ export const Login = (props) => {
         </Link>
         {/* {test} */}
       </div>
-
+      <SnackbarCustom
+        setSnackbarOpen={setSnackbarOpen}
+        snackbarOpen={snackbarOpen}
+        snackbarType='error'
+        snackbarMessege={errorMessage}
+        snackbarAutoHideDuration={5000}
+      />
 
     </div>
   )

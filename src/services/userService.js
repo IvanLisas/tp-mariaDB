@@ -1,17 +1,19 @@
 import axios from 'axios'
-import { User } from '../domain/usuario'
+import { User } from '../domain/user'
 import { REST_SERVER_URL } from './constants'
-export class UserService {
+class UserService {
+
+  user = new User()
+
   async login(username, password) {
-    try {
-      const json = await axios.post(`${REST_SERVER_URL}/login`, {
-        username,
-        password,
-      })
-      return User.fromJSON(json.data)
-    } catch (err) {
-      console.log(err)
-    }
+
+    const json = await axios.put(`${REST_SERVER_URL}/login`, {
+      username,
+      password,
+    })
+    // this.user = User.fromJSON(json.data)
+    return User.fromJSON(json.data)
+
   }
 
   async newUser(user) {
@@ -52,3 +54,5 @@ export class UserService {
     }
   }
 }
+
+export const userService = new UserService()
