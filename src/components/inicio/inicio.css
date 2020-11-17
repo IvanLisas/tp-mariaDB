@@ -1,0 +1,60 @@
+ .inicio{
+
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 3rem 1rem 3rem;
+    border-style: solid;
+    height:500px;
+    align-items: center;
+ }
+
+.inicio-container{
+
+    border-style: solid;
+    border-color: salmon;
+    display: flex;  
+    justify-content: space-around;
+    flex-direction: column;
+    height:300px;
+    width:370px;
+    
+    
+}
+
+ 
+.ladoDerecho, .ladoIzquierdo{
+  
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+     
+ 
+}
+
+ 
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    
+     
+    
+}
+.salir, .descargas, .reproducciones, .miperfil {
+    border-style: solid;
+    border-color: salmon;
+    font-family: "Lobster";
+    display: flex;
+    margin:2em;
+    flex-direction: column;
+    
+}
+
+.title{
+    font-size: calc(10px + 2vmin);
+    display: flex;
+    justify-content: center;
+    background-color: blanchedalmond;
+    font-family: "Lobster";
+    font-size: 2rem;
+}
