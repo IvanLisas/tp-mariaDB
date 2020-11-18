@@ -103,4 +103,14 @@ class UserQuery {
 		}downloads
     
 	}
+	
+	def modificar(User user ) {
+ 
+ 
+		var PreparedStatement stmt = c.prepareStatement("UPDATE user SET email = ? WHERE email=?" )
+		stmt.executeUpdate( user.email)
+	 	val rs = stmt.executeQuery
+		rs.next
+        println(user)
+	}
 }
