@@ -48,7 +48,7 @@ class UserQuery {
 	
 	def consulta(int id_usuarioLogueado){
 		var PreparedStatement stmt = c.prepareStatement("SELECT * FROM Download WHERE
-          user_id=?") 
+          user_id = ?") 
  		
  		stmt.setInt(1, id_usuarioLogueado)
 	 	val rs = stmt.executeQuery

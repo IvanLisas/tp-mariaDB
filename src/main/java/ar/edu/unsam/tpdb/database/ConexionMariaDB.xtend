@@ -7,6 +7,7 @@ import java.sql.SQLException
 import java.sql.Statement
 import ar.edu.unsam.tpdb.domain.User
 import java.sql.PreparedStatement
+import ar.edu.unsam.tpdb.formularios.UserQuery
 
 class ConexionMariaDB {
 	Connection cx
@@ -37,13 +38,13 @@ class ConexionMariaDB {
 	def static void main(String[] args) {
 		val ConexionMariaDB c = new ConexionMariaDB() // crea la conexion
 		c.conectar() // se conecta
-		val query = "SELECT * FROM clientes"
-		val Statement stmt = c.cx.createStatement()
-		val ResultSet rs = stmt.executeQuery(query)
-		rs.next()
-		rs.next()
-		println(rs.getString("apellido"))
-		val nombre = rs.getString("apellido")
+		
+		val consulta = (new UserQuery()).consulta(1) 
+		
+		
+		
+		println(consulta)
+		 
 	}
 
 
