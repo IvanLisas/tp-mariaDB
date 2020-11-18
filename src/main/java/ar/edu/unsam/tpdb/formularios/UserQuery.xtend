@@ -146,7 +146,7 @@ class UserQuery {
 		  
        var PreparedStatement stmt = c.prepareStatement
 		("DELETE FROM user WHERE username = ? ")
-		
+	
 		   stmt.setString(1, user.username)
            val rs= stmt.executeQuery
 		 
