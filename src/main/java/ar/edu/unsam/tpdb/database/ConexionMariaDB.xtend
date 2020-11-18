@@ -91,8 +91,8 @@ class ConexionMariaDB {
 		val ConexionMariaDB c = new ConexionMariaDB() // crea la conexion
 		c.conectar() // se conecta
 		
-		val promedioDeDescargas = (new UserQuery()).promedioDeDescargas(1) 	
-		println(promedioDeDescargas)
+//		val promedioDeDescargas = (new UserQuery()).promedioDeDescargas(1) 	
+//		println(promedioDeDescargas)
 
 	}
 }
