@@ -76,5 +76,6 @@ def static void main(String[] args) {
 		
 
 	  (new UserQuery()).borrarUser(usuario)
+	  }
+	  }
 	
-}
