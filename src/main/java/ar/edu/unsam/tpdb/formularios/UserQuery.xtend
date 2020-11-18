@@ -12,6 +12,7 @@ import java.util.ArrayList
 import java.util.List
 import ar.edu.unsam.tpdb.domain.BusinessException
 import java.sql.SQLException
+import ar.edu.unsam.tpdb.domain.Reproduction
 
 class UserQuery {
 
@@ -108,6 +109,55 @@ class UserQuery {
 			throw new BusinessException(e.message)
 		}
 		downloads
+	}
+def todasReproduccionesDe(int id_usuarioLogueado) {
+
+		var PreparedStatement stmt = c.prepareStatement
+	("SELECT * FROM (((reproduction LEFT JOIN 
+          file ON file.id = reproduction.file_id )
+         LEFT JOIN video ON file.id=video.file_id) 
+      LEFT JOIN accion ON reproduction.accion_id = accion.id) 
+       WHERE reproduction.user_id = ? ")
+
+ 
+		stmt.setInt(1, id_usuarioLogueado)
+
+		val rs = stmt.executeQuery
+
+		var List<Reproduction> reproductions = new ArrayList()
+
+		try {
+			while (rs.next) {
+			 
+
+				val _file = new File() => [
+					id = rs.getInt("id")
+					title = rs.getString("title")
+					extension_type = rs.getString("extension_type")
+					type = rs.getString("type")
+					publish_date = rs.getString("publish_date")
+
+				]
+
+				val _accion = new Accion() => [
+					id = rs.getInt("id")
+					type = rs.getString("type")
+					date_init = rs.getString("date_init")
+					date_end = rs.getString("date_end")
+
+				]
+				reproductions.add(new Reproduction() => [
+					id = rs.getInt("id")
+					os = rs.getString("os")
+					 file = _file
+					accion = _accion
+				])
+			}
+
+		} catch (SQLException e) {
+			throw new BusinessException(e.message)
+		}
+		reproductions
 	}
 
 	def modificar(User user) {

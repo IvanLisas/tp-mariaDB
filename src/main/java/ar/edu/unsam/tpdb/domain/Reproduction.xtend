@@ -5,8 +5,10 @@ import org.eclipse.xtend.lib.annotations.Accessors
 @Accessors
 
 class Reproduction {
-	int id
-	int file_id
-	int action_id
+	int id	 
 	String os
+	 
+	Accion accion
+	File file
+	User user
 }

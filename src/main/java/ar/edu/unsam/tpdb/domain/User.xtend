@@ -14,5 +14,6 @@ class User  {
 	String email
 	String password
 	String date
-	List <Download> downloads  
+	List <Download> downloads 
+		List <Reproduction> reproductions  
 }
