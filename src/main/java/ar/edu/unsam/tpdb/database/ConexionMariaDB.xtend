@@ -35,15 +35,46 @@ class ConexionMariaDB {
 		}
 	}
 
-	def static void main(String[] args) {
+//	def static void main(String[] args) {
+//		val ConexionMariaDB c = new ConexionMariaDB() // crea la conexion
+//		c.conectar() // se conecta
+//		
+//		val consulta = (new UserQuery()).consulta(1) 	
+//		println(consulta)
+//
+//	}
+//	def static void main2(String[] args) {
+//      val usuario = new User() => [ 
+// 	name="Estefania" 
+// 	username="JoacoArnedoV" 
+// 	surname ="lalala"
+// 	dni=39874450 
+// 	email="lalallalala" 
+// 	it.password="1212"
+// 	 ] 
+//		
+//		val ConexionMariaDB c = new ConexionMariaDB() // crea la conexion
+//		c.conectar() // se conecta
+//		
+//		val modificar = (new UserQuery()).modificar(usuario)
+//		println(modificar)
+//
+//	}
+def static void main(String[] args) {
+	
+       val usuario = new User() => [ 
+ 	name="Estefania" 
+ 	username="javibonanno" 
+ 	surname ="lalala"
+ 	dni=39874450 
+ 	email="lalallalala" 
+ 	it.password="1212"
+ 	 ] 
+		
 		val ConexionMariaDB c = new ConexionMariaDB() // crea la conexion
 		c.conectar() // se conecta
 		
-		val consulta = (new UserQuery()).todasLasDescargasDe(1) 	
-		println(consulta)
-		
-  
-	}
 
-
+	  (new UserQuery()).borrarUser(usuario)
+	
 }
