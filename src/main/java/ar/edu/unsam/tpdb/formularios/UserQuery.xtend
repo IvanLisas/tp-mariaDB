@@ -47,14 +47,31 @@ class UserQuery {
 	}
 	
 	def consulta(int id_usuarioLogueado){
-		var PreparedStatement stmt = c.prepareStatement("SELECT * FROM Download WHERE
-          user_id = ?") 
+		var PreparedStatement stmt = c.prepareStatement("SELECT * FROM ((((download LEFT JOIN 
+          file ON file.id = download.file_id )LEFT JOIN document 
+    ON file.id = document.file_id)  LEFT JOIN music ON file.id=music.file_id) 
+      LEFT JOIN accion ON download.accion_id = accion.id) WHERE download.user_id = ? ") 
  		
+ 		//todo lo que esta en download todo lo que tenga id-archivo.
+ 		//ademas todos los id_usuarios que esten en download 
  		stmt.setInt(1, id_usuarioLogueado)
+ 		
+ 		 
 	 	val rs = stmt.executeQuery
-		rs.next
+		  rs.next
+		 rs.getDouble("speed")
+		 rs.getString("title")
+		 rs.getString("file.type")
 		 
 	}
+	
+	new Download() => [
+			username = rs.getString("username")
+			name = rs.getString("name")
+			surname = rs.getString("surname")
+			dni = rs.getInt("dni")
+			email = rs.getString("email")
+		]
 	
 }
 

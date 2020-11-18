@@ -2,6 +2,7 @@ package ar.edu.unsam.tpdb.domain
 
 import org.eclipse.xtend.lib.annotations.Accessors
 import java.time.LocalDateTime
+import java.util.List
 
 @Accessors
 class User  {
@@ -11,4 +12,5 @@ class User  {
 	int dni
 	String email
 	String password
+	List <Download> downloads  
 }

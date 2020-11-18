@@ -8,4 +8,9 @@ class Download {
 	int speed
 	int accion_id
 	int archive_id
+	
+	Accion accion
+	File file
+	User user
+	
 }

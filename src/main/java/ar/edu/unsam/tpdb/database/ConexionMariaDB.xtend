@@ -39,12 +39,9 @@ class ConexionMariaDB {
 		val ConexionMariaDB c = new ConexionMariaDB() // crea la conexion
 		c.conectar() // se conecta
 		
-		val consulta = (new UserQuery()).consulta(1) 
-		
-		
-		
+		val consulta = (new UserQuery()).consulta(1) 	
 		println(consulta)
-		 
+ 	
 	}
 
 
