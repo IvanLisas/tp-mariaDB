@@ -11,12 +11,14 @@ import java.time.LocalDateTime
 import java.util.ArrayList
 import java.util.List
 import ar.edu.unsam.tpdb.domain.BusinessException
+import java.sql.SQLException
 
 class UserQuery {
 
 	Connection c = new ConexionMariaDB().conectar()
 
 	def insertUser(User user) {
+
 		var PreparedStatement stmt = c.prepareStatement("INSERT INTO user
  		(`name`, `surname`, `username`, `password`, `dni`, `email`) 
 		VALUES (?, ?, ?, ?, ?, ?)")
@@ -28,29 +30,36 @@ class UserQuery {
 		stmt.setInt(5, user.dni)
 		stmt.setString(6, user.email)
 		stmt.executeUpdate
+
 	}
 
 	def loginUser(String _username, String _password) {
 
 		var PreparedStatement stmt = c.prepareStatement("SELECT * FROM user
  		WHERE username= ? and password= ?")
+		try {
+			stmt.setString(1, _username)
+			stmt.setString(2, _password)
+			val rs = stmt.executeQuery
+			rs.next
 
-		stmt.setString(1, _username)
-		stmt.setString(2, _password)
-		val rs = stmt.executeQuery
-		rs.next
+			new User() => [
+				id = rs.getInt("id")
+				username = rs.getString("username")
+				name = rs.getString("name")
+				surname = rs.getString("surname")
+				dni = rs.getInt("dni")
+				email = rs.getString("email")
 
-		new User() => [
-			username = rs.getString("username")
-			name = rs.getString("name")
-			surname = rs.getString("surname")
-			dni = rs.getInt("dni")
-			email = rs.getString("email")
-		]
+			]
+
+		} catch (SQLException e) {
+			throw new BusinessException(e.message)
+		}
 
 	}
 
-	def consulta(int id_usuarioLogueado) {
+	def todasLasDescargasDe(int id_usuarioLogueado) {
 
 		var PreparedStatement stmt = c.prepareStatement("SELECT * FROM ((((download LEFT JOIN 
           file ON file.id = download.file_id )LEFT JOIN document 
@@ -87,22 +96,18 @@ class UserQuery {
 					date_end = rs.getString("date_end")
 
 				]
-				val _download = new Download() => [
+				downloads.add(new Download() => [
 					id = rs.getInt("id")
 					speed = rs.getDouble("speed")
-					accion_id = rs.getInt("accion_id")
-					archive_id = rs.getInt("file_id")
+					accion = _accion
 					file = _file
 					accion = _accion
-				]
-				println(_download)
-
-				downloads.add(_download)
+				])
 
 			}
-		} catch (BusinessException e) {
-			 downloads
+		} catch (SQLException e) {
+			throw new BusinessException(e.message)
 		}
-
+		downloads
 	}
 }
