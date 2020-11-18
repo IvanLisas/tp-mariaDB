@@ -105,12 +105,54 @@ class UserQuery {
 	}
 	
 	def modificar(User user ) {
+      
+		var PreparedStatement stmt = c.prepareStatement
+		("UPDATE user SET name = ?, surname  = ?,
+        password  = ? , dni  = ?, email  = ? WHERE username = ? ")
+      
+		
+		stmt.setString(1, user.name)
+		stmt.setString(2, user.surname)
+		stmt.setString(3, user.password)
+		stmt.setInt(4, user.dni)
+		stmt.setString(5, user.email)
+		stmt.setString(6, user.username)
+		 
+
+		val rs = stmt.executeQuery
  
- 
-		var PreparedStatement stmt = c.prepareStatement("UPDATE user SET email = ? WHERE email=?" )
-		stmt.executeUpdate( user.email)
-	 	val rs = stmt.executeQuery
-		rs.next
+		var PreparedStatement state = c.prepareStatement
+		("COMMIT ")
+      	val rs2 = stmt.executeQuery
         println(user)
+  
+ 
 	}
+	
+	def borrarUser(User user ) {
+      
+           var PreparedStatement stmt3 = c.prepareStatement
+        ("DELETE survey FROM survey INNER JOIN user ON survey.user_id= user.id WHERE user.id 
+           IN (SELECT id FROM user WHERE username= ? )")
+           
+           stmt3.setString(1, user.username)
+          val rs1= stmt3.executeQuery
+          
+      var PreparedStatement stmt2 = c.prepareStatement
+		  ("DELETE download FROM download INNER JOIN user ON download.user_id= user.id WHERE user.id 
+           IN (SELECT id FROM user WHERE username= ? )")
+           stmt2.setString(1, user.username)
+		  val rs2= stmt2.executeQuery
+		  
+       var PreparedStatement stmt = c.prepareStatement
+		("DELETE * FROM user WHERE username = ? ")
+		
+		   stmt.setString(1, user.username)
+           val rs= stmt2.executeQuery
+		 
+  
+ 
+	}
+	
+	
 }
