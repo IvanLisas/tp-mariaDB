@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import java.util.HashMap
 import ar.edu.unsam.tpdb.domain.BusinessException
+import java.sql.SQLException
 
 @RestController
 @CrossOrigin
@@ -24,10 +25,11 @@ class LoginController {
 		try {
 			val username = body.get('username')
 			val password = body.get('password')
+			val userToLogin = new UserQuery().loginUser(username, password)
+			ResponseEntity.ok(userToLogin)
 
-			ResponseEntity.ok(new UserQuery().loginUser(username, password))
-
-		} catch (BusinessException e) {
+		} catch (SQLException e) {
+			println(e.message)
 			ResponseEntity.badRequest.body(e.message)
 		}
 	}

@@ -74,8 +74,10 @@ def static void main(String[] args) {
 		val ConexionMariaDB c = new ConexionMariaDB() // crea la conexion
 		c.conectar() // se conecta
 		
-	  (new UserQuery()).borrarUser(usuario)
-	
-	}
 
-}
+	  (new UserQuery()).borrarUser(usuario)
+
+	  }
+	  }
+	
+
