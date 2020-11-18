@@ -7,6 +7,8 @@ import java.sql.Connection
 import java.sql.Statement
 
 class UserQuery {
+	
+
 	Connection c = new ConexionMariaDB().conectar()
 	
 	def insertUser(User user){
@@ -41,14 +43,19 @@ class UserQuery {
 			dni = rs.getInt("dni")
 			email = rs.getString("email")
 		]
-
-
-	
-		
-		
 		
 	}
 	
-	
+	def consulta(int id_usuarioLogueado){
+		var PreparedStatement stmt = c.prepareStatement("SELECT * FROM Download WHERE
+          user_id=?") 
+ 		
+ 		stmt.setInt(1, id_usuarioLogueado)
+	 	val rs = stmt.executeQuery
+		rs.next
+		 
+	}
 	
 }
+
+
