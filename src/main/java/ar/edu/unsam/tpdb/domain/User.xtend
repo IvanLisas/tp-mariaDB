@@ -11,5 +11,4 @@ class User  {
 	int dni
 	String email
 	String password
-
 }
