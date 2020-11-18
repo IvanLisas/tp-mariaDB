@@ -1,31 +1,30 @@
-import './descargas.css'
 import React, { useEffect, useState, useContext } from 'react'
-import { Column } from 'primereact/column'
-import {DataTable } from 'primereact/datatable'
+import { TablesRouter } from '../table/table'
 import { Button } from 'primereact/button'
-import {Busqueda} from '../busqueda/busqueda'
-import { Panel } from 'primereact/panel'
+import { Context } from '../../context/context'
+import { downloadService } from '../../services/downloadService'
 
 export const Descargas = (props) => {
   const [textoBusqueda, setTextoBusqueda] = useState('')
-  
-  const volver = () =>{
-    props.history.push('/inicio')
-  }
+  const [descargas, setDescargas] = useState([])
+  const { loggedUser } = useContext(Context)
+
+  useEffect(async () => setDescargas(await downloadService.allDownloads(loggedUser.id)), [])
+
+  const volver = () => { props.history.push('/inicio') }
+
+
 
   return (
-    <Panel className="contenedor-principal" header="Mis descargas">
-       <div>
-      <Busqueda onChange={(textoBusqueda) => setTextoBusqueda(textoBusqueda)} />
-      <DataTable>
-        <Column field="titulo" header="Titulo" sortable></Column>
-        <Column field="tipo" header="Tipo" sortable></Column>
-        <Column field="fecha" header="Fecha"></Column>
-      </DataTable>  
-      </div>
-      <div class="Button-container">
-      <Button className="p-button-raised buton" label="Volver" onClick={() => volver()} />
-      </div>
-    </Panel>
+    <div>
+      {console.log(descargas)}
+      <TablesRouter
+        titulo='Mis descargas'
+        elementos={descargas}
+        volver={volver}
+        setTextoBusqueda={(textoBusqueda) => setTextoBusqueda(textoBusqueda)}
+      >
+      </TablesRouter>
+    </div>
   )
 }

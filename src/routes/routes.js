@@ -8,6 +8,8 @@ import { Descargas } from '../components/descargas/descargas'
 import { Reproducciones } from '../components/reproducciones/reproducciones'
 import { Context } from '../context/context'
 import { NavBar } from '../components/nav-bar/nav-bar'
+import { SingUp } from '../components/singUp/singUp'
+import { Tables } from '../components/table/table'
 
 export const MainRoutes = () => {
 
@@ -16,13 +18,16 @@ export const MainRoutes = () => {
   return (
     <Router>
       {loggedUser && <Route component={NavBar} />}
+
       <Switch>
         {loggedUser && <Route path="/miperfil" component={Miperfil} />}
         {loggedUser && <Route path="/descargas" component={Descargas} />}
         {loggedUser && <Route path="/reproducciones" component={Reproducciones} />}
         {loggedUser && <Route path="/inicio" component={Inicio} />}
         {loggedUser && <Route path="/" component={Inicio} />}
+        {!loggedUser && <Route path="/registrarse" component={SingUp} />}
         {!loggedUser && <Route path="/" component={Login} />}
+
       </Switch>
     </Router>)
 

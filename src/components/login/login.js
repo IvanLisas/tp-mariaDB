@@ -6,7 +6,6 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import TextField from '@material-ui/core/TextField'
 import { SnackbarCustom } from '../snackbar/snackbarCustom'
-import { testService } from '../../services/testService'
 import { userService } from '../../services/userService'
 import Link from '@material-ui/core/Link'
 
@@ -17,15 +16,14 @@ export const Login = (props) => {
   const { updateLoggedUser } = useContext(Context)
   const [errorMessage, setErrorMessage] = useState('')
   const [snackbarOpen, setSnackbarOpen] = useState(false)
-  // const [test, setTest] = useState('')
-  // useEffect(async () => setTest(await testService.testCall()), [])
 
   const login = async () => {
     try {
+
       updateLoggedUser(await userService.login(username, password))
       props.history.push('/inicio')
     } catch (errorMessage) {
-      setErrorMessage('Usuario o contraseña incorrecto ' + errorMessage)
+      setErrorMessage('' + errorMessage)
       setSnackbarOpen(true)
     }
   }
@@ -39,7 +37,6 @@ export const Login = (props) => {
             storage
           </span>
           Maria DB
-
         </div>
         <TextField
           variant="outlined"
@@ -75,10 +72,9 @@ export const Login = (props) => {
         >
           Ingresar
         </Button>
-        <Link className="link" href="#" variant="body2">
+        <Link className="link" href="/registrarse" variant="body2">
           {'No tienes cuenta? Registrate aqui'}
         </Link>
-        {/* {test} */}
       </div>
       <SnackbarCustom
         setSnackbarOpen={setSnackbarOpen}

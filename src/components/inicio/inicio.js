@@ -28,9 +28,9 @@ export const Inicio = (props) => {
         />
         <CommentCard
           encabezado='Archivo'
-          titulo='Documental sobre tu madre'
-          cuerpo='Apasinante documental'
-          cuerpo2='Sobre tu madre'
+          titulo='Documental National geographic '
+          cuerpo='Segundo episodio sobre '
+          cuerpo2='los Incas'
         />
         <Music
           banda='Los sultanes'
@@ -40,8 +40,8 @@ export const Inicio = (props) => {
       </div>
       <div className="column">
         <MediaCard
-          cuerpo='Bottazzi se quiere comprar la Xbox pero no encuentra stock.'
-          titulo='Xbox'
+          cuerpo='Descargar Cyperpunk 2077'
+          titulo='Cyperpunk'
           imagen='/xbox.jpg'
         />
         <CommentCard
@@ -51,7 +51,7 @@ export const Inicio = (props) => {
           cuerpo2='Si falla no hay rebolso' /></div>
       <div className="column">
         <ComplexCard
-          titulo='Chorizo Portuano'
+          titulo='Chorizo a la pomarola'
           cuerpo='Receta que nadie se debe perder'
           imagen='/chorizo.jpg'
         />

@@ -1,13 +1,16 @@
 export class Reproduction {
-    constructor(historyID, startDate, reproductionID, endDate, endDateHour, usedOS) {
-      this.historyID = historyID
-      this.startDate = startDate
-      this.reproductionID= reproductionID
-      this.endDate = endDate
-      this.endDateHour = endDateHour
-      this.usedOS = usedOS
-    }
-  
-    static fromJSON(reproductionJSON) { return Object.assign(new Reproduction(), reproductionJSON) }
-  
+  constructor(accion, file, os) {
+    this.accion = accion
+    this.file = file
+    this.os = os
   }
+
+  static fromJSON(reproductionJSON) {
+    return Object.assign(new Reproduction(), reproductionJSON, {
+      accion: Accion.fromJSON(reproductionJSON.accion),
+      file: File.fromJSON(reproductionJSON.file)
+    })
+
+  }
+
+}

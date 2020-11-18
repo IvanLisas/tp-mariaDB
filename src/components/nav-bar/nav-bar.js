@@ -16,6 +16,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import { Context } from '../../context/context'
 import { NavBarButton } from './nav-bar-button/nav-bar-button'
+import Button from '@material-ui/core/Button'
 
 export const NavBar = (props) => {
   const classes = useStyles()
@@ -47,9 +48,16 @@ export const NavBar = (props) => {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Bienvenido {loggedUser.name}
-          </Typography>
+          <Button
+            aria-controls="customized-menu"
+            aria-haspopup="true"
+            variant="contained"
+            color="primary"
+            onClick={() => props.history.push('/inicio')}
+            disableElevation
+          >
+            Home
+          </Button>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -65,6 +73,9 @@ export const NavBar = (props) => {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            <Typography className={classes.title} variant="h6" noWrap>
+              Buen dia {loggedUser.name}
+            </Typography>
             <IconButton aria-label="show new notifications" color="inherit">
               <Badge badgeContent={0} color="secondary">
                 <NotificationsIcon />
@@ -90,9 +101,15 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   title: {
-    display: 'none',
+    display: 'flex',
+    alignSelf: 'center',
+    fontFamily: 'Roboto',
+    fontSize: '1.2rem',
+    marginRight: '0.5rem',
+
     [theme.breakpoints.up('sm')]: {
       display: 'block',
+
     },
   },
   search: {
