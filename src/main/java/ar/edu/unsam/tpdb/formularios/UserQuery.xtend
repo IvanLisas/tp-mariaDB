@@ -125,10 +125,10 @@ catch (SQLException e) {
 			throw new BusinessException(e.message)
 		}
 		downloads	
-		
+		//
 	}
 def todasReproduccionesDe(int id_usuarioLogueado) {
-
+//
 		var PreparedStatement stmt = c.prepareStatement
 	("SELECT * FROM (((reproduction LEFT JOIN 
           file ON file.id = reproduction.file_id )
