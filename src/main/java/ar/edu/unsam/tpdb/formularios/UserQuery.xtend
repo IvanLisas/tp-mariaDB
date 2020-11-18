@@ -127,6 +127,156 @@ catch (SQLException e) {
 		downloads	
 		//
 	}
+	def descOrderByNameAsc(int id_usuarioLogueado) {
+
+	var PreparedStatement stmt = c.prepareStatement
+	("SELECT * FROM ((((download
+         LEFT JOIN file ON file.id = download.file_id)
+          LEFT JOIN document ON file.id = document.file_id)  
+           LEFT JOIN music ON file.id=music.file_id) 
+          LEFT JOIN accion ON download.accion_id = accion.id)
+          WHERE download.user_id = ?  ORDER BY file.title ASC ")
+
+	// todo lo que esta en download todo lo que tenga id-archivo.
+	// ademas todos los id_usuarios que esten en download 
+	stmt.setInt(1, id_usuarioLogueado)
+
+	val rs = stmt.executeQuery
+
+	var List<Download> downloads = new ArrayList()
+	var List<Category> categories = new ArrayList()
+	try {
+		while (rs.next) {
+			rs.getDouble("speed")
+			rs.getString("title")
+			rs.getString("file.type")
+
+			val _file = new File() => [
+				id = rs.getInt("id")
+				title = rs.getString("title")
+				extension_type = rs.getString("extension_type")
+				type = rs.getString("type")
+				publish_date = rs.getString("publish_date")
+				it.categories.add("description")
+			]
+			val _accion = new Accion() => [
+				id = rs.getInt("id")
+				type = rs.getString("type")
+				date_init = rs.getString("date_init")
+				date_end = rs.getString("date_end")
+
+			] 
+      var PreparedStatement stmt2 = c.prepareStatement
+      
+      ("SELECT description FROM category WHERE id IN (SELECT category_id 
+         FROM category_has_archive c WHERE c.file_id = ? )")
+           stmt2.setInt(1, _file.id)
+	       val rs2 = stmt2.executeQuery
+	       
+	      while(rs2.next){
+	      _file.categories.add(rs2.getString("description"))
+	      	println(rs2.getString("desciption"))
+	      } 
+           
+        
+			downloads.add(new Download() => [
+				id = rs.getInt("id")
+				speed = rs.getDouble("speed")
+				file = _file
+				accion = _accion
+			])
+		
+}}
+catch (SQLException e) {
+			throw new BusinessException(e.message)
+		}
+		downloads	
+		//
+	}
+	
+def descOrderByNameDown(int id_usuarioLogueado) {
+
+	var PreparedStatement stmt = c.prepareStatement
+	("SELECT * FROM ((((download
+         LEFT JOIN file ON file.id = download.file_id)
+          LEFT JOIN document ON file.id = document.file_id)  
+           LEFT JOIN music ON file.id=music.file_id) 
+          LEFT JOIN accion ON download.accion_id = accion.id)
+          WHERE download.user_id = ?  ORDER BY file.title DESC ")
+
+	// todo lo que esta en download todo lo que tenga id-archivo.
+	// ademas todos los id_usuarios que esten en download 
+	stmt.setInt(1, id_usuarioLogueado)
+
+	val rs = stmt.executeQuery
+
+	var List<Download> downloads = new ArrayList()
+	var List<Category> categories = new ArrayList()
+	try {
+		while (rs.next) {
+			rs.getDouble("speed")
+			rs.getString("title")
+			rs.getString("file.type")
+
+			val _file = new File() => [
+				id = rs.getInt("id")
+				title = rs.getString("title")
+				extension_type = rs.getString("extension_type")
+				type = rs.getString("type")
+				publish_date = rs.getString("publish_date")
+				it.categories.add("description")
+			]
+			val _accion = new Accion() => [
+				id = rs.getInt("id")
+				type = rs.getString("type")
+				date_init = rs.getString("date_init")
+				date_end = rs.getString("date_end")
+
+			] 
+      var PreparedStatement stmt2 = c.prepareStatement
+      
+      ("SELECT description FROM category WHERE id IN (SELECT category_id 
+         FROM category_has_archive c WHERE c.file_id = ? )")
+           stmt2.setInt(1, _file.id)
+	       val rs2 = stmt2.executeQuery
+	       
+	      while(rs2.next){
+	      _file.categories.add(rs2.getString("description"))
+	      	println(rs2.getString("desciption"))
+	      } 
+           
+        
+			downloads.add(new Download() => [
+				id = rs.getInt("id")
+				speed = rs.getDouble("speed")
+				file = _file
+				accion = _accion
+			])
+		
+}}
+catch (SQLException e) {
+			throw new BusinessException(e.message)
+		}
+		downloads	
+		//
+	}	
+	
+	def promedioDeDescargas(int id_usuarioLogueado){
+		var PreparedStatement stmt = c.prepareStatement
+		("SELECT AVG(speed) FROM download WHERE user_id= ?")
+		
+		stmt.setInt(1, id_usuarioLogueado)
+		val rs = stmt.executeQuery
+         
+		rs.next()
+		println()
+    	 
+	}
+	
+	
+	
+	
+	
 def todasReproduccionesDe(int id_usuarioLogueado) {
 //
 		var PreparedStatement stmt = c.prepareStatement
@@ -136,7 +286,6 @@ def todasReproduccionesDe(int id_usuarioLogueado) {
       LEFT JOIN accion ON reproduction.accion_id = accion.id) 
        WHERE reproduction.user_id = ? ")
 
- 
 		stmt.setInt(1, id_usuarioLogueado)
 
 		val rs = stmt.executeQuery
@@ -146,7 +295,6 @@ def todasReproduccionesDe(int id_usuarioLogueado) {
 		try {
 			while (rs.next) {
 			 
-
 				val _file = new File() => [
 					id = rs.getInt("id")
 					title = rs.getString("title")
@@ -176,6 +324,101 @@ def todasReproduccionesDe(int id_usuarioLogueado) {
 		}
 		reproductions
 	}
+	def repOrderByNameAsc(int id_usuarioLogueado) {
+//
+		var PreparedStatement stmt = c.prepareStatement
+	("SELECT * FROM (((reproduction LEFT JOIN 
+          file ON file.id = reproduction.file_id )
+         LEFT JOIN video ON file.id=video.file_id) 
+      LEFT JOIN accion ON reproduction.accion_id = accion.id) 
+       WHERE reproduction.user_id = ? ORDER BY file.title ASC ")
+
+		stmt.setInt(1, id_usuarioLogueado)
+
+		val rs = stmt.executeQuery
+
+		var List<Reproduction> reproductions = new ArrayList()
+
+		try {
+			while (rs.next) {
+			 
+				val _file = new File() => [
+					id = rs.getInt("id")
+					title = rs.getString("title")
+					extension_type = rs.getString("extension_type")
+					type = rs.getString("type")
+					publish_date = rs.getString("publish_date")
+
+				]
+
+				val _accion = new Accion() => [
+					id = rs.getInt("id")
+					type = rs.getString("type")
+					date_init = rs.getString("date_init")
+					date_end = rs.getString("date_end")
+
+				]
+				reproductions.add(new Reproduction() => [
+					id = rs.getInt("id")
+					os = rs.getString("os")
+					 file = _file
+					accion = _accion
+				])
+			}
+
+		} catch (SQLException e) {
+			throw new BusinessException(e.message)
+		}
+		reproductions
+	}
+	def repOrderByNameDesc(int id_usuarioLogueado) {
+//
+		var PreparedStatement stmt = c.prepareStatement
+	("SELECT * FROM (((reproduction LEFT JOIN 
+          file ON file.id = reproduction.file_id )
+         LEFT JOIN video ON file.id=video.file_id) 
+      LEFT JOIN accion ON reproduction.accion_id = accion.id) 
+       WHERE reproduction.user_id = ? ORDER BY file.title DESC ")
+
+		stmt.setInt(1, id_usuarioLogueado)
+
+		val rs = stmt.executeQuery
+
+		var List<Reproduction> reproductions = new ArrayList()
+
+		try {
+			while (rs.next) {
+			 
+				val _file = new File() => [
+					id = rs.getInt("id")
+					title = rs.getString("title")
+					extension_type = rs.getString("extension_type")
+					type = rs.getString("type")
+					publish_date = rs.getString("publish_date")
+
+				]
+
+				val _accion = new Accion() => [
+					id = rs.getInt("id")
+					type = rs.getString("type")
+					date_init = rs.getString("date_init")
+					date_end = rs.getString("date_end")
+
+				]
+				reproductions.add(new Reproduction() => [
+					id = rs.getInt("id")
+					os = rs.getString("os")
+					 file = _file
+					accion = _accion
+				])
+			}
+
+		} catch (SQLException e) {
+			throw new BusinessException(e.message)
+		}
+		reproductions
+	}
+	
 
 	def modificar(User user) {
 
@@ -193,8 +436,7 @@ def todasReproduccionesDe(int id_usuarioLogueado) {
 
 		var PreparedStatement state = c.prepareStatement("COMMIT ")
 		val rs2 = stmt.executeQuery
-		println(user)
-
+			
 	}
 
 	def borrarUser(User user) {

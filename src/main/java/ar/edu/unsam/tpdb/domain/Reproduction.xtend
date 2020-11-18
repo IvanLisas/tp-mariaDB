@@ -7,7 +7,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class Reproduction {
 	int id	 
 	String os
-	 
 	Accion accion
 	File file
 	User user

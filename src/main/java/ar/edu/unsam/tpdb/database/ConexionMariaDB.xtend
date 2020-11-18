@@ -35,14 +35,14 @@ class ConexionMariaDB {
 		}
 	}
 
-	def static void main(String[] args) {
-		val ConexionMariaDB c = new ConexionMariaDB() // crea la conexion
-		c.conectar() // se conecta
-		
-		val todasLasDescargasDe = (new UserQuery()).todasLasDescargasDe(1) 	
-		println(todasLasDescargasDe)
-
-	}
+//	def static void main(String[] args) {
+//		val ConexionMariaDB c = new ConexionMariaDB() // crea la conexion
+//		c.conectar() // se conecta
+//		
+//		val todasLasDescargasDe = (new UserQuery()).todasLasDescargasDe(1) 	
+//		println(todasLasDescargasDe)
+//
+//	}
 //	def static void main(String[] args) {
 //		val ConexionMariaDB c = new ConexionMariaDB() // crea la conexion
 //		c.conectar() // se conecta
@@ -87,5 +87,12 @@ class ConexionMariaDB {
 //
 //	  }
 //	  }
- 
+ 	def static void main(String[] args) {
+		val ConexionMariaDB c = new ConexionMariaDB() // crea la conexion
+		c.conectar() // se conecta
+		
+		val promedioDeDescargas = (new UserQuery()).promedioDeDescargas(1) 	
+		println(promedioDeDescargas)
+
+	}
 }
