@@ -90,19 +90,17 @@ class UserQuery {
 				val _download = new Download() => [
 					id = rs.getInt("id")
 					speed = rs.getDouble("speed")
-					accion_id = rs.getInt("accion_id")
-					archive_id = rs.getInt("file_id")
 					file = _file
 					accion = _accion
 				]
 				println(_download)
 
-				downloads.add(_download)
+				 downloads.add(_download)
 
 			}
 		} catch (BusinessException e) {
-			 downloads
-		}
-
+			 
+		}downloads
+    
 	}
 }

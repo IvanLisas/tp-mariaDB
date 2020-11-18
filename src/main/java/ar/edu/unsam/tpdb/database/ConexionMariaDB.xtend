@@ -41,8 +41,7 @@ class ConexionMariaDB {
 		
 		val consulta = (new UserQuery()).consulta(1) 	
 		println(consulta)
-		
-  
+
 	}
 
 
