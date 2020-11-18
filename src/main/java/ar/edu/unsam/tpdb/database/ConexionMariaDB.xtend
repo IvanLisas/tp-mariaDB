@@ -34,11 +34,17 @@ class ConexionMariaDB {
 		}
 	}
 
-//	def static void main(String[] args) {
-//		val ConexionMariaDB c = new ConexionMariaDB() // crea la conexion
-//		c.conectar() // se conecta
-//	}
-
+	def static void main(String[] args) {
+		val ConexionMariaDB c = new ConexionMariaDB() // crea la conexion
+		c.conectar() // se conecta
+		val query = "SELECT * FROM clientes"
+		val Statement stmt = c.cx.createStatement()
+		val ResultSet rs = stmt.executeQuery(query)
+		rs.next()
+		rs.next()
+		println(rs.getString("apellido"))
+		val nombre = rs.getString("apellido")
+	}
 
 
 }
