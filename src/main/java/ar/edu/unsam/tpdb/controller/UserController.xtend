@@ -33,6 +33,18 @@ class UserController {
 			ResponseEntity.badRequest.body(e.message)
 		}
 	}
+	
+	
+		@GetMapping("/todasReproduccionesDe/{userId}")
+	def todasReproduccionesDe(@PathVariable Integer userId) {
+		try {
+			val downloads = new UserQuery().todasReproduccionesDe(userId)
+			ResponseEntity.ok(downloads)
+
+		} catch (SQLException e) {
+			ResponseEntity.badRequest.body(e.message)
+		}
+	}
 
 	@PostMapping("/newUser")
 	def newUser(@RequestBody String body) {
