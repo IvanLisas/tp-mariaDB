@@ -5,7 +5,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 @Accessors
 class Download {
 	int id
-	int speed
+	double speed
 	int accion_id
 	int archive_id
 	

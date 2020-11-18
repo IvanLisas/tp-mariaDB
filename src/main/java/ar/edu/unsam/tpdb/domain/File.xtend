@@ -9,6 +9,6 @@ class File {
 	String title
 	String extension_type
 	String type
-	LocalDateTime publish_date
+	String publish_date
 
 }

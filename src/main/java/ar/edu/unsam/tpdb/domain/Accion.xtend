@@ -6,7 +6,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 @Accessors
 class Accion {
 	int id
-	LocalDateTime date_init
-	LocalDateTime date_end
+	String date_init
+	String date_end
 	String type
 }
