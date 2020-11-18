@@ -4,6 +4,7 @@ import ar.edu.unsam.tpdb.database.ConexionMariaDB
 import ar.edu.unsam.tpdb.domain.User
 import java.sql.PreparedStatement
 import java.sql.Connection
+import java.sql.Statement
 
 class UserQuery {
 	Connection c = new ConexionMariaDB().conectar()
@@ -12,7 +13,7 @@ class UserQuery {
 		var PreparedStatement stmt = c.prepareStatement("INSERT INTO user
  		(`name`, `surname`, `username`, `password`, `dni`, `email`) 
 		VALUES (?, ?, ?, ?, ?, ?)")
-		
+	
 		stmt.setString(1, user.name)
 		stmt.setString(2, user.surname)
 		stmt.setString(3, user.username)
@@ -21,4 +22,33 @@ class UserQuery {
 		stmt.setString(6, user.email)
 		stmt.executeUpdate
 	}
+	
+	def loginUser(String _username, String _password){
+		
+
+	var PreparedStatement stmt = c.prepareStatement("SELECT * FROM user
+ 		WHERE username= ? and password= ?") 
+ 		
+ 		stmt.setString(1, _username)
+		stmt.setString(2, _password)
+		val rs = stmt.executeQuery
+		rs.next
+		
+		new User() => [
+			username = rs.getString("username")
+			name = rs.getString("name")
+			surname = rs.getString("surname")
+			dni = rs.getInt("dni")
+			email = rs.getString("email")
+		]
+
+
+	
+		
+		
+		
+	}
+	
+	
+	
 }
