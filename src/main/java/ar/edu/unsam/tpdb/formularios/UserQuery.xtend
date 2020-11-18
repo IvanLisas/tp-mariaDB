@@ -145,10 +145,10 @@ class UserQuery {
 		  val rs2= stmt2.executeQuery
 		  
        var PreparedStatement stmt = c.prepareStatement
-		("DELETE * FROM user WHERE username = ? ")
+		("DELETE FROM user WHERE username = ? ")
 		
 		   stmt.setString(1, user.username)
-           val rs= stmt2.executeQuery
+           val rs= stmt.executeQuery
 		 
   
  

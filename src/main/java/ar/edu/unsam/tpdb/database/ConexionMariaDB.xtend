@@ -64,7 +64,7 @@ def static void main(String[] args) {
 	
        val usuario = new User() => [ 
  	name="Estefania" 
- 	username="javibonanno" 
+ 	username="JoacoArnedoV" 
  	surname ="lalala"
  	dni=39874450 
  	email="lalallalala" 
