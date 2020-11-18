@@ -35,22 +35,22 @@ class ConexionMariaDB {
 		}
 	}
 
-//	def static void main(String[] args) {
-//		val ConexionMariaDB c = new ConexionMariaDB() // crea la conexion
-//		c.conectar() // se conecta
-//		
-//		val todasLasDescargasDe = (new UserQuery()).todasLasDescargasDe(1) 	
-//		println(todasLasDescargasDe)
-//
-//	}
 	def static void main(String[] args) {
 		val ConexionMariaDB c = new ConexionMariaDB() // crea la conexion
 		c.conectar() // se conecta
 		
-		val todasReproduccionesDe = (new UserQuery()).todasReproduccionesDe(1) 	
-		println(todasReproduccionesDe)
+		val todasLasDescargasDe = (new UserQuery()).todasLasDescargasDe(1) 	
+		println(todasLasDescargasDe)
+
 	}
-}
+//	def static void main(String[] args) {
+//		val ConexionMariaDB c = new ConexionMariaDB() // crea la conexion
+//		c.conectar() // se conecta
+//		
+//		val todasReproduccionesDe = (new UserQuery()).todasReproduccionesDe(1) 	
+//		println(todasReproduccionesDe)
+//	}
+//}
 //	def static void main2(String[] args) {
 //      val usuario = new User() => [ 
 // 	name="Estefania" 
@@ -88,4 +88,4 @@ class ConexionMariaDB {
 //	  }
 //	  }
  
-
+}
