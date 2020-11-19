@@ -45,6 +45,52 @@ class UserController {
 			ResponseEntity.badRequest.body(e.message)
 		}
 	}
+	
+	
+	@GetMapping("/descOrderByNameAsc/{userId}")
+	def descOrderByNameAsc(@PathVariable Integer userId) {
+		try {
+			val downloads = new UserQuery().descOrderByNameAsc(userId)
+			ResponseEntity.ok(downloads)
+
+		} catch (SQLException e) {
+			ResponseEntity.badRequest.body(e.message)
+		}
+	}
+	
+	@GetMapping("/descOrderByNameDown/{userId}")
+	def descOrderByNameDown(@PathVariable Integer userId) {
+		try {
+			val downloads = new UserQuery().descOrderByNameDown(userId)
+			ResponseEntity.ok(downloads)
+
+		} catch (SQLException e) {
+			ResponseEntity.badRequest.body(e.message)
+		}
+	}
+	
+	@GetMapping("/promedio/{userId}")
+	def promedio(@PathVariable Integer userId) {
+		try {
+			val downloads = new UserQuery().promedioDeDescargas(userId)
+			ResponseEntity.ok(downloads)
+
+		} catch (SQLException e) {
+			ResponseEntity.badRequest.body(e.message)
+		}
+	}
+	
+	@GetMapping("/busqueda/{userId}/{busqueda}")
+	def busqueda(@PathVariable String busqueda,@PathVariable Integer userId) {
+		try {
+			val downloads = new UserQuery().busqueda(busqueda,userId)
+			ResponseEntity.ok(downloads)
+
+		} catch (SQLException e) {
+			ResponseEntity.badRequest.body(e.message)
+		}
+	}
+	
 
 	@PostMapping("/newUser")
 	def newUser(@RequestBody String body) {
