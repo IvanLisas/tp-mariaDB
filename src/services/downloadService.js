@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { REST_SERVER_URL } from './constants'
-import { Download } from '../domain/download'
+import { Download } from '../domain/action'
 
 class DownloadService {
   async allDownloads(userID) {
@@ -9,28 +9,23 @@ class DownloadService {
     return json.data.map(download => Download.fromJSON(download))
   }
 
-
-
-  async ordernar(userID) {
-    const json = await axios.get(`${REST_SERVER_URL}/descOrderByNameAsc/${userID}`)
-    console.log(await axios.get(`${REST_SERVER_URL}/descOrderByNameAsc/${userID}`))
+  async downloadsByAscName(userID) {
+    const json = await axios.get(`${REST_SERVER_URL}/downloadsByAscName/${userID}`)
     return json.data.map(download => Download.fromJSON(download))
   }
 
-  async ordernar2(userID) {
-    const json = await axios.get(`${REST_SERVER_URL}/descOrderByNameDown/${userID}`)
-    console.log(await axios.get(`${REST_SERVER_URL}/descOrderByNameDown/${userID}`))
+  async downloadsByDesName(userID) {
+    const json = await axios.get(`${REST_SERVER_URL}/downloadsByDesName/${userID}`)
     return json.data.map(download => Download.fromJSON(download))
   }
 
-  async promedio(userID) {
-    const json = await axios.get(`${REST_SERVER_URL}/promedio/${userID}`)
-    console.log(await axios.get(`${REST_SERVER_URL}/promedio/${userID}`))
+  async averageDownload(userID) {
+    const json = await axios.get(`${REST_SERVER_URL}/averageDownload/${userID}`)
     return json.data
   }
 
-  async busqueda(userID, busqueda) {
-    const json = await axios.get(`${REST_SERVER_URL}/busqueda/${userID}/${busqueda}`)
+  async searchDownloadsOf(userID, busqueda) {
+    const json = await axios.get(`${REST_SERVER_URL}/searchDownloadsOf/${userID}/${busqueda}`)
     return json.data.map(download => Download.fromJSON(download))
   }
 }

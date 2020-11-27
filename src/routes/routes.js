@@ -4,12 +4,11 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Login } from '../components/login/login'
 import { Inicio } from '../components/inicio/inicio'
 import { Miperfil } from '../components/miperfil/miperfil'
-import { Descargas } from '../components/descargas/descargas'
-import { Reproducciones } from '../components/reproducciones/reproducciones'
+import { Descargas } from '../components/actions/descargas/descargas'
+import { Reproducciones } from '../components/actions/reproducciones/reproducciones'
 import { Context } from '../context/context'
 import { NavBar } from '../components/nav-bar/nav-bar'
 import { SingUp } from '../components/singUp/singUp'
-import { Tables } from '../components/table/table'
 
 export const MainRoutes = () => {
 
