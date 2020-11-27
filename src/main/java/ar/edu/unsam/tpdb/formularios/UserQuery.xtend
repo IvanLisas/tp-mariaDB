@@ -39,25 +39,20 @@ class UserQuery {
 
 		var PreparedStatement stmt = c.prepareStatement("SELECT * FROM user
  		WHERE username= ? and password= ?")
-		try {
-			stmt.setString(1, _username)
-			stmt.setString(2, _password)
-			val rs = stmt.executeQuery
-			rs.next
+		stmt.setString(1, _username)
+		stmt.setString(2, _password)
+		val rs = stmt.executeQuery
+		rs.next
 
-			new User() => [
-				id = rs.getInt("id")
-				username = rs.getString("username")
-				name = rs.getString("name")
-				surname = rs.getString("surname")
-				dni = rs.getInt("dni")
-				email = rs.getString("email")
+		new User() => [
+			id = rs.getInt("id")
+			username = rs.getString("username")
+			name = rs.getString("name")
+			surname = rs.getString("surname")
+			dni = rs.getInt("dni")
+			email = rs.getString("email")
 
-			]
-
-		} catch (SQLException e) {
-			throw new BusinessException(e.message)
-		}
+		]
 
 	}
 

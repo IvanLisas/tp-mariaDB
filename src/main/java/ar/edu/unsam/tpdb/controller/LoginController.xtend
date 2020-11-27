@@ -29,7 +29,6 @@ class LoginController {
 			ResponseEntity.ok(userToLogin)
 
 		} catch (SQLException e) {
-			println(e.message)
 			ResponseEntity.badRequest.body(e.message)
 		}
 	}
