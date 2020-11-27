@@ -15,7 +15,6 @@ export class Download {
     return this.file.title
   }
 
-
   static fromJSON(downloadJSON) {
 
     return Object.assign(new Download(), downloadJSON, {

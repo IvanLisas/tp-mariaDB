@@ -7,7 +7,7 @@ export class FileService {
   async buscar(userID, keyword) {
     try {
       const json = await axios.post(`${REST_SERVER_URL}/search/${userID}`,
-        keyword, { headers: { "Content-Type": "text/plain" } }
+        keyword, { headers: { 'Content-Type': 'text/plain' } }
       )
       return File.fromJSON(json.data)
     } catch (err) {

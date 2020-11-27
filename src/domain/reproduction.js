@@ -1,3 +1,4 @@
+import { File } from './file'
 export class Reproduction {
   constructor(accion, file, os) {
     this.accion = accion

@@ -9,17 +9,28 @@ class DownloadService {
     return json.data.map(download => Download.fromJSON(download))
   }
 
-  async todasReproduccionesDe(userID) {
 
-    const json = await axios.get(`${REST_SERVER_URL}/todasReproduccionesDe/${userID}`)
-    console.log(await axios.get(`${REST_SERVER_URL}/todasReproduccionesDe/${userID}`))
+
+  async ordernar(userID) {
+    const json = await axios.get(`${REST_SERVER_URL}/descOrderByNameAsc/${userID}`)
+    console.log(await axios.get(`${REST_SERVER_URL}/descOrderByNameAsc/${userID}`))
     return json.data.map(download => Download.fromJSON(download))
   }
 
-  async ordernar(userID) {
+  async ordernar2(userID) {
+    const json = await axios.get(`${REST_SERVER_URL}/descOrderByNameDown/${userID}`)
+    console.log(await axios.get(`${REST_SERVER_URL}/descOrderByNameDown/${userID}`))
+    return json.data.map(download => Download.fromJSON(download))
+  }
 
-    const json = await axios.get(`${REST_SERVER_URL}/repOrderByNameDesc/${userID}`)
-    console.log(await axios.get(`${REST_SERVER_URL}/repOrderByNameDesc/${userID}`))
+  async promedio(userID) {
+    const json = await axios.get(`${REST_SERVER_URL}/promedio/${userID}`)
+    console.log(await axios.get(`${REST_SERVER_URL}/promedio/${userID}`))
+    return json.data
+  }
+
+  async busqueda(userID, busqueda) {
+    const json = await axios.get(`${REST_SERVER_URL}/busqueda/${userID}/${busqueda}`)
     return json.data.map(download => Download.fromJSON(download))
   }
 }

@@ -18,8 +18,6 @@ class UserService {
 
   async newUser(user) { await axios.post(`${REST_SERVER_URL}/newUser`, user) }
 
-
-
   async updateUser(user) { await axios.put(`${REST_SERVER_URL}/updateUser/`, user) }
 
   async deleteUser(user) {

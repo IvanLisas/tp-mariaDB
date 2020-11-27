@@ -19,7 +19,7 @@ const Tables = (props) => {
     <Panel className="contenedor-principal" header={props.titulo}>
       {/* {console.log(props.elementos[0].accion.id)} */}
       <div>
-        <Busqueda onChange={props.setTextoBusqueda} />
+        {/* <Busqueda buscar={props.buscar} onChange={props.setTextoBusqueda} /> */}
         <Table>
           <TableHead>
             <TableRow>

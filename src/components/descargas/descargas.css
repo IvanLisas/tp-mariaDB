@@ -1,12 +1,23 @@
-.Button-container{ 
-        display: flex;
-        justify-content: flex-end;
-        position: relative;
-  
+.Button-container {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
 }
 
 .contenedor-principal {
     font-family: "Lobster";
     background-color: blanchedalmond;
     border-color: salmon;
+}
+
+.filtros {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
