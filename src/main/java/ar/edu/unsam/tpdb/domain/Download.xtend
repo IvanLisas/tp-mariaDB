@@ -7,8 +7,8 @@ class Download {
 	int id
 	double speed
 	
-	Accion accion
+	Action action
 	File file
-	User user
+	int user_id
 	
 }

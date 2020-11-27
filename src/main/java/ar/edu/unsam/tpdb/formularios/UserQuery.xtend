@@ -6,7 +6,6 @@ import ar.edu.unsam.tpdb.domain.Download
 import ar.edu.unsam.tpdb.domain.File
 import java.sql.Connection
 import java.sql.PreparedStatement
-import ar.edu.unsam.tpdb.domain.Accion
 import java.time.LocalDateTime
 import java.util.ArrayList
 import java.util.List
@@ -14,6 +13,7 @@ import ar.edu.unsam.tpdb.domain.BusinessException
 import java.sql.SQLException
 import ar.edu.unsam.tpdb.domain.Reproduction
 import ar.edu.unsam.tpdb.domain.Category
+import ar.edu.unsam.tpdb.domain.Action
 
 class UserQuery {
 
@@ -91,7 +91,7 @@ class UserQuery {
 
 				]
 
-				val _accion = new Accion() => [
+				val _accion = new Action() => [
 					id = rs.getInt("id")
 					type = rs.getString("type")
 					date_init = rs.getString("date_init")
@@ -102,7 +102,7 @@ class UserQuery {
 					id = rs.getInt("id")
 					speed = rs.getDouble("speed")
 					file = _file
-					accion = _accion
+					setAction = _accion
 				])
 			}
 
@@ -112,8 +112,7 @@ class UserQuery {
 		downloads
 	}
 
-	def descOrderByNameAsc(int id_usuarioLogueado) {
-
+	def downloadsByAscName(int id_usuarioLogueado) {
 		var PreparedStatement stmt = c.prepareStatement("SELECT * FROM ((((download
          LEFT JOIN file ON file.id = download.file_id)
           LEFT JOIN document ON file.id = document.file_id)  
@@ -143,7 +142,7 @@ class UserQuery {
 					publish_date = rs.getString("publish_date")
 					it.categories.add("description")
 				]
-				val _accion = new Accion() => [
+				val _accion = new Action() => [
 					id = rs.getInt("id")
 					type = rs.getString("type")
 					date_init = rs.getString("date_init")
@@ -164,7 +163,7 @@ class UserQuery {
 					id = rs.getInt("id")
 					speed = rs.getDouble("speed")
 					file = _file
-					accion = _accion
+					setAction = _accion
 				])
 
 			}
@@ -175,7 +174,7 @@ class UserQuery {
 	//
 	}
 
-	def descOrderByNameDown(int id_usuarioLogueado) {
+	def downloadsByDesName(int id_usuarioLogueado) {
 
 		var PreparedStatement stmt = c.prepareStatement("SELECT * FROM ((((download
          LEFT JOIN file ON file.id = download.file_id)
@@ -206,7 +205,7 @@ class UserQuery {
 					publish_date = rs.getString("publish_date")
 					it.categories.add("description")
 				]
-				val _accion = new Accion() => [
+				val _action = new Action() => [
 					id = rs.getInt("id")
 					type = rs.getString("type")
 					date_init = rs.getString("date_init")
@@ -227,7 +226,7 @@ class UserQuery {
 					id = rs.getInt("id")
 					speed = rs.getDouble("speed")
 					file = _file
-					accion = _accion
+					setAction = _action
 				])
 
 			}
@@ -235,24 +234,18 @@ class UserQuery {
 			throw new BusinessException(e.message)
 		}
 		downloads
-	//
 	}
-	
-	
-	
 
-
-	def busqueda(String busqueda,int _id) {
+	def searchDownloadsOf(String busqueda, int _id) {
 		var PreparedStatement stmt = c.prepareStatement("select * from (file in
 ner join download where download.file_id = file.id) where download.user_id in ( 
 	select id from user where user.id = ?) where file.title = ?")
-	println('a')
-		
+		println('a')
+
 		stmt.setInt(1, _id)
 		stmt.setString(2, busqueda)
 		val rs = stmt.executeQuery
-	
-	
+
 		var List<Download> downloads = new ArrayList()
 
 		try {
@@ -270,7 +263,7 @@ ner join download where download.file_id = file.id) where download.user_id in (
 
 				]
 
-				val _accion = new Accion() => [
+				val _action = new Action() => [
 					id = rs.getInt("id")
 					type = rs.getString("type")
 					date_init = rs.getString("date_init")
@@ -281,7 +274,7 @@ ner join download where download.file_id = file.id) where download.user_id in (
 					id = rs.getInt("id")
 					speed = rs.getDouble("speed")
 					file = _file
-					accion = _accion
+					setAction = _action
 				])
 			}
 
@@ -289,13 +282,10 @@ ner join download where download.file_id = file.id) where download.user_id in (
 			throw new BusinessException(e.message)
 		}
 		downloads
-	
+
 	}
 
-
-
-
-	def promedioDeDescargas(int id_usuarioLogueado) {
+	def averageDownload(int id_usuarioLogueado) {
 		var PreparedStatement stmt = c.prepareStatement("SELECT AVG(speed) FROM download WHERE user_id= ?")
 
 		stmt.setInt(1, id_usuarioLogueado)
@@ -306,7 +296,7 @@ ner join download where download.file_id = file.id) where download.user_id in (
 	}
 
 	def todasReproduccionesDe(int id_usuarioLogueado) {
-//
+		
 		var PreparedStatement stmt = c.prepareStatement("SELECT * FROM (((reproduction LEFT JOIN 
           file ON file.id = reproduction.file_id )
          LEFT JOIN video ON file.id=video.file_id) 
@@ -331,7 +321,7 @@ ner join download where download.file_id = file.id) where download.user_id in (
 
 				]
 
-				val _accion = new Accion() => [
+				val _action = new Action() => [
 					id = rs.getInt("id")
 					type = rs.getString("type")
 					date_init = rs.getString("date_init")
@@ -342,7 +332,7 @@ ner join download where download.file_id = file.id) where download.user_id in (
 					id = rs.getInt("id")
 					os = rs.getString("os")
 					file = _file
-					accion = _accion
+					action = _action
 				])
 			}
 
@@ -353,7 +343,6 @@ ner join download where download.file_id = file.id) where download.user_id in (
 	}
 
 	def repOrderByNameAsc(int id_usuarioLogueado) {
-//
 		var PreparedStatement stmt = c.prepareStatement("SELECT * FROM (((reproduction LEFT JOIN 
           file ON file.id = reproduction.file_id )
          LEFT JOIN video ON file.id=video.file_id) 
@@ -378,7 +367,7 @@ ner join download where download.file_id = file.id) where download.user_id in (
 
 				]
 
-				val _accion = new Accion() => [
+				val _accion = new Action() => [
 					id = rs.getInt("id")
 					type = rs.getString("type")
 					date_init = rs.getString("date_init")
@@ -389,7 +378,7 @@ ner join download where download.file_id = file.id) where download.user_id in (
 					id = rs.getInt("id")
 					os = rs.getString("os")
 					file = _file
-					accion = _accion
+					action = _accion
 				])
 			}
 
@@ -400,7 +389,6 @@ ner join download where download.file_id = file.id) where download.user_id in (
 	}
 
 	def repOrderByNameDesc(int id_usuarioLogueado) {
-//
 		var PreparedStatement stmt = c.prepareStatement("SELECT * FROM (((reproduction LEFT JOIN 
           file ON file.id = reproduction.file_id )
          LEFT JOIN video ON file.id=video.file_id) 
@@ -425,7 +413,7 @@ ner join download where download.file_id = file.id) where download.user_id in (
 
 				]
 
-				val _accion = new Accion() => [
+				val _action = new Action() => [
 					id = rs.getInt("id")
 					type = rs.getString("type")
 					date_init = rs.getString("date_init")
@@ -436,7 +424,7 @@ ner join download where download.file_id = file.id) where download.user_id in (
 					id = rs.getInt("id")
 					os = rs.getString("os")
 					file = _file
-					accion = _accion
+					setAction = _action
 				])
 			}
 

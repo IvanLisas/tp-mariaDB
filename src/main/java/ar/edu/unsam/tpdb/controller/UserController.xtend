@@ -23,75 +23,6 @@ import org.springframework.web.bind.annotation.DeleteMapping
 @RestController
 class UserController {
 
-	@GetMapping("/allDownloads/{userId}")
-	def allDownloads(@PathVariable Integer userId) {
-		try {
-			val downloads = new UserQuery().todasLasDescargasDe(userId)
-			ResponseEntity.ok(downloads)
-
-		} catch (SQLException e) {
-			ResponseEntity.badRequest.body(e.message)
-		}
-	}
-	
-	
-		@GetMapping("/todasReproduccionesDe/{userId}")
-	def todasReproduccionesDe(@PathVariable Integer userId) {
-		try {
-			val downloads = new UserQuery().todasReproduccionesDe(userId)
-			ResponseEntity.ok(downloads)
-
-		} catch (SQLException e) {
-			ResponseEntity.badRequest.body(e.message)
-		}
-	}
-	
-	
-	@GetMapping("/descOrderByNameAsc/{userId}")
-	def descOrderByNameAsc(@PathVariable Integer userId) {
-		try {
-			val downloads = new UserQuery().descOrderByNameAsc(userId)
-			ResponseEntity.ok(downloads)
-
-		} catch (SQLException e) {
-			ResponseEntity.badRequest.body(e.message)
-		}
-	}
-	
-	@GetMapping("/descOrderByNameDown/{userId}")
-	def descOrderByNameDown(@PathVariable Integer userId) {
-		try {
-			val downloads = new UserQuery().descOrderByNameDown(userId)
-			ResponseEntity.ok(downloads)
-
-		} catch (SQLException e) {
-			ResponseEntity.badRequest.body(e.message)
-		}
-	}
-	
-	@GetMapping("/promedio/{userId}")
-	def promedio(@PathVariable Integer userId) {
-		try {
-			val downloads = new UserQuery().promedioDeDescargas(userId)
-			ResponseEntity.ok(downloads)
-
-		} catch (SQLException e) {
-			ResponseEntity.badRequest.body(e.message)
-		}
-	}
-	
-	@GetMapping("/busqueda/{userId}/{busqueda}")
-	def busqueda(@PathVariable String busqueda,@PathVariable Integer userId) {
-		try {
-			val downloads = new UserQuery().busqueda(busqueda,userId)
-			ResponseEntity.ok(downloads)
-
-		} catch (SQLException e) {
-			ResponseEntity.badRequest.body(e.message)
-		}
-	}
-	
-
 	@PostMapping("/newUser")
 	def newUser(@RequestBody String body) {
 		try {
@@ -116,7 +47,7 @@ class UserController {
 		}
 	}
 	
-		@PutMapping("/deleteUser")
+	@PutMapping("/deleteUser")
 	def deleteUser(@RequestBody String body) {
 		try {
 			println(body)
@@ -128,8 +59,6 @@ class UserController {
 			ResponseEntity.badRequest.body(e.message)
 		}
 	}
-
-
 
 	static def mapper() {
 		new ObjectMapper => [

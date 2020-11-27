@@ -34,25 +34,27 @@ class LoginController {
 		}
 	}
 
-	@GetMapping("/test")
-	def verificarUserPass() {
-		val user = new User() => [
-			name = "Pepe"
-			surname = "Apellido"
-			password = "asasas"
-			username = "Pepe2"
-			dni = 123444
-			email = "jajjaj@jaja.cc"
-		]
-
-		new UserQuery().insertUser(user)
-		ResponseEntity.ok(mapper.writeValueAsString("ok"))
-	}
-
 	static def mapper() {
 		new ObjectMapper => [
 			configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 			configure(SerializationFeature.INDENT_OUTPUT, true)
 		]
 	}
+	
+//	@GetMapping("/test")
+//	def verificarUserPass() {
+//		val user = new User() => [
+//			name = "Pepe"
+//			surname = "Apellido"
+//			password = "asasas"
+//			username = "Pepe2"
+//			dni = 123444
+//			email = "jajjaj@jaja.cc"
+//		]
+//
+//		new UserQuery().insertUser(user)
+//		ResponseEntity.ok(mapper.writeValueAsString("ok"))
+//	}
+	
+	
 }
