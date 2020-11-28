@@ -15,7 +15,7 @@ export const ActionRow = ({ action, extraCellDate }) => {
         {file.name()}
       </TableCell>
       {extraCellDate(action)}
-      <TableCell>{action.action.date_init_format()}</TableCell>
+      <TableCell>{action.date_init_format()}</TableCell>
     </TableRow>
   )
 }

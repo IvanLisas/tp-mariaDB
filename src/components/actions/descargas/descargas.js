@@ -15,6 +15,8 @@ export const Descargas = (props) => {
     setPromedio(await downloadService.averageDownload(loggedUser.id) + ' MB/S')
   }, [])
 
+  useEffect(async () => searchDownloads(), [textoBusqueda])
+
   const searchDownloads = async () => setDescargas(await downloadService.searchDownloadsOf(loggedUser.id, textoBusqueda))
 
   const downloadsByAscName = async () => setDescargas(await downloadService.downloadsByAscName(loggedUser.id))

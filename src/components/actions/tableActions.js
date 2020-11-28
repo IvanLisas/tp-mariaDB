@@ -15,8 +15,8 @@ export const TableActions = (props) => {
 
   return (
     <div className='container'>
+      {console.log(props.actions)}
       <Panel header={props.tittle}>
-        {props.textoBusqueda}
         <div>
           <Busqueda buscar={props.buscar} onChange={props.setTextoBusqueda} />
           <Table>
@@ -26,7 +26,6 @@ export const TableActions = (props) => {
                 <TableCell>Titulo</TableCell>
                 <TableCell>Tipo</TableCell>
                 {props.extraCell()}
-                {/* {props.reproducion && <TableCell>Sistema operativo</TableCell>} */}
                 <TableCell>Fecha de descarga</TableCell>
               </TableRow>
             </TableHead>

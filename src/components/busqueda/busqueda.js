@@ -14,7 +14,7 @@ export const Busqueda = (props) => {
             placeholder="Busqueda"
             autoComplete="off"
             onChange={(event) => props.onChange(event.target.value)} />
-          <Button icon="pi pi-search" onClick={() => props.buscar()} />
+          {/* <Button icon="pi pi-search" onClick={() => props.buscar()} /> */}
         </div>
       </div>
     </div>
