@@ -4,10 +4,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 @Accessors
 
-class Reproduction {
-	int id	 
+class Reproduction extends Action{
+	int reproduction_id	 
 	String os
-	Action action
-	File file
-	int user_id
 }

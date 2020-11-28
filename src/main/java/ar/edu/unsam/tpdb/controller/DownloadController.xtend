@@ -7,6 +7,9 @@ import org.springframework.http.ResponseEntity
 import java.sql.SQLException
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.RestController
+import ar.edu.unsam.tpdb.formularios.DownloadQuery
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.PutMapping
 
 @CrossOrigin
 @RestController
@@ -14,18 +17,19 @@ class DownloadController {
 	@GetMapping("/allDownloads/{userId}")
 	def allDownloads(@PathVariable Integer userId) {
 		try {
-			val downloads = new UserQuery().todasLasDescargasDe(userId)
+			val downloads = new DownloadQuery().allDownloadsOf(userId, '')
 			ResponseEntity.ok(downloads)
 
 		} catch (SQLException e) {
 			ResponseEntity.badRequest.body(e.message)
+			println(e.message)
 		}
 	}
 
 	@GetMapping("/downloadsByAscName/{userId}")
 	def descOrderByNameAsc(@PathVariable Integer userId) {
 		try {
-			val downloads = new UserQuery().downloadsByAscName(userId)
+			val downloads = new DownloadQuery().downloadsByAscName(userId)
 			ResponseEntity.ok(downloads)
 
 		} catch (SQLException e) {
@@ -36,7 +40,7 @@ class DownloadController {
 	@GetMapping("/downloadsByDesName/{userId}")
 	def descOrderByNameDown(@PathVariable Integer userId) {
 		try {
-			val downloads = new UserQuery().downloadsByDesName(userId)
+			val downloads = new DownloadQuery().downloadsByDesName(userId)
 			ResponseEntity.ok(downloads)
 
 		} catch (SQLException e) {
@@ -47,21 +51,23 @@ class DownloadController {
 	@GetMapping("/averageDownload/{userId}")
 	def promedio(@PathVariable Integer userId) {
 		try {
-			val downloads = new UserQuery().averageDownload(userId)
-			ResponseEntity.ok(downloads)
+			val average = new DownloadQuery().averageDownload(userId)
+			ResponseEntity.ok(average)
 
 		} catch (SQLException e) {
 			ResponseEntity.badRequest.body(e.message)
 		}
 	}
 
-	@GetMapping("/searchDownloadsOf/{userId}/{busqueda}")
-	def busqueda(@PathVariable String busqueda, @PathVariable Integer userId) {
+	@PutMapping("/searchDownloadsOf/{userId}")
+	def busqueda(@RequestBody String body, @PathVariable Integer userId) {
+		println(body)
 		try {
-			val downloads = new UserQuery().searchDownloadsOf(busqueda, userId)
+			val downloads = new DownloadQuery().searchDownloadsOf(userId, body)
 			ResponseEntity.ok(downloads)
 
 		} catch (SQLException e) {
+			println(e.message)
 			ResponseEntity.badRequest.body(e.message)
 		}
 	}

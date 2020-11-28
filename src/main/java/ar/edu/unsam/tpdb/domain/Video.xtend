@@ -4,6 +4,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import java.time.LocalDateTime
 
 @Accessors
-class Video {
+class Video extends File {
 	int file_id
 }
