@@ -11,7 +11,8 @@ class CategoryQuery {
 
 	def getCategorysOf(int file_id) {
 		val categories = new ArrayList
-		var PreparedStatement categoryStmt = c.prepareStatement("SELECT description FROM category WHERE id IN (SELECT category_id 
+		var PreparedStatement categoryStmt = c.prepareStatement(
+		"SELECT description FROM category WHERE id IN (SELECT category_id 
         		FROM category_has_archive c WHERE c.file_id = " + file_id + " )")
 
 		val categoryResult = categoryStmt.executeQuery

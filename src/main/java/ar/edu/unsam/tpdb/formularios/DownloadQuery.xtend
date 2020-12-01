@@ -17,7 +17,8 @@ class DownloadQuery {
 	def allDownloadsOf(int user_id, String filter) {
 
 		val query = "select * from (download join file on file.id = download.file_id
- 					join action on action.id = download.action_id) 
+ 					join action on action.id = download.action_id
+					inner join user on user.id = file.user_id) 
 					where download.user_id = " + user_id + filter
 
 		var stmt = c.createStatement()

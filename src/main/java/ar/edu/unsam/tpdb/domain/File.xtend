@@ -13,6 +13,7 @@ class File {
 	String extension_type
 	String type
 	String publish_date
+	String autor
 	List<String> categories = new ArrayList()
 	
 	def fileFactory(ResultSet actionResult) {
@@ -22,6 +23,7 @@ class File {
 			extension_type = actionResult.getString("extension_type")
 			type = actionResult.getString("type")
 			publish_date = actionResult.getString("publish_date")
+			autor = actionResult.getString("user.username")
 		]
 		_file.categories = new CategoryQuery().getCategorysOf(_file.id)
 		_file

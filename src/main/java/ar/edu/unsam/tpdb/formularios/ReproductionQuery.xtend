@@ -13,12 +13,14 @@ import ar.edu.unsam.tpdb.domain.Reproduction
 class ReproductionQuery {
 	ConexionMariaDB cx = new ConexionMariaDB()
 	Connection c = cx.conectar()
+	//Falta cerrar la conexion
 
 // Todas las descargas
 	def allReproductionsOf(int user_id, String filter) {
 
 		val query = "select * from (reproduction join file on file.id = reproduction.file_id
- 					join action on action.id = reproduction.action_id) 
+ 					join action on action.id = reproduction.action_id
+					inner join user on user.id = file.user_id) 
 					where reproduction.user_id = " + user_id + filter
 
 		var stmt = c.createStatement()
