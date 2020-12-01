@@ -24,6 +24,7 @@ export const TableActions = (props) => {
               <TableRow>
                 <TableCell></TableCell>
                 <TableCell>Titulo</TableCell>
+                <TableCell>Autor</TableCell>
                 <TableCell>Tipo</TableCell>
                 {props.extraCell()}
                 <TableCell>Fecha de descarga</TableCell>

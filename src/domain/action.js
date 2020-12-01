@@ -44,6 +44,4 @@ export class Reproduction extends Action {
   }
 }
 
-
-
 const buildDate = (fecha) => fecha ? new Date(moment(fecha)) : null

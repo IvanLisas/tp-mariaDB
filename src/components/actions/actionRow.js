@@ -12,6 +12,9 @@ export const ActionRow = ({ action, extraCellDate }) => {
         {file.title}.{file.extension_type}
       </TableCell>
       <TableCell component="th" scope="row">
+        {file.autor}
+      </TableCell>
+      <TableCell component="th" scope="row">
         {file.name()}
       </TableCell>
       {extraCellDate(action)}
