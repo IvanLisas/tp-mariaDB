@@ -7,7 +7,7 @@ import ar.edu.unsam.tpdb.formularios.UserQuery
 import java.sql.SQLException
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.RestController
-import ar.edu.unsam.tpdb.formularios.ReproductionsQuery
+import ar.edu.unsam.tpdb.formularios.ReproductionQuery
 
 @CrossOrigin
 @RestController
@@ -15,10 +15,11 @@ class ReproductionController {
 	@GetMapping("/allReproductions/{userId}")
 	def todasReproduccionesDe(@PathVariable Integer userId) {
 		try {
-			val downloads = new ReproductionsQuery().allReproductionsOf(userId)
+			val downloads = new ReproductionQuery().allReproductionsOf(userId, '')
 			ResponseEntity.ok(downloads)
 
 		} catch (SQLException e) {
+			println(e.message)
 			ResponseEntity.badRequest.body(e.message)
 		}
 	}

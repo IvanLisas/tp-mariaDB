@@ -61,7 +61,6 @@ class DownloadController {
 
 	@PutMapping("/searchDownloadsOf/{userId}")
 	def busqueda(@RequestBody String body, @PathVariable Integer userId) {
-		println(body)
 		try {
 			val downloads = new DownloadQuery().searchDownloadsOf(userId, body)
 			ResponseEntity.ok(downloads)
