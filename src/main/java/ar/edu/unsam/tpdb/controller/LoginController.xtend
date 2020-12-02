@@ -22,6 +22,7 @@ class LoginController {
 
 	@PutMapping("/login")
 	def verificarUserPass(@RequestBody HashMap<String, String> body) {
+		println(body)
 		try {
 			val username = body.get('username')
 			val password = body.get('password')

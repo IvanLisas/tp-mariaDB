@@ -11,17 +11,16 @@ import java.sql.ResultSet
 import ar.edu.unsam.tpdb.domain.Reproduction
 
 class ReproductionQuery {
+	// Falta cerrar la conexion
 	ConexionMariaDB cx = new ConexionMariaDB()
 	Connection c = cx.conectar()
-	//Falta cerrar la conexion
-
-// Todas las descargas
-	def allReproductionsOf(int user_id, String filter) {
+	
+	def searchReproductionOf(int user_id, List<Filtro> filtros) {
 
 		val query = "select * from (reproduction join file on file.id = reproduction.file_id
  					join action on action.id = reproduction.action_id
 					inner join user on user.id = file.user_id) 
-					where reproduction.user_id = " + user_id + filter
+					where reproduction.user_id = " + user_id + new Filter().create(filtros)
 
 		var stmt = c.createStatement()
 		val reproductionResult = stmt.executeQuery(query)
@@ -29,15 +28,8 @@ class ReproductionQuery {
 		new Reproduction().reproductionsFactory(reproductionResult)
 	}
 
-// Busqueda
-	def searchReproductionsOf(int user_id, String keyword) {
-		allReproductionsOf(user_id, new Filter().byFileName(keyword))
-	}
-
 // Filtros
-	def reproductionsByAscName(int user_id) { searchReproductionsOf(user_id, new Filter().byAscFileName) }
-
-	def reproductionsByDesName(int user_id) { searchReproductionsOf(user_id, new Filter().byDesFileName) }
-
-
+//	def reproductionsByAscName(int user_id) { searchReproductionsOf(user_id, new Filter().byAscFileName) }
+//
+//	def reproductionsByDesName(int user_id) { searchReproductionsOf(user_id, new Filter().byDesFileName) }
 }

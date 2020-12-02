@@ -10,57 +10,17 @@ import org.springframework.web.bind.annotation.RestController
 import ar.edu.unsam.tpdb.formularios.DownloadQuery
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.PutMapping
+import java.util.HashMap
+import java.util.ArrayList
+import org.eclipse.xtend.lib.annotations.Accessors
+import ar.edu.unsam.tpdb.formularios.Filtro
 
 @CrossOrigin
 @RestController
 class DownloadController {
-	@GetMapping("/allDownloads/{userId}")
-	def allDownloads(@PathVariable Integer userId) {
-		try {
-			val downloads = new DownloadQuery().allDownloadsOf(userId, '')
-			ResponseEntity.ok(downloads)
-
-		} catch (SQLException e) {
-			ResponseEntity.badRequest.body(e.message)
-			println(e.message)
-		}
-	}
-
-	@GetMapping("/downloadsByAscName/{userId}")
-	def descOrderByNameAsc(@PathVariable Integer userId) {
-		try {
-			val downloads = new DownloadQuery().downloadsByAscName(userId)
-			ResponseEntity.ok(downloads)
-
-		} catch (SQLException e) {
-			ResponseEntity.badRequest.body(e.message)
-		}
-	}
-
-	@GetMapping("/downloadsByDesName/{userId}")
-	def descOrderByNameDown(@PathVariable Integer userId) {
-		try {
-			val downloads = new DownloadQuery().downloadsByDesName(userId)
-			ResponseEntity.ok(downloads)
-
-		} catch (SQLException e) {
-			ResponseEntity.badRequest.body(e.message)
-		}
-	}
-
-	@GetMapping("/averageDownload/{userId}")
-	def promedio(@PathVariable Integer userId) {
-		try {
-			val average = new DownloadQuery().averageDownload(userId)
-			ResponseEntity.ok(average)
-
-		} catch (SQLException e) {
-			ResponseEntity.badRequest.body(e.message)
-		}
-	}
 
 	@PutMapping("/searchDownloadsOf/{userId}")
-	def busqueda(@RequestBody String body, @PathVariable Integer userId) {
+	def busqueda(@PathVariable Integer userId, @RequestBody ArrayList<Filtro> body) {
 		try {
 			val downloads = new DownloadQuery().searchDownloadsOf(userId, body)
 			ResponseEntity.ok(downloads)
@@ -71,4 +31,48 @@ class DownloadController {
 		}
 	}
 
+//	@GetMapping("/downloadsByAscName/{userId}")
+//	def descOrderByNameAsc(@PathVariable Integer userId) {
+//		try {
+//			val downloads = new DownloadQuery().downloadsByAscName(userId)
+//			ResponseEntity.ok(downloads)
+//
+//		} catch (SQLException e) {
+//			ResponseEntity.badRequest.body(e.message)
+//		}
+//	}
+//
+//	@GetMapping("/downloadsByDesName/{userId}")
+//	def descOrderByNameDown(@PathVariable Integer userId) {
+//		try {
+//			val downloads = new DownloadQuery().downloadsByDesName(userId)
+//			ResponseEntity.ok(downloads)
+//
+//		} catch (SQLException e) {
+//			ResponseEntity.badRequest.body(e.message)
+//		}
+//	}
+
+	@GetMapping("/averageDownload/{userId}")
+	def promedio(@PathVariable Integer userId) {
+		try {
+			val average = new DownloadQuery().averageDownload(userId)
+			ResponseEntity.ok(average)
+
+		} catch (SQLException e) {
+			ResponseEntity.badRequest.body(e.message)
+		}
+	} 
+// @GetMapping("/allDownloads/{userId}")
+//	def allDownloads(@PathVariable Integer userId) {
+//		try {
+//			val downloads = new DownloadQuery().allDownloadsOf(userId, '')
+//			ResponseEntity.ok(downloads)
+//
+//		} catch (SQLException e) {
+//			ResponseEntity.badRequest.body(e.message)
+//			println(e.message)
+//		}
+//	}
 }
+
