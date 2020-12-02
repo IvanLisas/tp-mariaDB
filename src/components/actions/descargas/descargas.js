@@ -5,7 +5,8 @@ import { TableActionsRouter } from '../tableActions'
 import TableCell from '@material-ui/core/TableCell'
 
 export const Descargas = (props) => {
-  const [textoBusqueda, setTextoBusqueda] = useState('')
+  const [tituloBusqueda, setTituloBusqueda] = useState('')
+  const [autorBusqueda, setAutorBusqueda] = useState('')
   const [descargas, setDescargas] = useState([])
   const [promedio, setPromedio] = useState('')
   const { loggedUser } = useContext(Context)
@@ -15,17 +16,17 @@ export const Descargas = (props) => {
     setPromedio(await downloadService.averageDownload(loggedUser.id) + ' MB/S')
   }, [])
 
-  useEffect(async () => searchDownloads(), [textoBusqueda])
+  useEffect(async () => searchDownloads(), [tituloBusqueda, autorBusqueda])
 
-  const searchDownloads = async () => setDescargas(await downloadService.searchDownloadsOf(loggedUser.id, textoBusqueda))
+  const searchDownloads = async () => setDescargas(await downloadService.searchDownloadsOf(loggedUser.id, tituloBusqueda, autorBusqueda))
 
   const downloadsByAscName = async () => setDescargas(await downloadService.downloadsByAscName(loggedUser.id))
 
   const downloadsByDesName = async () => setDescargas(await downloadService.downloadsByDesName(loggedUser.id))
 
-  const extraCell = () => <TableCell>Tasa de transferencia</TableCell>
+  const extraCell = () => 'Tasa de transferencia'
 
-  const extraCellDate = (download) => <TableCell>{download.speed} MB/s</TableCell>
+  const extraCellDate = (download) => download.speed + ' MB/s'
 
   return (
     <TableActionsRouter
@@ -36,9 +37,22 @@ export const Descargas = (props) => {
       sortByAscName={downloadsByAscName}
       sortByDesName={downloadsByDesName}
       average={promedio}
-      textoBusqueda={textoBusqueda}
-      setTextoBusqueda={setTextoBusqueda}
+      tituloBusqueda={tituloBusqueda}
+      autorBusqueda={autorBusqueda}
+      setTituloBusqueda={setTituloBusqueda}
+      setAutorBusqueda={setAutorBusqueda}
       buscar={searchDownloads}
     />
   )
 }
+
+// [
+//   {
+//     filtro:titutlo
+//     palabra:compilado
+//   },
+//     filtro:autor
+//     palabra: pepe
+//   }
+// ]
+

@@ -18,16 +18,17 @@ export const TableActions = (props) => {
       {console.log(props.actions)}
       <Panel header={props.tittle}>
         <div>
-          <Busqueda buscar={props.buscar} onChange={props.setTextoBusqueda} />
+          <div className='busquda-container'>
+          </div>
           <Table>
             <TableHead>
               <TableRow>
                 <TableCell></TableCell>
-                <TableCell>Titulo</TableCell>
-                <TableCell>Autor</TableCell>
-                <TableCell>Tipo</TableCell>
-                {props.extraCell()}
-                <TableCell>Fecha de descarga</TableCell>
+                <TableCell><Busqueda placeholder='Titulo' buscar={props.buscar} onChange={props.setTituloBusqueda} /></TableCell>
+                <TableCell><Busqueda placeholder='Autor' buscar={props.buscar} onChange={props.setAutorBusqueda} /></TableCell>
+                <TableCell><Busqueda placeholder='Tipo' buscar={props.buscar} onChange={props.setAutorBusqueda} /></TableCell>
+                <TableCell><Busqueda placeholder={props.extraCell()} buscar={props.buscar} onChange={props.setAutorBusqueda} /></TableCell>
+                <TableCell><Busqueda placeholder='Fecha de descarga' buscar={props.buscar} onChange={props.setAutorBusqueda} /></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -41,7 +42,6 @@ export const TableActions = (props) => {
             </TableBody>
           </Table>
         </div>
-
       </Panel>
       <div class="Button-container">
         <Button className="p-button-raised buton" label="Volver" onClick={() => props.history.push('/inicio')} />

@@ -17,7 +17,9 @@ export const ActionRow = ({ action, extraCellDate }) => {
       <TableCell component="th" scope="row">
         {file.name()}
       </TableCell>
-      {extraCellDate(action)}
+      <TableCell>
+        {extraCellDate(action)}
+      </TableCell>
       <TableCell>{action.date_init_format()}</TableCell>
     </TableRow>
   )

@@ -17,9 +17,9 @@ export const Reproducciones = (props) => {
 
   // const promedio = async () => setPromedio(await downloadService.promedio(loggedUser.id) + ' MB/S')
 
-  const extraCell = () => <TableCell>Sistema Operativo</TableCell>
+  const extraCell = () => 'Sistema Operativo'
 
-  const extraCellDate = (reproduction) => <TableCell>{reproduction.os}</TableCell>
+  const extraCellDate = (reproduction) => reproduction.os
 
   return (
     <TableActionsRouter
