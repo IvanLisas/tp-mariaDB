@@ -15,7 +15,7 @@ export const TableActions = (props) => {
 
   return (
     <div className='container'>
-      {console.log(props.actions)}
+      {/* {console.log(props.actions)} */}
       <Panel header={props.tittle}>
         <div>
           <div className='busquda-container'>
@@ -24,11 +24,11 @@ export const TableActions = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell></TableCell>
-                <TableCell><Busqueda placeholder='Titulo' buscar={props.buscar} onChange={props.setTituloBusqueda} /></TableCell>
-                <TableCell><Busqueda placeholder='Autor' buscar={props.buscar} onChange={props.setAutorBusqueda} /></TableCell>
-                <TableCell><Busqueda placeholder='Tipo' buscar={props.buscar} onChange={props.setAutorBusqueda} /></TableCell>
-                <TableCell><Busqueda placeholder={props.extraCell()} buscar={props.buscar} onChange={props.setAutorBusqueda} /></TableCell>
-                <TableCell><Busqueda placeholder='Fecha de descarga' buscar={props.buscar} onChange={props.setAutorBusqueda} /></TableCell>
+                <TableCell><Busqueda placeholder='Titulo' onChange={props.setTituloBusqueda} /></TableCell>
+                <TableCell><Busqueda placeholder='Autor' onChange={props.setAutorBusqueda} /></TableCell>
+                <TableCell><Busqueda placeholder='Tipo' onChange={props.setTipoBusqueda} /></TableCell>
+                <TableCell><Busqueda placeholder={props.extraCell()} onChange={props.setExtraBusqueda} /></TableCell>
+                <TableCell><Busqueda placeholder='Fecha de descarga' onChange={props.setFechaBusqueda} /></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

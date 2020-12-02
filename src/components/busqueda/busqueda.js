@@ -12,7 +12,6 @@ export const Busqueda = (props) => {
       <div className="p-col-12 p-md-2">
         <div className="p-inputgroup">
           <TextField
-            id="busqueda"
             placeholder={props.placeholder}
             autoComplete="off"
             onChange={(event) => props.onChange(event.target.value)}

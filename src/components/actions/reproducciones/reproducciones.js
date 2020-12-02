@@ -9,7 +9,7 @@ export const Reproducciones = (props) => {
   const [reproducciones, setReproducciones] = useState([])
   const { loggedUser } = useContext(Context)
 
-  useEffect(async () => setReproducciones(await reproductionService.allReproductions(loggedUser.id)), [])
+  useEffect(async () => setReproducciones(await reproductionService.searchReproductionsOf(loggedUser.id)), [])
 
   // const ordenar = async () => setDescargas(await downloadService.ordernar(loggedUser.id))
 
