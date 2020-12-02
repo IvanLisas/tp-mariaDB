@@ -40,14 +40,12 @@ export const Miperfil = (props) => {
     await userService.deleteUser(loggedUser)
     updateLoggedUser(undefined)
     props.history.push('/login')
-
   }
 
   return (
     <div className='perfil'>
       <div className='perfil-container'>
         <Form
-
           username={loggedUser.username}
           surname={loggedUser.surname}
           email={loggedUser.email}
@@ -107,7 +105,7 @@ export const Miperfil = (props) => {
             onClick={() => borrarPerfil()}
           >
             Borrar
-            </Button>
+          </Button>
           <SnackbarCustom
             setSnackbarOpen={setSnackbarOpen}
             snackbarOpen={snackbarOpen}
@@ -120,4 +118,3 @@ export const Miperfil = (props) => {
     </div>
   )
 }
-

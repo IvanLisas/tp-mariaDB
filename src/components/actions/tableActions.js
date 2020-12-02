@@ -10,8 +10,25 @@ import TableRow from '@material-ui/core/TableRow'
 import { Panel } from 'primereact/panel'
 import { ActionRow } from './actionRow'
 import { Busqueda } from '../busqueda/busqueda'
+import { Filtro } from '../../domain/filtro'
 
 export const TableActions = (props) => {
+
+  const [tituloBusqueda, setTituloBusqueda] = useState('')
+  const [autorBusqueda, setAutorBusqueda] = useState('')
+  const [tipoBusqueda, setTipoBusqueda] = useState('')
+  const [extraCellBusqueda, setExtraCellBusqueda] = useState('')
+  const [fechaBusqueda, setFechaBusqueda] = useState('')
+
+  useEffect(async () => {
+    let filtrosAux = []
+    filtrosAux.push(new Filtro('title', tituloBusqueda))
+    filtrosAux.push(new Filtro('username', autorBusqueda))
+    filtrosAux.push(new Filtro('file.type', tipoBusqueda))
+    filtrosAux.push(new Filtro(props.extraCellFilter, extraCellBusqueda))
+    filtrosAux.push(new Filtro('date_init', fechaBusqueda))
+    await props.buscar(filtrosAux)
+  }, [tituloBusqueda, autorBusqueda, tipoBusqueda, fechaBusqueda, extraCellBusqueda])
 
   return (
     <div className='container'>
@@ -24,11 +41,11 @@ export const TableActions = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell></TableCell>
-                <TableCell><Busqueda placeholder='Titulo' onChange={props.setTituloBusqueda} /></TableCell>
-                <TableCell><Busqueda placeholder='Autor' onChange={props.setAutorBusqueda} /></TableCell>
-                <TableCell><Busqueda placeholder='Tipo' onChange={props.setTipoBusqueda} /></TableCell>
-                <TableCell><Busqueda placeholder={props.extraCell()} onChange={props.setExtraBusqueda} /></TableCell>
-                <TableCell><Busqueda placeholder='Fecha de descarga' onChange={props.setFechaBusqueda} /></TableCell>
+                <TableCell><Busqueda placeholder='Titulo' onChange={setTituloBusqueda} /></TableCell>
+                <TableCell><Busqueda placeholder='Autor' onChange={setAutorBusqueda} /></TableCell>
+                <TableCell><Busqueda placeholder='Tipo' onChange={setTipoBusqueda} /></TableCell>
+                <TableCell><Busqueda placeholder={props.extraCell()} onChange={setExtraCellBusqueda} /></TableCell>
+                <TableCell><Busqueda placeholder='Fecha de descarga' onChange={setFechaBusqueda} /></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -45,30 +62,6 @@ export const TableActions = (props) => {
       </Panel>
       <div class="Button-container">
         <Button className="p-button-raised buton" label="Volver" onClick={() => props.history.push('/inicio')} />
-      </div>
-      <div class="filtros">
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          onClick={props.sortByAscName}
-        >
-          Ordenar por nombre ascedente
-        </Button>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          onClick={async () => await props.sortByDesName()}
-        >
-          Ordenar por nombre Descendente
-        </Button>
-
-
-        {props.average}
-
       </div>
     </div>
   )
