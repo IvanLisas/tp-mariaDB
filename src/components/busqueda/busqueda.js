@@ -4,6 +4,7 @@ import { Button } from 'primereact/button'
 import TextField from '@material-ui/core/TextField'
 import './busqueda.css'
 import SearchIcon from '@material-ui/icons/Search'
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
 import InputAdornment from '@material-ui/core/InputAdornment'
 
 export const Busqueda = (props) => {
@@ -15,6 +16,7 @@ export const Busqueda = (props) => {
             placeholder={props.placeholder}
             autoComplete="off"
             onChange={(event) => props.onChange(event.target.value)}
+            type={props.type}
             // variant="outlined"
             // endAdornment={
             //   <InputAdornment position="end">
@@ -25,7 +27,7 @@ export const Busqueda = (props) => {
             InputProps={{
               endAdornment: (
                 <InputAdornment position="start">
-                  <SearchIcon className="search-icon" />
+                  {/* {!props.type && <ArrowUpwardIcon className="search-icon" />} */}
                 </InputAdornment>
               ),
             }}

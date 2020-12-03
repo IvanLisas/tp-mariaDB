@@ -9,6 +9,7 @@ import { Reproducciones } from '../components/actions/reproducciones/reproduccio
 import { Context } from '../context/context'
 import { NavBar } from '../components/nav-bar/nav-bar'
 import { SingUp } from '../components/singUp/singUp'
+import ServerSortingGrid from '../components/demo/demo'
 
 export const MainRoutes = () => {
 
@@ -19,6 +20,7 @@ export const MainRoutes = () => {
       {loggedUser && <Route component={NavBar} />}
 
       <Switch>
+        <Route path="/demo" component={ServerSortingGrid} />
         {loggedUser && <Route path="/miperfil" component={Miperfil} />}
         {loggedUser && <Route path="/descargas" component={Descargas} />}
         {loggedUser && <Route path="/reproducciones" component={Reproducciones} />}

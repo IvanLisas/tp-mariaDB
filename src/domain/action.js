@@ -13,7 +13,7 @@ class Action {
 
   get fileTitle() { return this.file.title }
 
-  date_init_format = () => this.date_init ? format(this.date_init, 'DD/MM/YYYY  ') : undefined
+  date_init_format = () => this.date_init
 
 }
 export class Download extends Action {
@@ -29,7 +29,6 @@ export class Download extends Action {
     })
   }
 }
-
 export class Reproduction extends Action {
   constructor(accion_id, file, date_init, date_end, user_id, reproduction_id, os) {
     super(accion_id, file, date_init, date_end, user_id)

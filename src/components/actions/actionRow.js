@@ -20,7 +20,9 @@ export const ActionRow = ({ action, extraCellDate }) => {
       <TableCell>
         {extraCellDate(action)}
       </TableCell>
-      <TableCell>{action.date_init_format()}</TableCell>
+      <TableCell component="th" scope="row">
+        {action.date_init_format()}
+      </TableCell>
     </TableRow>
   )
 }

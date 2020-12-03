@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { Button } from 'primereact/button'
 import './tableActions.css'
 import { withRouter } from 'react-router-dom'
 import Table from '@material-ui/core/Table'
+import Button from '@material-ui/core/Button'
 import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
@@ -11,6 +11,9 @@ import { Panel } from 'primereact/panel'
 import { ActionRow } from './actionRow'
 import { Busqueda } from '../busqueda/busqueda'
 import { Filtro } from '../../domain/filtro'
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
+import ArrowDownwardIcon from '@material-ui/icons/ArrowUpward'
+
 
 export const TableActions = (props) => {
 
@@ -19,6 +22,24 @@ export const TableActions = (props) => {
   const [tipoBusqueda, setTipoBusqueda] = useState('')
   const [extraCellBusqueda, setExtraCellBusqueda] = useState('')
   const [fechaBusqueda, setFechaBusqueda] = useState('')
+
+  const [tituloArrow, setTituloArrow] = useState()
+  const [autorArrow, setAutorArrow] = useState()
+  const [tipoArrow, setTipoBArrow] = useState()
+  const [extraCellArrow, setExtraCellArrow] = useState()
+  const [fechaArrow, setFechaArrow] = useState()
+
+  const column = (placeholder, onChange, type) =>
+    <TableCell>
+      <div className='action-column'>
+        <Busqueda placeholder={placeholder} onChange={onChange} type={type} />
+        <Button>
+          <span class="material-icons">
+            arrow_upward
+          </span>
+        </Button>
+      </div>
+    </TableCell>
 
   useEffect(async () => {
     let filtrosAux = []
@@ -41,11 +62,11 @@ export const TableActions = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell></TableCell>
-                <TableCell><Busqueda placeholder='Titulo' onChange={setTituloBusqueda} /></TableCell>
-                <TableCell><Busqueda placeholder='Autor' onChange={setAutorBusqueda} /></TableCell>
-                <TableCell><Busqueda placeholder='Tipo' onChange={setTipoBusqueda} /></TableCell>
-                <TableCell><Busqueda placeholder={props.extraCell()} onChange={setExtraCellBusqueda} /></TableCell>
-                <TableCell><Busqueda placeholder='Fecha de descarga' onChange={setFechaBusqueda} /></TableCell>
+                {column('Titulo', setTituloBusqueda)}
+                {column('Autor', setAutorBusqueda)}
+                {column('Tipo', setTipoBusqueda)}
+                {column(props.extraCell(), setExtraCellBusqueda)}
+                {column('Fecha de descarga', setFechaBusqueda, 'date')}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -63,7 +84,7 @@ export const TableActions = (props) => {
       <div class="Button-container">
         <Button className="p-button-raised buton" label="Volver" onClick={() => props.history.push('/inicio')} />
       </div>
-    </div>
+    </div >
   )
 }
 
