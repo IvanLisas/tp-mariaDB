@@ -14,13 +14,15 @@ import java.sql.SQLException
 import ar.edu.unsam.tpdb.domain.Reproduction
 import ar.edu.unsam.tpdb.domain.Category
 import ar.edu.unsam.tpdb.domain.Action
+import java.security.MessageDigest
+import java.security.SecureRandom
+import java.security.NoSuchAlgorithmException
 
 class UserQuery {
 
 	Connection c = new ConexionMariaDB().conectar()
 
 	def insertUser(User user) {
-
 		var PreparedStatement stmt = c.prepareStatement("INSERT INTO user
  		(`name`, `surname`, `username`, `password`, `dni`, `email`) 
 		VALUES (?, ?, ?, ?, ?, ?)")
@@ -52,13 +54,11 @@ class UserQuery {
 		]
 	}
 
-	
-
 	def updateUser(User user) {
 
 		var PreparedStatement stmt = c.prepareStatement("UPDATE user SET name = ?, surname  = ?,
         password  = ? , dni  = ?, email  = ? WHERE username = ? ")
-
+		val MessageDigest md = MessageDigest.getInstance("SHA-256")
 		stmt.setString(1, user.name)
 		stmt.setString(2, user.surname)
 		stmt.setString(3, user.password)
@@ -93,5 +93,4 @@ class UserQuery {
 		val rs = stmt.executeQuery
 
 	}
-
 }
