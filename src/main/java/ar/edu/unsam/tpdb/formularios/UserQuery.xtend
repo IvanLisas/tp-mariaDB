@@ -38,13 +38,13 @@ class UserQuery {
 	}
 
 	def loginUser(String _username, String _password) {
-
-		var PreparedStatement stmt = c.prepareStatement("SELECT * FROM user
- 		WHERE username= ? and password= ?")
-		stmt.setString(1, _username)
-		stmt.setString(2, _password)
-		val rs = stmt.executeQuery
-		rs.next
+        
+           val query = 'SELECT * FROM user WHERE username ="' +_username +'" and 
+            password="'+ new Encriptar().encriptarContenido(_password) +'" and isDeleted = 0'
+            println(query) 
+          var stmt = c.createStatement
+          val rs = stmt.executeQuery(query)	 
+		   rs.next
 
 		new User() => [
 			id = rs.getInt("id")
@@ -53,8 +53,8 @@ class UserQuery {
 			surname = rs.getString("surname")
 			dni = rs.getInt("dni")
 			email = rs.getString("email")
-		]
-	}
+		]}
+	
 
 	def updateUser(User user) {
 
@@ -76,23 +76,12 @@ class UserQuery {
 	}
 
 	def deleteUser(User user) {
-
-		var PreparedStatement stmt3 = c.prepareStatement("DELETE survey FROM survey INNER JOIN user ON survey.user_id= user.id WHERE user.id 
-           IN (SELECT id FROM user WHERE username= ? )")
-
-		stmt3.setString(1, user.username)
-		val rs1 = stmt3.executeQuery
-
-		var PreparedStatement stmt2 = c.prepareStatement("DELETE download FROM download INNER JOIN user ON download.user_id= user.id WHERE user.id 
-           IN (SELECT id FROM user WHERE username= ? )")
-
-		stmt2.setString(1, user.username)
-		val rs2 = stmt2.executeQuery
-
-		var PreparedStatement stmt = c.prepareStatement("DELETE FROM user WHERE username = ? ")
-
-		stmt.setString(1, user.username)
-		val rs = stmt.executeQuery
+			
+         val query = 'UPDATE user SET isDeleted = 1 WHERE username ="' +user.username +'"'
+         println(query) 
+		  var stmt = c.createStatement
+          val rs = stmt.executeQuery(query)	 
+		 
 
 	}
 }
