@@ -30,10 +30,12 @@ class UserController {
 			val newUser = mapper.readValue(body, User)
 			new UserQuery().insertUser(newUser)
 			ResponseEntity.ok(body)
+			
 		} catch (SQLException e) {
+			println(e.message)
 			ResponseEntity.badRequest.body(e.message)
 		}
-	}
+	} 
 
 	@PutMapping("/updateUser")
 	def updateUser(@RequestBody String body) {
