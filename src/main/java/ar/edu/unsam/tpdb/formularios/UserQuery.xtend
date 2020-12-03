@@ -18,9 +18,6 @@ import java.security.MessageDigest
 import java.security.SecureRandom
 import java.security.NoSuchAlgorithmException
 
- 
-
-    
 class UserQuery {
 
 	Connection c = new ConexionMariaDB().conectar()
@@ -33,18 +30,12 @@ class UserQuery {
 		stmt.setString(1, user.name)
 		stmt.setString(2, user.surname)
 		stmt.setString(3, user.username)
-	    val encriptar = new Encriptar().encriptarContenido(user.password)
+		val encriptar = new Encriptar().encriptarContenido(user.password)
 		stmt.setString(4, encriptar)
 		stmt.setInt(5, user.dni)
 		stmt.setString(6, user.email)
 		stmt.executeUpdate
-		}  
-			
-		   
 	}
-	
-
-	
 
 	def loginUser(String _username, String _password) {
 
