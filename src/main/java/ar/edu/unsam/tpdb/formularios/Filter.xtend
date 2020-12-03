@@ -25,4 +25,5 @@ class Filter {
 		val str = String.join("", resultado);
 		str
 	}
+
 }

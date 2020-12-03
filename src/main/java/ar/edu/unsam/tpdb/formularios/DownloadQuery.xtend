@@ -26,6 +26,7 @@ class DownloadQuery {
 
 		var stmt = c.createStatement()
 		val downloadResult = stmt.executeQuery(query)
+		cx.desconectar()
 
 		new Download().downloadsFactory(downloadResult)
 	}

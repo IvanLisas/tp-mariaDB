@@ -26,7 +26,6 @@ class UserController {
 	@PostMapping("/newUser")
 	def newUser(@RequestBody String body) {
 		try {
-			println(body)
 			val newUser = mapper.readValue(body, User)
 			new UserQuery().insertUser(newUser)
 			ResponseEntity.ok(body)
