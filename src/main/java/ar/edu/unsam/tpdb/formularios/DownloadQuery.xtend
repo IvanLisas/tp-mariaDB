@@ -38,6 +38,8 @@ class DownloadQuery {
 		rs.next()
 		rs.getDouble("AVG(speed)")
 	}
+	
+	
 
 // Filtros
 //	def downloadsByAscName(int user_id) { allDownloadsOf(user_id, new Filter().byAscFileName) }
