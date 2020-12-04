@@ -5,9 +5,20 @@ import java.lang.reflect.Array
 import org.eclipse.xtend.lib.annotations.Accessors
 
 @Accessors
+
+class FilterOrden{
+	List<Filtro> filtros
+	Orden orden
+}
+@Accessors
 class Filtro {
 	String filtro
 	String keyword
+}
+@Accessors
+class Orden{
+	String column
+	String orden
 }
 
 class Filter {

@@ -24,7 +24,7 @@ class ReproductionQuery {
 
 		var stmt = c.createStatement()
 		val reproductionResult = stmt.executeQuery(query)
-
+//		cx.desconectar()
 		new Reproduction().reproductionsFactory(reproductionResult)
 	}
 

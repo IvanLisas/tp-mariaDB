@@ -17,71 +17,83 @@ import ar.edu.unsam.tpdb.domain.Action
 import java.security.MessageDigest
 import java.security.SecureRandom
 import java.security.NoSuchAlgorithmException
+import java.sql.ResultSet
 
 class UserQuery {
 
-	Connection c = new ConexionMariaDB().conectar()
+	ConexionMariaDB cx = new ConexionMariaDB()
 
-	def insertUser(User user) {
-
-		var PreparedStatement stmt = c.prepareStatement("INSERT INTO user
- 		(`name`, `surname`, `username`, `password`, `dni`, `email`) 
-		VALUES (?, ?, ?, ?, ?, ?)")
-		stmt.setString(1, user.name)
-		stmt.setString(2, user.surname)
-		stmt.setString(3, user.username)
-		val encriptar = new Encriptar().encriptarContenido(user.password)
-		stmt.setString(4, encriptar)
-		stmt.setInt(5, user.dni)
-		stmt.setString(6, user.email)
-		stmt.executeUpdate
-	}
+//	def insertUser(User user) {
+//
+//		var PreparedStatement stmt = c.prepareStatement("INSERT INTO user
+// 		(`name`, `surname`, `username`, `password`, `dni`, `email`) 
+//		VALUES (?, ?, ?, ?, ?, ?)")
+//		stmt.setString(1, user.name)
+//		stmt.setString(2, user.surname)
+//		stmt.setString(3, user.username)
+//		val encriptar = new Encriptar().encriptarContenido(user.password)
+//		stmt.setString(4, encriptar)
+//		stmt.setInt(5, user.dni)
+//		stmt.setString(6, user.email)
+//		stmt.executeUpdate
+//	}
 
 	def loginUser(String _username, String _password) {
-        
-           val query = 'SELECT * FROM user WHERE username ="' +_username +'" and 
-            password="'+ new Encriptar().encriptarContenido(_password) +'" and isDeleted = 0'
-            println(query) 
-          var stmt = c.createStatement
-          val rs = stmt.executeQuery(query)	 
-		   rs.next
+		var c = cx.conectar();
+		var PreparedStatement stmt = null;
+//		var ResultSet rs = null;
+		var user = new User()
+		try {
+			val query = 'SELECT * FROM user WHERE username ="' + _username + '" and 
+        password="' + new Encriptar().encriptarContenido(_password) + '" and isDeleted = 0'
+			stmt = c.prepareStatement(query)
+			val rs = stmt.executeQuery()
+			rs.next
+			user = new User() => [
+				id = rs.getInt("id")
+				username = rs.getString("username")
+				name = rs.getString("name")
+				surname = rs.getString("surname")
+				dni = rs.getInt("dni")
+				email = rs.getString("email")
+			]
+			rs.close();
+		} finally {
 
-		new User() => [
-			id = rs.getInt("id")
-			username = rs.getString("username")
-			name = rs.getString("name")
-			surname = rs.getString("surname")
-			dni = rs.getInt("dni")
-			email = rs.getString("email")
-		]}
-	
+			if (stmt !== null) {
+				stmt.close();
+			}
 
-	def updateUser(User user) {
-
-		var PreparedStatement stmt = c.prepareStatement("UPDATE user SET name = ?, surname  = ?,
-        password  = ? , dni  = ?, email  = ? WHERE username = ? ")
-		val MessageDigest md = MessageDigest.getInstance("SHA-256")
-		stmt.setString(1, user.name)
-		stmt.setString(2, user.surname)
-		stmt.setString(3, user.password)
-		stmt.setInt(4, user.dni)
-		stmt.setString(5, user.email)
-		stmt.setString(6, user.username)
-
-		val rs = stmt.executeQuery
-
-		var PreparedStatement state = c.prepareStatement("COMMIT ")
-		val rs2 = stmt.executeQuery
-
+			cx.desconectar(c)
+		}
+		user
 	}
 
-	def deleteUser(User user) {
-			
-         val query = 'UPDATE user SET isDeleted = 1 WHERE username ="' +user.username +'"'
-         println(query) 
-		  var stmt = c.createStatement
-          val rs = stmt.executeQuery(query)	 
-		 
-
-	}
+//	def updateUser(User user) {
+//
+//		var PreparedStatement stmt = c.prepareStatement("UPDATE user SET name = ?, surname  = ?,
+//        password  = ? , dni  = ?, email  = ? WHERE username = ? ")
+//		val MessageDigest md = MessageDigest.getInstance("SHA-256")
+//		stmt.setString(1, user.name)
+//		stmt.setString(2, user.surname)
+//		stmt.setString(3, user.password)
+//		stmt.setInt(4, user.dni)
+//		stmt.setString(5, user.email)
+//		stmt.setString(6, user.username)
+//
+//		val rs = stmt.executeQuery
+//
+//		var PreparedStatement state = c.prepareStatement("COMMIT ")
+//		val rs2 = stmt.executeQuery
+//
+//	}
+//
+//	def deleteUser(User user) {
+//
+//		val query = 'UPDATE user SET isDeleted = 1 WHERE username ="' + user.username + '"'
+//		println(query)
+//		var stmt = c.createStatement
+//		val rs = stmt.executeQuery(query)
+//
+//	}
 }

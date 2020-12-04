@@ -10,7 +10,7 @@ import java.sql.PreparedStatement
 import ar.edu.unsam.tpdb.formularios.UserQuery
 
 class ConexionMariaDB {
-	Connection cx
+
 	String db = "mariadb"
 	String url = "jdbc:mysql://localhost:3306/" + db
 	String user = "root"
@@ -19,17 +19,20 @@ class ConexionMariaDB {
 	def Connection conectar() {
 		try {
 			Class.forName("org.mariadb.jdbc.Driver")
-			cx = DriverManager.getConnection(url, user, password)
+			val c =  DriverManager.getConnection(url, user, password)
 			println("Se establecio la conexion con la base de datos")
+			return c
 		} catch (ClassNotFoundException  | SQLException ex) {
 			println("No se pudo establecer una conexion con la base de datos Error: " + ex)
 		}
-		return cx
+		return null
 	}
 
-	def void desconectar() {
+	def void desconectar(Connection c) {
 		try {
-			cx.close()
+			if (c !== null) {
+				c.close();
+			}
 		} catch (SQLException ex) {
 			println("No se pudo desconectar de la base de datos Error: " + ex)
 		}
@@ -87,12 +90,10 @@ class ConexionMariaDB {
 //
 //	  }
 //	  }
- 	def static void main(String[] args) {
+	def static void main(String[] args) {
 		val ConexionMariaDB c = new ConexionMariaDB() // crea la conexion
 		c.conectar() // se conecta
-		
 //		val promedioDeDescargas = (new UserQuery()).promedioDeDescargas(1) 	
 //		println(promedioDeDescargas)
-
 	}
 }

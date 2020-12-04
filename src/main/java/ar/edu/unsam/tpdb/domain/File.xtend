@@ -25,7 +25,8 @@ class File {
 			publish_date = actionResult.getString("publish_date")
 			autor = actionResult.getString("user.username")
 		]
-		_file.categories = new CategoryQuery().getCategorysOf(_file.id)
+		//Hay que cerrar la conexion de las categorias
+//		_file.categories = new CategoryQuery().getCategorysOf(_file.id)
 		_file
 	}
 	
