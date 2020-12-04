@@ -49,6 +49,7 @@ class DownloadQuery {
 	}
 
 // Promedio
+
 //	def averageDownload(int user_id) {
 //		var stmt = c.createStatement()
 //		val rs = stmt.executeQuery("SELECT AVG(speed) FROM download WHERE user_id=" + user_id)
@@ -56,6 +57,9 @@ class DownloadQuery {
 //		rs.next()
 //		rs.getDouble("AVG(speed)")
 //	}
+
+	
+
 
 // Filtros
 //	def downloadsByAscName(int user_id) { allDownloadsOf(user_id, new Filter().byAscFileName) }
