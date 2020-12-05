@@ -9,7 +9,7 @@ import java.util.List
 class ReproductionQuery {
 	ConexionMariaDB cx = new ConexionMariaDB()
 
-	def searchReproductionOf(int user_id, List<Filtro> filtros) {
+	def searchReproductionOf(int user_id, FilterOrden filtros) {
 		var c = cx.conectar();
 		var PreparedStatement stmt = null;
 		var ResultSet reproductionResult = null;
@@ -18,7 +18,8 @@ class ReproductionQuery {
 			val query = "select * from (reproduction join file on file.id = reproduction.file_id
  					join action on action.id = reproduction.action_id
 					inner join user on user.id = file.user_id) 
-					where reproduction.user_id = " + user_id + new Filter().create(filtros)
+					where reproduction.user_id = " + user_id + new Filter().create(filtros.filtros) + ' ORDER BY ' +
+				filtros.orden.column + ' ' + filtros.orden.orden
 
 			stmt = c.prepareStatement(query)
 			reproductionResult = stmt.executeQuery(query)
@@ -129,8 +130,4 @@ class ReproductionQuery {
 		}
 	}
 
-// Filtros
-//	def reproductionsByAscName(int user_id) { searchReproductionsOf(user_id, new Filter().byAscFileName) }
-//
-//	def reproductionsByDesName(int user_id) { searchReproductionsOf(user_id, new Filter().byDesFileName) }
 }
