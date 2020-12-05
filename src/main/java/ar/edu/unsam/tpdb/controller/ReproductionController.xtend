@@ -52,7 +52,7 @@ class ReproductionController {
 	
 	
 	@GetMapping("/reproductionAverage/{user_id}")
-	def reproductionAverages(@PathVariable Integer user_id) {
+	def reproductionsAverage(@PathVariable Integer user_id) {
 		try {
 			val average = new ReproductionQuery().reproductionAverage(user_id,'reproduction')
 			ResponseEntity.ok(average)

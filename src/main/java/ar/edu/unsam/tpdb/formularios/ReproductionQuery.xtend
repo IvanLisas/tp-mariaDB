@@ -1,14 +1,11 @@
 package ar.edu.unsam.tpdb.formularios
 
 import ar.edu.unsam.tpdb.database.ConexionMariaDB
+import ar.edu.unsam.tpdb.domain.ActionsCount
 import ar.edu.unsam.tpdb.domain.Reproduction
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.util.List
-import org.eclipse.xtend.lib.annotations.Accessors
-import java.util.ArrayList
-import ar.edu.unsam.tpdb.domain.Translator
-import ar.edu.unsam.tpdb.domain.ActionsCount
 
 class ReproductionQuery {
 	ConexionMariaDB cx = new ConexionMariaDB()
