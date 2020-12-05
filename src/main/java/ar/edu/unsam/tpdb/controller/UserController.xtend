@@ -44,6 +44,7 @@ class UserController {
 			new UserQuery().updateUser(userToUpdate)
 			ResponseEntity.ok(body)
 		} catch (SQLException e) {
+			println(e.message)
 			ResponseEntity.badRequest.body(e.message)
 		}
 	}

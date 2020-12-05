@@ -75,27 +75,24 @@ class UserQuery {
 		user
 	}
 
-	def updateUser(User user) {
+//	def updateUser(User user) {
+//		var c = cx.conectar()
+//		var PreparedStatement stmt = c.prepareStatement("UPDATE user SET name = ?, surname  = ?,
+//        if (password  !== null, password = ? , dni  = ?, email  = ? WHERE username = ? ")
+//
+//		stmt.setString(1, user.name)
+//		stmt.setString(2, user.surname)
+//		stmt.setString(3, user.password)
+//		stmt.setInt(4, user.dni)
+//		stmt.setString(5, user.email)
+//		stmt.setString(6, user.username)
+//
+//		stmt.executeUpdate
 
-		var c = cx.conectar()
-		var PreparedStatement stmt = null
-		try {
-			stmt = c.prepareStatement("UPDATE user SET name = ?, surname  = ?,
-            password  = ? , dni  = ?, email  = ? WHERE username = ? ")
-			stmt.setString(1, user.name)
-			stmt.setString(2, user.surname)
-			stmt.setString(3, new Encriptar().encriptarContenido(user.password))
-			stmt.setInt(4, user.dni)
-			stmt.setString(5, user.email)
-			stmt.setString(6, user.username)
-			stmt.executeQuery
-		} finally {
-			if (stmt !== null) {
-				stmt.close();
-			}
-			cx.desconectar(c)
-		}
-	}
+//		var PreparedStatement state = c.prepareStatement("COMMIT ")
+//		val rs2 = stmt.executeQuery
+
+//	}
 
 	def deleteUser(User user) {
 		var c = cx.conectar()
@@ -111,30 +108,30 @@ class UserQuery {
 			cx.desconectar(c)
 		}
 	}
-	
-//	def updateUser(User user) {
-//
-//		var c = cx.conectar()
-//		var PreparedStatement stmt = null
-//		val hashPassword = new Encriptar().encriptarContenido(user.password)
-//		try {
-//			println(user.dni)
-//			val query = 'UPDATE user SET name = "' + user.name + '", surname  = "' + user.surname + '",
-//            password  = "' + hashPassword + '", dni  = "' + user.dni + '", email  = "' + user.email + '" 
-//			WHERE username = "' + user.username + '"'
-//			println(query)
-//			stmt = c.prepareStatement(query)
-//			stmt.executeQuery()
-//			
-//
-//		} finally {
-//			if (stmt !== null) {
-//				stmt.close();
-//			}
-//			cx.desconectar(c)
-//		}
-//	}
-	
-	
-}
 
+	def updateUser(User user) {
+
+		var c = cx.conectar()
+		var PreparedStatement stmt = null
+		val hashPassword = new Encriptar().encriptarContenido(user.password)
+		var String passwordQuery = null
+		if(hashPassword !== null){
+			passwordQuery = ' password = "'+hashPassword+'" '
+		}
+		try {
+			val query = 'UPDATE user SET name = "' + user.name + '", surname  = "' + user.surname + '",
+            dni  = "' + user.dni + '", email  = "' + user.email + '" 
+			WHERE username = "' + user.username + '"'
+			println(query)
+			stmt = c.prepareStatement(query)
+			stmt.executeQuery()
+			
+
+		} finally {
+			if (stmt !== null) {
+				stmt.close();
+			}
+			cx.desconectar(c)
+		}
+	}
+}
