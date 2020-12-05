@@ -48,4 +48,17 @@ class ReproductionController {
 			ResponseEntity.badRequest.body(e.message)
 		}
 	}
+	
+	
+	@GetMapping("/reproductionAverage/{user_id}")
+	def reproductionAverages(@PathVariable Integer user_id) {
+		try {
+			val average = new ReproductionQuery().reproductionAverage(user_id)
+			ResponseEntity.ok(average)
+		} catch (SQLException e) {
+			println(e.message)
+			ResponseEntity.badRequest.body(e.message)
+		}
+	}
+	
 }

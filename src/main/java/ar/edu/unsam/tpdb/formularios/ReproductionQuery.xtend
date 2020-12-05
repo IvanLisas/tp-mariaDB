@@ -106,7 +106,7 @@ class ReproductionQuery {
 	}
 
 	//Promedio de las reproducciones de los ultimos 12 meses
-	def reproductionAverage(int user_id, String date) {
+	def reproductionAverage(int user_id) {
 		var c = cx.conectar();
 		var PreparedStatement stmt = null;
 		var ResultSet averageResult = null;
@@ -114,7 +114,7 @@ class ReproductionQuery {
 			val query = "SELECT AVG(count) AS average 
             FROM (select monthname(date_init) as month , year (date_init) as year, count(date_init) as count 
             FROM (reproduction join action on action.id = reproduction.action_id) 
-            where date_init > " + date + "- INTERVAL 12 month
+            where date_init > now() - INTERVAL 12 month
             group by month(date_init), year(date_init) ) AS newTable;"
 
 			stmt = c.prepareStatement(query)
@@ -134,7 +134,6 @@ class ReproductionQuery {
 			cx.desconectar(c)
 		}
 	}
-
 }
 
 @Accessors
