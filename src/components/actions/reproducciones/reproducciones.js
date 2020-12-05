@@ -8,7 +8,7 @@ export const Reproducciones = (props) => {
   const [reproduciones, setReproduciones] = useState([])
   const { loggedUser } = useContext(Context)
 
-  const searchReproductions = async (filtros) => setReproduciones(await reproductionService.searchReproductionsOf(loggedUser.id, filtros))
+  const searchReproductions = async (filtros, orden) => setReproduciones(await reproductionService.searchReproductionsOf(loggedUser.id, filtros, orden))
 
   const extraCell = () => 'Sistema Operativo'
 

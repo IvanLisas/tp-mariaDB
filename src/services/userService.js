@@ -16,14 +16,14 @@ class UserService {
 
   }
 
-  async newUser(user) { await axios.post(`${REST_SERVER_URL}/newUser`, user) }
+  async newUser(user_id) { await axios.post(`${REST_SERVER_URL}/newUser`, user_id) }
 
-  async updateUser(user) { await axios.put(`${REST_SERVER_URL}/updateUser/`, user) }
+  async updateUser(user_id) { await axios.put(`${REST_SERVER_URL}/updateUser/`, user_id) }
 
-  async deleteUser(user) {
-    console.log(user)
-    await axios.put(`${REST_SERVER_URL}/deleteUser/`, user)
-  }
+  //cambiar a delete
+  async deleteUser(user_id) { await axios.put(`${REST_SERVER_URL}/deleteUser/`, user_id) }
+
+
 }
 
 export const userService = new UserService()

@@ -9,6 +9,7 @@ import { Form } from '../form/form'
 import { userService } from '../../services/userService'
 import { User } from '../../domain/user'
 import { SnackbarCustom } from '../snackbar/snackbarCustom'
+import { reproductionService } from '../../services/reproductionService'
 
 export const Miperfil = (props) => {
   const { loggedUser } = useContext(Context)
@@ -23,6 +24,10 @@ export const Miperfil = (props) => {
   const [snackbarOpen, setSnackbarOpen] = useState(false)
   const { updateLoggedUser } = useContext(Context)
   const [noEditable, setNoEditable] = useState(true)
+  const [reproducionesPorMes, setReproducionesPorMes] = useState([])
+  const [reproducionesPromedio, setReproducionesPromedio] = useState()
+  const [month, setMonth] = useState()
+  const [year, setYear] = useState()
 
   const volver = () => props.history.push('/inicio')
 
@@ -42,9 +47,36 @@ export const Miperfil = (props) => {
     props.history.push('/login')
   }
 
+  const reproductionsByDate = async () => {
+    reproductionService.reproductionsByDate(loggedUser.id, month, year)
+  }
+
+  useEffect(async () => {
+    setReproducionesPorMes(await reproductionService.reproductionsLast12Month(loggedUser.id))
+    setReproducionesPromedio(await reproductionService.reproductionAverage(loggedUser.id))
+  }, [])
+
   return (
     <div className='perfil'>
-      <div className='perfil-container'>
+      Cantidad de reproduciones dado un mes y año
+      <TextField
+        variant="outlined"
+        label="Mes"
+        id="month"
+        onChange={(event) => setMonth(event.target.value)}
+      />
+      <TextField
+        variant="outlined"
+        label="Año"
+        id="year"
+        onChange={(event) => setYear(event.target.value)}
+      />
+      <Button onClick={() => reproductionsByDate()}>Buscar</Button>
+      reproducionesPromedio = {reproducionesPromedio}
+      { console.log(reproducionesPorMes)}
+      {/* <div className='perfil-container'>
+
+
         <Form
           username={loggedUser.username}
           surname={loggedUser.surname}
@@ -114,7 +146,7 @@ export const Miperfil = (props) => {
             snackbarAutoHideDuration={5000}
           />
         </div>}
-      </div>
+      </div> */}
     </div>
   )
 }
