@@ -8,7 +8,6 @@ import java.sql.ResultSet
 
 class CategoryQuery {
 	ConexionMariaDB cx = new ConexionMariaDB()
-	Connection c = cx.conectar()
 
 	def getCategorysOf(int file_id) {
 		var c = cx.conectar()
