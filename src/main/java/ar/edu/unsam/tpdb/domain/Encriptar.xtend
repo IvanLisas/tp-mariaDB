@@ -1,9 +1,5 @@
-package ar.edu.unsam.tpdb.formularios
+package ar.edu.unsam.tpdb.domain
 
-import java.util.ArrayList;
-import ar.edu.unsam.tpdb.domain.User
-import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
 import com.google.common.hash.Hashing
 import java.nio.charset.StandardCharsets
 

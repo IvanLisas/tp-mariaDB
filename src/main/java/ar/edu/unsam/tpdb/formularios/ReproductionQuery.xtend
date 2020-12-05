@@ -5,6 +5,9 @@ import ar.edu.unsam.tpdb.domain.Reproduction
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
+import java.util.ArrayList
+import ar.edu.unsam.tpdb.domain.Translator
 
 class ReproductionQuery {
 	ConexionMariaDB cx = new ConexionMariaDB()
@@ -39,15 +42,15 @@ class ReproductionQuery {
 		reproductions
 	}
 
-	// CALCULO DEL PROMEDIO DE REPRODUCCIONES POR MES y AÑO
-	def CountByMonth(int user_id, String month, String year) {
+	// Calculo de reproducciones de un mes y año
+	def reproductionsByDate(int user_id, int month, int year) {
 		var c = cx.conectar();
 		var PreparedStatement stmt = null;
 		var ResultSet countResult = null;
 		try {
-			val query = "SELECT COUNT(*) FROM (reproduction  
+			val query = 'SELECT COUNT(*) as count FROM (reproduction  
  					JOIN action ON action.id = reproduction.action_id) WHERE
-                    MONTH(date_init)=" + month + "AND YEAR(date_init)=" + year
+                    MONTH(date_init)="' + month + '" AND YEAR(date_init)="' + year+'"'
 
 			stmt = c.prepareStatement(query)
 			countResult = stmt.executeQuery(query)
@@ -67,23 +70,24 @@ class ReproductionQuery {
 		}
 	}
 
-	def countLastYear(int user_id, String date) {
+	//Cantidad de reproducciones por mes de los ultimos 12 meses
+	def reproductionsLast12Months(int user_id) {
 		var c = cx.conectar();
 		var PreparedStatement stmt = null;
 		var ResultSet countResult = null;
-		var List<Double> reproductionCount
+		var List<Integer> reproductionCount
 		try {
 			val query = "select monthname(date_init) as month , year (date_init) as year, count(date_init) as count 
                         from (reproduction join action on action.id = reproduction.action_id) 
-                        where date_init > " + date + " - INTERVAL 12 month
+                        where date_init > now() - INTERVAL 12 month
                         group by month(date_init), year(date_init)
-                        order by max(date_init) asc)"
+                        order by max(date_init) asc"
 
 			stmt = c.prepareStatement(query)
 			countResult = stmt.executeQuery(query)
 			while (countResult.next) {
 				reproductionCount.add(
-					countResult.getDouble("count")
+					countResult.getInt("count")
 				)
 			}
 			return reproductionCount
@@ -101,6 +105,7 @@ class ReproductionQuery {
 		}
 	}
 
+	//Promedio de las reproducciones de los ultimos 12 meses
 	def reproductionAverage(int user_id, String date) {
 		var c = cx.conectar();
 		var PreparedStatement stmt = null;
@@ -130,4 +135,22 @@ class ReproductionQuery {
 		}
 	}
 
+}
+
+@Accessors
+class ReproductionCount {
+	String month
+	int count
+
+	def factory(ResultSet reproductionResult) {
+		var List<ReproductionCount> reproductionCount = new ArrayList()
+
+		while (reproductionResult.next) {
+			reproductionCount.add(new ReproductionCount() => [
+				month =  Translator.get.translator(reproductionResult.getString("MONTH"))
+				count = reproductionResult.getInt("COUNT")
+			])
+		}
+		reproductionCount
+	}
 }
