@@ -29,6 +29,7 @@ class ReproductionController {
 	@GetMapping("/reproductionsByDate/{user_id}/{month}/{year}")
 	def reproductionsByDate(@PathVariable Integer user_id, @PathVariable Integer month, @PathVariable Integer year) {
 		try {
+			//Aca faltaria parametrizar
 			val average = new ReproductionQuery().reproductionsByDate(user_id, month, year)
 			ResponseEntity.ok(average)
 
