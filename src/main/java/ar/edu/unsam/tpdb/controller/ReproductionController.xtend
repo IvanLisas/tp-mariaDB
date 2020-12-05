@@ -41,7 +41,7 @@ class ReproductionController {
 	@GetMapping("/reproductionsLast12Months/{user_id}")
 	def reproductionsLast12Month(@PathVariable Integer user_id) {
 		try {
-			val average = new ReproductionQuery().reproductionsLast12Months(user_id)
+			val average = new ReproductionQuery().reproductionsLast12Months(user_id,'reproduction')
 			ResponseEntity.ok(average)
 		} catch (SQLException e) {
 			println(e.message)
@@ -53,7 +53,7 @@ class ReproductionController {
 	@GetMapping("/reproductionAverage/{user_id}")
 	def reproductionAverages(@PathVariable Integer user_id) {
 		try {
-			val average = new ReproductionQuery().reproductionAverage(user_id)
+			val average = new ReproductionQuery().reproductionAverage(user_id,'reproduction')
 			ResponseEntity.ok(average)
 		} catch (SQLException e) {
 			println(e.message)

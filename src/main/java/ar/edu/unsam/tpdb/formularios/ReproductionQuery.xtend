@@ -72,16 +72,16 @@ class ReproductionQuery {
 	}
 
 	// Cantidad de reproducciones por mes de los ultimos 12 meses
-	def reproductionsLast12Months(int user_id) {
+	def reproductionsLast12Months(int user_id, String action) {
 		var c = cx.conectar();
 		var PreparedStatement stmt = null;
 		var ResultSet countResult = null;
 		try {
-			val query = "select monthname(date_init) as month , year (date_init) as year, count(date_init) as count 
-                        from (reproduction join action on action.id = reproduction.action_id) 
+			val query = 'select monthname(date_init) as month , year (date_init) as year, count(date_init) as count 
+                        from (' + action + ' join action on action.id = ' + action + '.action_id) 
                         where date_init > now() - INTERVAL 12 month
                         group by month(date_init), year(date_init)
-                        order by max(date_init) asc"
+                        order by max(date_init) asc'
 
 			stmt = c.prepareStatement(query)
 			countResult = stmt.executeQuery(query)
@@ -101,16 +101,16 @@ class ReproductionQuery {
 	}
 
 	// Promedio de las reproducciones de los ultimos 12 meses
-	def reproductionAverage(int user_id) {
+	def reproductionAverage(int user_id, String action) {
 		var c = cx.conectar();
 		var PreparedStatement stmt = null;
 		var ResultSet averageResult = null;
 		try {
-			val query = "SELECT AVG(count) AS average 
+			val query = 'SELECT AVG(count) AS average 
             FROM (select monthname(date_init) as month , year (date_init) as year, count(date_init) as count 
-            FROM (reproduction join action on action.id = reproduction.action_id) 
+            FROM (' + action + ' join action on action.id = ' + action + '.action_id) 
             where date_init > now() - INTERVAL 12 month
-            group by month(date_init), year(date_init) ) AS newTable;"
+            group by month(date_init), year(date_init) ) AS newTable;'
 
 			stmt = c.prepareStatement(query)
 			averageResult = stmt.executeQuery(query)
@@ -130,4 +130,3 @@ class ReproductionQuery {
 		}
 	}
 }
-

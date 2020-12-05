@@ -40,7 +40,6 @@ class DownloadQuery {
 			}
 			cx.desconectar(c)
 		}
-
 	}
 
 // Promedio
