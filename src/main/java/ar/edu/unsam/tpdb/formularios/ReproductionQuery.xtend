@@ -75,7 +75,7 @@ class ReproductionQuery {
 		var c = cx.conectar();
 		var PreparedStatement stmt = null;
 		var ResultSet countResult = null;
-		var List<Integer> reproductionCount
+		var List<ReproductionCount> reproductionCount
 		try {
 			val query = "select monthname(date_init) as month , year (date_init) as year, count(date_init) as count 
                         from (reproduction join action on action.id = reproduction.action_id) 
@@ -86,9 +86,11 @@ class ReproductionQuery {
 			stmt = c.prepareStatement(query)
 			countResult = stmt.executeQuery(query)
 			while (countResult.next) {
-				reproductionCount.add(
-					countResult.getInt("count")
-				)
+				val obj = new ReproductionCount()
+				obj.month = countResult.getString("month")
+				obj.year = countResult.getInt("year")
+				obj.count = countResult.getInt("count")
+				reproductionCount.add(obj)
 			}
 			return reproductionCount
 
@@ -141,6 +143,7 @@ class ReproductionQuery {
 class ReproductionCount {
 	String month
 	int count
+	int year
 
 	def factory(ResultSet reproductionResult) {
 		var List<ReproductionCount> reproductionCount = new ArrayList()
@@ -148,7 +151,8 @@ class ReproductionCount {
 		while (reproductionResult.next) {
 			reproductionCount.add(new ReproductionCount() => [
 				month =  Translator.get.translator(reproductionResult.getString("MONTH"))
-				count = reproductionResult.getInt("COUNT")
+				year = reproductionResult.getInt("year")
+				count = reproductionResult.getInt("count")
 			])
 		}
 		reproductionCount
