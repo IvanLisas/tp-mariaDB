@@ -82,7 +82,6 @@ class UserQuery {
 		try {
 			stmt = c.prepareStatement("UPDATE user SET name = ?, surname  = ?,
             password  = ? , dni  = ?, email  = ? WHERE username = ? ")
-
 			stmt.setString(1, user.name)
 			stmt.setString(2, user.surname)
 			stmt.setString(3, new Encriptar().encriptarContenido(user.password))
