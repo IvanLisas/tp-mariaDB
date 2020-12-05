@@ -13,7 +13,14 @@ class Action {
 
   get fileTitle() { return this.file.title }
 
-  date_init_format = () => this.date_init
+  // date_init_format = () => {format(this.date_init, 'dd/MM/yyyy  ')}
+
+  //Horrible pero bue, no se cual es el error del format :(
+  date_init_format = () => {
+    var chunks = this.date_init.split(' ')
+    var chunks2 = chunks[0].split('-')
+    return chunks2[2] + '/' + chunks2[1] + '/' + chunks2[0]
+  }
 
 }
 export class Download extends Action {

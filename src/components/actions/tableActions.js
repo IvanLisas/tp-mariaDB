@@ -14,8 +14,10 @@ import { Filtro } from '../../domain/filtro'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowUpward'
 
-
 export const TableActions = (props) => {
+
+  const [orden, setOrden] = useState('DESC')
+  const [columnSort, setColumnSort] = useState('date_init')
 
   const [tituloBusqueda, setTituloBusqueda] = useState('')
   const [autorBusqueda, setAutorBusqueda] = useState('')
@@ -23,33 +25,58 @@ export const TableActions = (props) => {
   const [extraCellBusqueda, setExtraCellBusqueda] = useState('')
   const [fechaBusqueda, setFechaBusqueda] = useState('')
 
-  const [tituloArrow, setTituloArrow] = useState()
-  const [autorArrow, setAutorArrow] = useState()
-  const [tipoArrow, setTipoBArrow] = useState()
-  const [extraCellArrow, setExtraCellArrow] = useState()
-  const [fechaArrow, setFechaArrow] = useState()
+  const [tituloArrow, setTituloArrow] = useState('sort')
+  const [autorArrow, setAutorArrow] = useState('sort')
+  const [tipoArrow, setTipoArrow] = useState('sort')
+  const [extraCellArrow, setExtraCellArrow] = useState('sort')
+  const [fechaArrow, setFechaArrow] = useState('arrow_downward')
 
-  const column = (placeholder, onChange, type) =>
+  const handleSort = async (field, arrow, setArrow) => {
+    setTituloArrow('sort')
+    setAutorArrow('sort')
+    setTipoArrow('sort')
+    setExtraCellArrow('sort')
+    setFechaArrow('sort')
+    if (arrow !== 'arrow_upward') {
+      setArrow('arrow_upward')
+      setOrden('ASC')
+    } else {
+      setArrow('arrow_downward')
+      setOrden('DESC')
+    }
+    setColumnSort(field)
+
+  }
+
+  const column = (placeholder, field, onChange, arrow, setArrow, type) =>
     <TableCell>
       <div className='action-column'>
         <Busqueda placeholder={placeholder} onChange={onChange} type={type} />
-        <Button>
+        <Button onClick={() => handleSort(field, arrow, setArrow)}>
           <span class="material-icons">
-            arrow_upward
+            {arrow}
           </span>
         </Button>
       </div>
     </TableCell>
 
   useEffect(async () => {
+    await applyFilters()
+  }, [tituloBusqueda, autorBusqueda, tipoBusqueda, fechaBusqueda, extraCellBusqueda, columnSort, orden])
+
+
+  const applyFilters = async () => {
     let filtrosAux = []
     filtrosAux.push(new Filtro('title', tituloBusqueda))
     filtrosAux.push(new Filtro('username', autorBusqueda))
     filtrosAux.push(new Filtro('file.type', tipoBusqueda))
     filtrosAux.push(new Filtro(props.extraCellFilter, extraCellBusqueda))
     filtrosAux.push(new Filtro('date_init', fechaBusqueda))
-    await props.buscar(filtrosAux)
-  }, [tituloBusqueda, autorBusqueda, tipoBusqueda, fechaBusqueda, extraCellBusqueda])
+    await props.buscar(filtrosAux, {
+      column: columnSort,
+      orden: orden,
+    })
+  }
 
   return (
     <div className='container'>
@@ -62,11 +89,11 @@ export const TableActions = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell></TableCell>
-                {column('Titulo', setTituloBusqueda)}
-                {column('Autor', setAutorBusqueda)}
-                {column('Tipo', setTipoBusqueda)}
-                {column(props.extraCell(), setExtraCellBusqueda)}
-                {column('Fecha de descarga', setFechaBusqueda, 'date')}
+                {column('Titulo', 'title', setTituloBusqueda, tituloArrow, setTituloArrow)}
+                {column('Autor', 'username', setAutorBusqueda, autorArrow, setAutorArrow)}
+                {column('Tipo', 'file.type', setTipoBusqueda, tipoArrow, setTipoArrow)}
+                {column(props.extraCell(), props.extraCellFilter, setExtraCellBusqueda, extraCellArrow, setExtraCellArrow)}
+                {column('Fecha de descarga', 'date_init', setFechaBusqueda, fechaArrow, setFechaArrow, 'date')}
               </TableRow>
             </TableHead>
             <TableBody>

@@ -9,8 +9,9 @@ class DownloadService {
     return json.data
   }
 
-  async searchDownloadsOf(userID, filtros) {
-    const json = await axios.put(`${REST_SERVER_URL}/searchDownloadsOf/${userID}`, filtros)
+  async searchDownloadsOf(userID, filtros, orden) {
+    console.log(filtros, orden)
+    const json = await axios.put(`${REST_SERVER_URL}/searchDownloadsOf/${userID}`, { filtros: filtros, orden: orden })
     return json.data.map(download => Download.fromJSON(download))
   }
 
