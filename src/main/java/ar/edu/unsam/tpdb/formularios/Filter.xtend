@@ -1,25 +1,23 @@
 package ar.edu.unsam.tpdb.formularios
 
-import java.util.List
-import java.lang.reflect.Array
-import org.eclipse.xtend.lib.annotations.Accessors
 import java.sql.ResultSet
-import ar.edu.unsam.tpdb.domain.Reproduction
 import java.util.ArrayList
-import java.io.File
 import java.util.HashMap
+import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
 
 @Accessors
-
 class FilterOrden{
 	List<Filtro> filtros
 	Orden orden
 }
+
 @Accessors
 class Filtro {
 	String filtro
 	String keyword
 }
+
 @Accessors
 class Orden{
 	String column

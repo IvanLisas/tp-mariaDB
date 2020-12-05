@@ -27,7 +27,7 @@ class UserController {
 	def newUser(@RequestBody String body) {
 		try {
 			val newUser = mapper.readValue(body, User)
-//			new UserQuery().insertUser(newUser)
+			new UserQuery().insertUser(newUser)
 			ResponseEntity.ok(body)
 			
 		} catch (SQLException e) {
@@ -41,7 +41,7 @@ class UserController {
 		try {
 			println(body)
 			val userToUpdate = mapper.readValue(body, User)
-//			new UserQuery().updateUser(userToUpdate)
+			new UserQuery().updateUser(userToUpdate)
 			ResponseEntity.ok(body)
 		} catch (SQLException e) {
 			ResponseEntity.badRequest.body(e.message)
@@ -53,7 +53,7 @@ class UserController {
 		try {
 			println(body)
 			val userToUpdate = mapper.readValue(body, User)
-//			new UserQuery().deleteUser(userToUpdate)
+			new UserQuery().deleteUser(userToUpdate)
 			ResponseEntity.ok(body)
 		} catch (SQLException e) {
 			println(e)

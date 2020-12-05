@@ -40,21 +40,4 @@ class LoginController {
 			configure(SerializationFeature.INDENT_OUTPUT, true)
 		]
 	}
-	
-//	@GetMapping("/test")
-//	def verificarUserPass() {
-//		val user = new User() => [
-//			name = "Pepe"
-//			surname = "Apellido"
-//			password = "asasas"
-//			username = "Pepe2"
-//			dni = 123444
-//			email = "jajjaj@jaja.cc"
-//		]
-//
-//		new UserQuery().insertUser(user)
-//		ResponseEntity.ok(mapper.writeValueAsString("ok"))
-//	}
-	
-	
 }

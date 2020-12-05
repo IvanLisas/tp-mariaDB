@@ -32,38 +32,18 @@ class DownloadController {
 		}
 	}
 
-//	@GetMapping("/downloadsByAscName/{userId}")
-//	def descOrderByNameAsc(@PathVariable Integer userId) {
-//		try {
-//			val downloads = new DownloadQuery().downloadsByAscName(userId)
-//			ResponseEntity.ok(downloads)
-//
-//		} catch (SQLException e) {
-//			ResponseEntity.badRequest.body(e.message)
-//		}
-//	}
-//
-//	@GetMapping("/downloadsByDesName/{userId}")
-//	def descOrderByNameDown(@PathVariable Integer userId) {
-//		try {
-//			val downloads = new DownloadQuery().downloadsByDesName(userId)
-//			ResponseEntity.ok(downloads)
-//
-//		} catch (SQLException e) {
-//			ResponseEntity.badRequest.body(e.message)
-//		}
-//	}
 
 	@GetMapping("/averageDownload/{userId}")
 	def promedio(@PathVariable Integer userId) {
 		try {
-//			val average = new DownloadQuery().averageDownload(userId)
-//			ResponseEntity.ok(average)
+			val average = new DownloadQuery().averageDownload(userId)
+			ResponseEntity.ok(average)
 
 		} catch (SQLException e) {
 			ResponseEntity.badRequest.body(e.message)
 		}
 	} 
+	
 // @GetMapping("/allDownloads/{userId}")
 //	def allDownloads(@PathVariable Integer userId) {
 //		try {

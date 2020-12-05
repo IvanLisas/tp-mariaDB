@@ -23,25 +23,32 @@ class UserQuery {
 
 	ConexionMariaDB cx = new ConexionMariaDB()
 
-//	def insertUser(User user) {
-//
-//		var PreparedStatement stmt = c.prepareStatement("INSERT INTO user
-// 		(`name`, `surname`, `username`, `password`, `dni`, `email`) 
-//		VALUES (?, ?, ?, ?, ?, ?)")
-//		stmt.setString(1, user.name)
-//		stmt.setString(2, user.surname)
-//		stmt.setString(3, user.username)
-//		val encriptar = new Encriptar().encriptarContenido(user.password)
-//		stmt.setString(4, encriptar)
-//		stmt.setInt(5, user.dni)
-//		stmt.setString(6, user.email)
-//		stmt.executeUpdate
-//	}
+	def insertUser(User user) {
+		var c = cx.conectar()
+		var PreparedStatement stmt = null
+		try {
+			stmt = c.prepareStatement("INSERT INTO user
+ 		(`name`, `surname`, `username`, `password`, `dni`, `email`) 
+		VALUES (?, ?, ?, ?, ?, ?)")
+			stmt.setString(1, user.name)
+			stmt.setString(2, user.surname)
+			stmt.setString(3, user.username)
+			val encriptar = new Encriptar().encriptarContenido(user.password)
+			stmt.setString(4, encriptar)
+			stmt.setInt(5, user.dni)
+			stmt.setString(6, user.email)
+			stmt.executeUpdate
+		} finally {
+			if (stmt !== null) {
+				stmt.close();
+			}
+			cx.desconectar(c)
+		}
+	}
 
 	def loginUser(String _username, String _password) {
 		var c = cx.conectar();
 		var PreparedStatement stmt = null;
-//		var ResultSet rs = null;
 		var user = new User()
 		try {
 			val query = 'SELECT * FROM user WHERE username ="' + _username + '" and 
@@ -59,7 +66,6 @@ class UserQuery {
 			]
 			rs.close();
 		} finally {
-
 			if (stmt !== null) {
 				stmt.close();
 			}
@@ -69,31 +75,67 @@ class UserQuery {
 		user
 	}
 
+	def updateUser(User user) {
+
+		var c = cx.conectar()
+		var PreparedStatement stmt = null
+		try {
+			stmt = c.prepareStatement("UPDATE user SET name = ?, surname  = ?,
+            password  = ? , dni  = ?, email  = ? WHERE username = ? ")
+
+			stmt.setString(1, user.name)
+			stmt.setString(2, user.surname)
+			stmt.setString(3, new Encriptar().encriptarContenido(user.password))
+			stmt.setInt(4, user.dni)
+			stmt.setString(5, user.email)
+			stmt.setString(6, user.username)
+			stmt.executeQuery
+		} finally {
+			if (stmt !== null) {
+				stmt.close();
+			}
+			cx.desconectar(c)
+		}
+	}
+
+	def deleteUser(User user) {
+		var c = cx.conectar()
+		var PreparedStatement stmt = null
+		try {
+			val query = 'UPDATE user SET isDeleted = 1 WHERE username ="' + user.username + '"'
+			stmt = c.prepareStatement(query)
+			stmt.executeQuery()
+		} finally {
+			if (stmt !== null) {
+				stmt.close();
+			}
+			cx.desconectar(c)
+		}
+	}
+	
 //	def updateUser(User user) {
 //
-//		var PreparedStatement stmt = c.prepareStatement("UPDATE user SET name = ?, surname  = ?,
-//        password  = ? , dni  = ?, email  = ? WHERE username = ? ")
-//		val MessageDigest md = MessageDigest.getInstance("SHA-256")
-//		stmt.setString(1, user.name)
-//		stmt.setString(2, user.surname)
-//		stmt.setString(3, user.password)
-//		stmt.setInt(4, user.dni)
-//		stmt.setString(5, user.email)
-//		stmt.setString(6, user.username)
+//		var c = cx.conectar()
+//		var PreparedStatement stmt = null
+//		val hashPassword = new Encriptar().encriptarContenido(user.password)
+//		try {
+//			println(user.dni)
+//			val query = 'UPDATE user SET name = "' + user.name + '", surname  = "' + user.surname + '",
+//            password  = "' + hashPassword + '", dni  = "' + user.dni + '", email  = "' + user.email + '" 
+//			WHERE username = "' + user.username + '"'
+//			println(query)
+//			stmt = c.prepareStatement(query)
+//			stmt.executeQuery()
+//			
 //
-//		val rs = stmt.executeQuery
-//
-//		var PreparedStatement state = c.prepareStatement("COMMIT ")
-//		val rs2 = stmt.executeQuery
-//
+//		} finally {
+//			if (stmt !== null) {
+//				stmt.close();
+//			}
+//			cx.desconectar(c)
+//		}
 //	}
-//
-//	def deleteUser(User user) {
-//
-//		val query = 'UPDATE user SET isDeleted = 1 WHERE username ="' + user.username + '"'
-//		println(query)
-//		var stmt = c.createStatement
-//		val rs = stmt.executeQuery(query)
-//
-//	}
+	
+	
 }
+
