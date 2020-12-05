@@ -2,6 +2,7 @@ package ar.edu.unsam.tpdb.controller
 
 import ar.edu.unsam.tpdb.formularios.DownloadQuery
 import ar.edu.unsam.tpdb.formularios.FilterOrden
+import ar.edu.unsam.tpdb.formularios.StatsQuery
 import java.sql.SQLException
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 class DownloadController {
 
 	@PutMapping("/searchDownloadsOf/{userId}")
-	def busqueda(@PathVariable Integer userId, @RequestBody FilterOrden body) {
+	def searchDownloadsOf(@PathVariable Integer userId, @RequestBody FilterOrden body) {
 		println(body)
 		try {
 			val downloads = new DownloadQuery().searchDownloadsOf(userId, body)
@@ -27,8 +28,7 @@ class DownloadController {
 		}
 	}
 
-
-	@GetMapping("/averageDownload/{userId}")
+	@GetMapping("/downloadSpeedAvg/{userId}")
 	def downloadSpeedAvg(@PathVariable Integer userId) {
 		try {
 			val average = new DownloadQuery().speedAvg(userId)
@@ -37,13 +37,13 @@ class DownloadController {
 		} catch (SQLException e) {
 			ResponseEntity.badRequest.body(e.message)
 		}
-	} 
-	
+	}
+
 	@GetMapping("/downloadsByDate/{user_id}/{month}/{year}")
 	def downloadsByDate(@PathVariable Integer user_id, @PathVariable Integer month, @PathVariable Integer year) {
 		try {
-			//Aca faltaria parametrizar
-			val average = new DownloadQuery().downloadsByDateQuery(user_id, month, year)
+			// Aca faltaria parametrizar
+			val average = new StatsQuery().actionsByDate(user_id, month, year, 'download')
 			ResponseEntity.ok(average)
 
 		} catch (SQLException e) {
@@ -52,29 +52,29 @@ class DownloadController {
 		}
 	}
 
-	@GetMapping("/downloadsLast12Month/{user_id}")
+	@GetMapping("/downloadsLast12Months/{user_id}")
 	def downloadsLast12Month(@PathVariable Integer user_id) {
 		try {
-			val average = new DownloadQuery().downloadsLast12MonthsQuery(user_id)
+			val average = new StatsQuery().actionsLast12Months(user_id, 'download')
 			ResponseEntity.ok(average)
 		} catch (SQLException e) {
 			println(e.message)
 			ResponseEntity.badRequest.body(e.message)
 		}
 	}
-	
-	
+
 	@GetMapping("/downloadsAverage/{user_id}")
 	def downloadsAverage(@PathVariable Integer user_id) {
 		try {
-			val average = new DownloadQuery().downloadAverageQuery(user_id,'reproduction')
+			val average = new StatsQuery().actionsAverage(user_id, 'download')
 			ResponseEntity.ok(average)
+			
 		} catch (SQLException e) {
 			println(e.message)
 			ResponseEntity.badRequest.body(e.message)
 		}
 	}
-	
+
 // @GetMapping("/allDownloads/{userId}")
 //	def allDownloads(@PathVariable Integer userId) {
 //		try {
@@ -87,4 +87,3 @@ class DownloadController {
 //		}
 //	}
 }
-
