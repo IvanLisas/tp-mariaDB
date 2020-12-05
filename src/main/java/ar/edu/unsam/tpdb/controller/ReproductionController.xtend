@@ -1,24 +1,20 @@
 package ar.edu.unsam.tpdb.controller
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.http.ResponseEntity
-import ar.edu.unsam.tpdb.formularios.UserQuery
-import java.sql.SQLException
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.RestController
+import ar.edu.unsam.tpdb.formularios.FilterOrden
 import ar.edu.unsam.tpdb.formularios.ReproductionQuery
+import java.sql.SQLException
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.CrossOrigin
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
-import java.util.ArrayList
-import ar.edu.unsam.tpdb.formularios.Filtro
-import ar.edu.unsam.tpdb.domain.Reproduction
+import org.springframework.web.bind.annotation.RestController
 
 @CrossOrigin
 @RestController
-class ReproductionController {	
+class ReproductionController {
 	@PutMapping("/searchReproductionsOf/{userId}")
-	def busqueda(@PathVariable Integer userId, @RequestBody ArrayList<Filtro> body) {
+	def busqueda(@PathVariable Integer userId, @RequestBody FilterOrden body) {
 		try {
 			val reproductions = new ReproductionQuery().searchReproductionOf(userId, body)
 			ResponseEntity.ok(reproductions)
