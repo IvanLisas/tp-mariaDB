@@ -1,0 +1,56 @@
+.perfil {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.perfil-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem 0 2rem 0;
+}
+
+.titulo-container {
+  font-size: 1.5rem;
+  font-weight: 600;
+  /* font-family: Segoe UI, SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif; */
+}
+
+.datos-estadisticas {
+  display: flex;
+  gap: 5rem;
+}
+
+.datos-container, .estadisticas-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+}
+
+.dato {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.estadisticas {
+  display: flex;
+  gap: 1rem;
+  /* flex-direction: column; */
+}
+
+.grafico-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.links-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  cursor: pointer;
+}

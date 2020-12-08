@@ -1,0 +1,24 @@
+.editar-perfil {
+    display: flex;
+    align-items: center;
+}
+
+.editar-perfil-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem 2rem 2rem 4rem;
+    width: 60%
+}
+
+.titulo-container {
+    font-size: 1.5rem;
+    font-weight: 600;
+    /* font-family: Segoe UI, SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif; */
+}
+
+.informacion-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
