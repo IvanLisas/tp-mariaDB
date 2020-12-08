@@ -67,17 +67,17 @@ class Reproduction extends Action {
 
 @Accessors
 class ActionsCount {
-	String month
+	String date
 	int count
-	int year
+
 
 	def factory(ResultSet reproductionResult) {
 		var List<ActionsCount> reproductionCount = new ArrayList()
 
 		while (reproductionResult.next) {
 			reproductionCount.add(new ActionsCount() => [
-				month = Translator.get.translator(reproductionResult.getString("MONTH"))
-				year = reproductionResult.getInt("year")
+				date = Translator.get.translator(reproductionResult.getString("MONTH")) 
+				/* + ' ' + reproductionResult.getInt("year")*/
 				count = reproductionResult.getInt("count")
 			])
 		}

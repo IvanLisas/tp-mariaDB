@@ -14,18 +14,18 @@ class Translator {
 	public static Translator get = new Translator
 
 	def translator(String month) {
-		spanishTranslate.put("January", "Enero");
-		spanishTranslate.put("February", "Febrero");
-		spanishTranslate.put("March", "Marzo");
-		spanishTranslate.put("April", "Abril");
-		spanishTranslate.put("May", "Mayo");
-		spanishTranslate.put("June", "Junio");
-		spanishTranslate.put("July", "Julio");
-		spanishTranslate.put("August", "Agosto");
-		spanishTranslate.put("September", "Septiembre");
-		spanishTranslate.put("October", "Octubre");
-		spanishTranslate.put("November", "Noviembre");
-		spanishTranslate.put("December", "Diciembre");
+		spanishTranslate.put("January", "Ene");
+		spanishTranslate.put("February", "Feb");
+		spanishTranslate.put("March", "Mar");
+		spanishTranslate.put("April", "Abr");
+		spanishTranslate.put("May", "May");
+		spanishTranslate.put("June", "Jun");
+		spanishTranslate.put("July", "Jul");
+		spanishTranslate.put("August", "Ago");
+		spanishTranslate.put("September", "Sep");
+		spanishTranslate.put("October", "Oct");
+		spanishTranslate.put("November", "Nov");
+		spanishTranslate.put("December", "Dic");
 		
 		spanishTranslate.get(month)
 	}

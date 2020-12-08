@@ -16,7 +16,7 @@ class StatsQuery {
 		var ResultSet countResult = null;
 		try {
 			val query = 'SELECT COUNT(*) as count FROM ("' + action + '"  
- 					JOIN action ON action.id = "' + action + '".action_id) WHERE
+ 					JOIN action ON action.id = ' + action + '.action_id) WHERE
                     MONTH(date_init)="' + month + '" AND YEAR(date_init)="' + year + '"'
 
 			stmt = c.prepareStatement(query)
@@ -44,7 +44,7 @@ class StatsQuery {
 		var ResultSet countResult = null;
 		try {
 			val query = 'select monthname(date_init) as month , year (date_init) as year, count(date_init) as count 
-                        from ("' + action + '" join action on action.id = "' + action + '".action_id) 
+                        from (' + action + ' join action on action.id = ' + action + '.action_id) 
                         where date_init > now() - INTERVAL 12 month
                         group by month(date_init), year(date_init)
                         order by max(date_init) asc'
@@ -74,7 +74,7 @@ class StatsQuery {
 		try {
 			val query = 'SELECT AVG(count) AS average 
             FROM (select monthname(date_init) as month , year (date_init) as year, count(date_init) as count 
-            FROM ("' + action + '" join action on action.id = "' + action + '".action_id) 
+            FROM (' + action + ' join action on action.id = ' + action + '.action_id) 
             where date_init > now() - INTERVAL 12 month
             group by month(date_init), year(date_init) ) AS newTable;'
 
