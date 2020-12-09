@@ -11,8 +11,12 @@ export const Descargas = (props) => {
   const [descargas, setDescargas] = useState([])
   const [promedio, setPromedio] = useState('')
   const { loggedUser } = useContext(Context)
+  const [downloadsCount, setDownloadsCount] = useState([])
 
-  const searchDownloads = async (filtros, orden) => setDescargas(await downloadService.searchDownloadsOf(loggedUser.id, filtros, orden))
+  const searchDownloads = async (filtros, orden, limit, offset) => {
+    setDownloadsCount(await downloadService.countDownloands(loggedUser.id, filtros, orden))
+    setDescargas(await downloadService.searchDownloadsOf(loggedUser.id, filtros, orden, limit, offset))
+  }
 
   const extraCell = () => 'Tasa de transferencia'
 
@@ -27,6 +31,7 @@ export const Descargas = (props) => {
       extraCellFilter="speed"
       buscar={searchDownloads}
       average={promedio}
+      actionsCount={downloadsCount}
     />
   )
 }

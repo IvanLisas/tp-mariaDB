@@ -32,9 +32,18 @@ class DownloadService {
     return json.data
   }
 
-  async searchDownloadsOf(userID, filtros, orden) {
-    const json = await axios.put(`${REST_SERVER_URL}/searchDownloadsOf/${userID}`, { filtros: filtros, orden: orden })
+  async searchDownloadsOf(userID, filtros, orden, limit, offset) {
+    const json = await axios.put(`${REST_SERVER_URL}/searchDownloadsOf/${userID}`, {
+      filtros: filtros, orden: orden, limit: limit, offset: offset
+    })
     return json.data.map(download => Download.fromJSON(download))
+  }
+
+  async countDownloands(userID, filtros, orden, limit, offset) {
+    const json = await axios.put(`${REST_SERVER_URL}/countDownloands/${userID}`, {
+      filtros: filtros, orden: orden, limit: limit, offset: offset
+    })
+    return json.data
   }
 
   // async allDownloads(userID) {

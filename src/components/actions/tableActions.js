@@ -11,8 +11,8 @@ import { Panel } from 'primereact/panel'
 import { ActionRow } from './actionRow'
 import { Busqueda } from '../busqueda/busqueda'
 import { Filtro } from '../../domain/filtro'
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
-import ArrowDownwardIcon from '@material-ui/icons/ArrowUpward'
+import TableFooter from '@material-ui/core/TableFooter'
+import TablePagination from '@material-ui/core/TablePagination'
 
 export const TableActions = (props) => {
 
@@ -31,7 +31,11 @@ export const TableActions = (props) => {
   const [extraCellArrow, setExtraCellArrow] = useState('sort')
   const [fechaArrow, setFechaArrow] = useState('arrow_downward')
 
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
+
   const handleSort = async (field, arrow, setArrow) => {
+    setPage(0)
     setTituloArrow('sort')
     setAutorArrow('sort')
     setTipoArrow('sort')
@@ -48,6 +52,16 @@ export const TableActions = (props) => {
 
   }
 
+  const handleChangePage = async (event, newPage) => {
+    setPage(newPage)
+
+  }
+
+  const handleChangeRowsPerPage = async (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+  }
+
   const column = (placeholder, field, onChange, arrow, setArrow, type) =>
     <TableCell>
       <div className='action-column'>
@@ -61,21 +75,27 @@ export const TableActions = (props) => {
     </TableCell>
 
   useEffect(async () => {
+
     await applyFilters()
-  }, [tituloBusqueda, autorBusqueda, tipoBusqueda, fechaBusqueda, extraCellBusqueda, columnSort, orden])
+  }, [tituloBusqueda, autorBusqueda, tipoBusqueda, fechaBusqueda, extraCellBusqueda, columnSort, orden, page, rowsPerPage])
 
 
   const applyFilters = async () => {
+
     let filtrosAux = []
     filtrosAux.push(new Filtro('title', tituloBusqueda))
     filtrosAux.push(new Filtro('username', autorBusqueda))
     filtrosAux.push(new Filtro('file.type', tipoBusqueda))
     filtrosAux.push(new Filtro(props.extraCellFilter, extraCellBusqueda))
     filtrosAux.push(new Filtro('date_init', fechaBusqueda))
+    console.log(filtrosAux, {
+      column: columnSort,
+      orden: orden,
+    }, rowsPerPage, (page) * rowsPerPage)
     await props.buscar(filtrosAux, {
       column: columnSort,
       orden: orden,
-    })
+    }, rowsPerPage, (page) * rowsPerPage)
   }
 
   return (
@@ -105,6 +125,24 @@ export const TableActions = (props) => {
                   />)
               }
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25, { label: 'All' }]}
+                  colSpan={3}
+                  count={props.actionsCount}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  SelectProps={{
+                    inputProps: { 'aria-label': 'rows per page' },
+                    native: true,
+                  }}
+                  onChangePage={handleChangePage}
+                  onChangeRowsPerPage={handleChangeRowsPerPage}
+
+                />
+              </TableRow>
+            </TableFooter>
           </Table>
         </div>
       </Panel>
