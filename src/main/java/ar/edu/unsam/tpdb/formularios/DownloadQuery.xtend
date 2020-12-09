@@ -46,7 +46,6 @@ class DownloadQuery {
 
 	def countDownloands(int user_id, FilterOrden filtros) {
 		var c = cx.conectar();
-
 		var PreparedStatement stmt = null;
 		var ResultSet downloadsCountResult = null;
 

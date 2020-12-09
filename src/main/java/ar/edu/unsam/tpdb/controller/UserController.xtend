@@ -29,26 +29,26 @@ class UserController {
 			val newUser = mapper.readValue(body, User)
 			new UserQuery().insertUser(newUser)
 			ResponseEntity.ok(body)
-			
+
 		} catch (SQLException e) {
 			println(e.message)
 			ResponseEntity.badRequest.body(e.message)
 		}
-	} 
+	}
 
-	@PutMapping("/updateUser")
-	def updateUser(@RequestBody String body) {
+	@PutMapping("/updateUser/{userId}")
+	def updateUser(@PathVariable Integer userId, @RequestBody String body) {
 		try {
 			println(body)
 			val userToUpdate = mapper.readValue(body, User)
-			new UserQuery().updateUser(userToUpdate)
+			new UserQuery().updateUser(userId, userToUpdate)
 			ResponseEntity.ok(body)
 		} catch (SQLException e) {
 			println(e.message)
 			ResponseEntity.badRequest.body(e.message)
 		}
 	}
-	
+
 	@PutMapping("/deleteUser")
 	def deleteUser(@RequestBody String body) {
 		try {

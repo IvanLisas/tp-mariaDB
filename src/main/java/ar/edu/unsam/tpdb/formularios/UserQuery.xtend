@@ -77,7 +77,7 @@ class UserQuery {
 		}
 	}
 
-	def updateUser(User user) {
+	def updateUser(int user_id, User user) {
 
 		var c = cx.conectar()
 		var PreparedStatement stmt = null
@@ -86,8 +86,8 @@ class UserQuery {
 		if (hashPassword !== null) {passwordQuery = ' password = "' + hashPassword + '",'}
 		try {
 			val query = 'UPDATE user SET name = "' + user.name + '", surname  = "' + user.surname + '",
-            ' + passwordQuery + ' dni  = "' + user.dni + '", email  = "' + user.email + '" 
-			WHERE username = "' + user.username + '"'
+            ' + passwordQuery + ' dni  = "' + user.dni + '", email  = "' + user.email + '  
+			where id = ' + user_id
 
 			println(query)
 			stmt = c.prepareStatement(query)
@@ -99,5 +99,11 @@ class UserQuery {
 			}
 			cx.desconectar(c)
 		}
+	}
+	
+	def updatePassword(int user_id, String oldPassword, String newPassword){
+		var c = cx.conectar()
+		var PreparedStatement stmt = null
+		val oldHashedPassword = new Encriptar().encriptarContenido(oldPassword)
 	}
 }
