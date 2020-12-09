@@ -41,8 +41,21 @@ class UserController {
 		try {
 			println(body)
 			val userToUpdate = mapper.readValue(body, User)
-			new UserQuery().updateUser(userId, userToUpdate)
-			ResponseEntity.ok(body)
+			ResponseEntity.ok(new UserQuery().updateUser(userId, userToUpdate))
+		} catch (SQLException e) {
+			println(e.message)
+			ResponseEntity.badRequest.body(e.message)
+		}
+	}
+
+	@PutMapping("/updatePassword/{userId}")
+	def updatePassword(@PathVariable Integer userId, @RequestBody HashMap<String, String> body) {
+		try {
+			val oldPassword = body.get('oldPassword')
+			val newPassword = body.get('newPassword')
+			println(oldPassword + newPassword)
+			new UserQuery().updatePassword(userId, oldPassword,newPassword)
+			ResponseEntity.ok('ok')
 		} catch (SQLException e) {
 			println(e.message)
 			ResponseEntity.badRequest.body(e.message)

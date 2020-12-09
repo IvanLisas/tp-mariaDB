@@ -4,6 +4,7 @@ import ar.edu.unsam.tpdb.database.ConexionMariaDB
 import ar.edu.unsam.tpdb.domain.Encriptar
 import ar.edu.unsam.tpdb.domain.User
 import java.sql.PreparedStatement
+import java.sql.SQLException
 
 class UserQuery {
 
@@ -61,7 +62,6 @@ class UserQuery {
 		user
 	}
 
-
 	def deleteUser(User user) {
 		var c = cx.conectar()
 		var PreparedStatement stmt = null
@@ -81,29 +81,60 @@ class UserQuery {
 
 		var c = cx.conectar()
 		var PreparedStatement stmt = null
-		val hashPassword = new Encriptar().encriptarContenido(user.password)
-		var String passwordQuery = ''
-		if (hashPassword !== null) {passwordQuery = ' password = "' + hashPassword + '",'}
+		var PreparedStatement stmt2 = null
+		var userTo = new User()
 		try {
-			val query = 'UPDATE user SET name = "' + user.name + '", surname  = "' + user.surname + '",
-            ' + passwordQuery + ' dni  = "' + user.dni + '", email  = "' + user.email + '  
+			val query = 'UPDATE user SET name = "' + user.name + '", username  = "' + user.username +
+				'", surname  = "' + user.surname + '",
+             dni  = ' + user.dni as int + ', email  = "' + user.email + '"  
 			where id = ' + user_id
 
-			println(query)
 			stmt = c.prepareStatement(query)
 			stmt.executeQuery()
+
+			val query2 = 'SELECT * FROM user WHERE username ="' + user.username + '"'
+			stmt2 = c.prepareStatement(query2)
+
+			val rs = stmt2.executeQuery()
+			rs.next
+			userTo = new User() => [
+				id = rs.getInt("id")
+				username = rs.getString("username")
+				name = rs.getString("name")
+				surname = rs.getString("surname")
+				dni = rs.getInt("dni")
+				email = rs.getString("email")
+			]
+			rs.close();
 
 		} finally {
 			if (stmt !== null) {
 				stmt.close();
+				stmt2.close();
 			}
 			cx.desconectar(c)
 		}
+		userTo
 	}
-	
-	def updatePassword(int user_id, String oldPassword, String newPassword){
+
+	def updatePassword(int user_id, String oldPassword, String newPassword) {
 		var c = cx.conectar()
 		var PreparedStatement stmt = null
 		val oldHashedPassword = new Encriptar().encriptarContenido(oldPassword)
+		val newHashedPassword = new Encriptar().encriptarContenido(newPassword)
+		try {
+			val query = 'UPDATE user SET password = "' + newHashedPassword + '" where id = ' + user_id +
+				' and password = "' + oldHashedPassword + '"'
+				println(query)
+			stmt = c.prepareStatement(query)
+			if(stmt.executeUpdate == 0) throw new SQLException('Contraseña Incorrecta')
+
+		} finally {
+			if (stmt !== null) {
+				stmt.close();
+
+			}
+			cx.desconectar(c)
+		}
 	}
 }

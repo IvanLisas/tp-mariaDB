@@ -6,6 +6,7 @@ import ar.edu.unsam.tpdb.domain.Download
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.util.List
+import java.text.DecimalFormat
 
 class DownloadQuery {
 
@@ -80,12 +81,13 @@ class DownloadQuery {
 		var c = cx.conectar();
 		var PreparedStatement stmt = null;
 		var ResultSet rs = null;
-		var Double avegare = null
 		try {
-			rs = stmt.executeQuery("SELECT AVG(speed) FROM download WHERE user_id=" + user_id)
-			cx.desconectar(c)
-			rs.next()
-			avegare = rs.getDouble("AVG(speed)")
+			val query = "SELECT AVG(speed) FROM download WHERE user_id=" + user_id	
+			stmt = c.prepareStatement(query)
+			rs = stmt.executeQuery()
+			rs.next
+			new DecimalFormat("#.##").format(rs.getDouble("AVG(speed)"))
+			
 		} finally {
 			if (rs !== null) {
 				rs.close();
@@ -97,7 +99,6 @@ class DownloadQuery {
 			}
 			cx.desconectar(c)
 		}
-		avegare
 	}
 
 }

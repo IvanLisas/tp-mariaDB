@@ -4,6 +4,7 @@ import ar.edu.unsam.tpdb.database.ConexionMariaDB
 import ar.edu.unsam.tpdb.domain.ActionsCount
 import java.sql.PreparedStatement
 import java.sql.ResultSet
+import java.text.DecimalFormat
 
 class StatsQuery {
 
@@ -81,7 +82,8 @@ class StatsQuery {
 			stmt = c.prepareStatement(query)
 			averageResult = stmt.executeQuery(query)
 			averageResult.next
-			averageResult.getDouble("average")
+			new DecimalFormat("#.#").format(averageResult.getDouble("average"))
+			
 
 		} finally {
 			if (averageResult !== null) {
