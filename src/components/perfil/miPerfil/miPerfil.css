@@ -31,12 +31,12 @@
 .dato {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .estadisticas {
   display: flex;
-  gap: 1rem;
+  gap: 3rem;
   /* flex-direction: column; */
 }
 

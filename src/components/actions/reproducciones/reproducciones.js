@@ -14,7 +14,7 @@ export const Reproducciones = (props) => {
     setReproduciones(await reproductionService.searchReproductionsOf(loggedUser.id, filtros, orden, limit, offset))
   }
 
-  const extraCell = () => 'Sistema Operativo'
+  const extraCell = () => 'OS'
 
   const extraCellDate = (reproduction) => reproduction.os
 

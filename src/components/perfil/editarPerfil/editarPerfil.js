@@ -1,30 +1,38 @@
 import './editarPerfil.css'
-import React, { useEffect, useState, useContext } from 'react'
-import Avatar from '@material-ui/core/Avatar'
+import React, { useState, useContext } from 'react'
 import Button from '@material-ui/core/Button'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
-import Link from '@material-ui/core/Link'
-import Grid from '@material-ui/core/Grid'
-import Box from '@material-ui/core/Box'
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
-import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
-import Container from '@material-ui/core/Container'
 import { userService } from '../../../services/userService'
 import { Context } from '../../../context/context'
+import { User } from '../../../domain/user'
 
 export const EditarPerfil = (props) => {
   const { loggedUser } = useContext(Context)
   const { updateLoggedUser } = useContext(Context)
 
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [name, setName] = useState('')
-  const [surname, setSurname] = useState('')
-  const [dni, setDni] = useState('')
+
+  const [username, setUsername] = useState(loggedUser.username)
+
+  const [email, setEmail] = useState(loggedUser.email)
+  const [name, setName] = useState(loggedUser.name)
+  const [surname, setSurname] = useState(loggedUser.surname)
+  const [dni, setDni] = useState(loggedUser.dni)
+
+  const volver = () => props.history.goBack()
+
+  const editarPerfil = async () => {
+
+    const updatedUser = new User(username, surname, name, dni, email)
+    console.log(updatedUser)
+    try {
+
+      updateLoggedUser(await userService.updateUser(loggedUser.id, updatedUser))
+      volver()
+    }
+    catch (message) { console.log(message) }
+
+  }
 
 
   return (
@@ -94,6 +102,23 @@ export const EditarPerfil = (props) => {
             onChange={(event) => setSurname(event.target.value)}
           />
         </div>
+        <div className="button-container">
+          <Button
+            variant="contained"
+            color="seconday"
+            onClick={() => volver()}
+          >
+            Cancelar
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => editarPerfil()}
+          >
+            Aceptar
+          </Button>
+
+        </div>
       </div>
 
     </div>
@@ -101,28 +126,4 @@ export const EditarPerfil = (props) => {
   )
 }
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: '1rem',
-    marginBottom: '1rem',
 
-
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-    marginBottom: '0',
-
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}))

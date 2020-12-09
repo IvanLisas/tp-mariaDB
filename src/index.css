@@ -25,3 +25,8 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
   color: inherit;
 }
+
+input[type="date" i] {
+  color: rgb(179, 178, 178)!important;
+  font-weight: 400!important;
+}

@@ -35,7 +35,6 @@ export const TableActions = (props) => {
   const [rowsPerPage, setRowsPerPage] = useState(5)
 
   const handleSort = async (field, arrow, setArrow) => {
-    setPage(0)
     setTituloArrow('sort')
     setAutorArrow('sort')
     setTipoArrow('sort')
@@ -54,7 +53,6 @@ export const TableActions = (props) => {
 
   const handleChangePage = async (event, newPage) => {
     setPage(newPage)
-
   }
 
   const handleChangeRowsPerPage = async (event) => {
@@ -75,32 +73,30 @@ export const TableActions = (props) => {
     </TableCell>
 
   useEffect(async () => {
-
+    setPage(0)
     await applyFilters()
-  }, [tituloBusqueda, autorBusqueda, tipoBusqueda, fechaBusqueda, extraCellBusqueda, columnSort, orden, page, rowsPerPage])
+  }, [tituloBusqueda, autorBusqueda, tipoBusqueda, fechaBusqueda, extraCellBusqueda, columnSort, orden, rowsPerPage])
 
+  useEffect(async () => {
+    await applyFilters()
+  }, [page])
 
   const applyFilters = async () => {
-
     let filtrosAux = []
     filtrosAux.push(new Filtro('title', tituloBusqueda))
     filtrosAux.push(new Filtro('username', autorBusqueda))
     filtrosAux.push(new Filtro('file.type', tipoBusqueda))
     filtrosAux.push(new Filtro(props.extraCellFilter, extraCellBusqueda))
     filtrosAux.push(new Filtro('date_init', fechaBusqueda))
-    console.log(filtrosAux, {
-      column: columnSort,
-      orden: orden,
-    }, rowsPerPage, (page) * rowsPerPage)
     await props.buscar(filtrosAux, {
       column: columnSort,
       orden: orden,
     }, rowsPerPage, (page) * rowsPerPage)
+
   }
 
   return (
     <div className='container'>
-      {/* {console.log(props.actions)} */}
       <Panel header={props.tittle}>
         <div>
           <div className='busquda-container'>

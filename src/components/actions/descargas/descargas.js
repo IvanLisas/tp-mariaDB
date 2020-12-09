@@ -18,7 +18,7 @@ export const Descargas = (props) => {
     setDescargas(await downloadService.searchDownloadsOf(loggedUser.id, filtros, orden, limit, offset))
   }
 
-  const extraCell = () => 'Tasa de transferencia'
+  const extraCell = () => 'Velocidad'
 
   const extraCellDate = (download) => download.speed + ' MB/s'
 

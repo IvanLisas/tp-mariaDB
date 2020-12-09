@@ -22,3 +22,9 @@
     flex-direction: column;
     gap: 1.5rem;
 }
+
+.button-container {
+    display: flex;
+    gap: 1rem;
+    align-self: flex-end;
+}

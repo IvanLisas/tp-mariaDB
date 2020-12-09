@@ -17,23 +17,16 @@ export const Busqueda = (props) => {
             autoComplete="off"
             onChange={(event) => props.onChange(event.target.value)}
             type={props.type}
-            // variant="outlined"
-            // endAdornment={
-            //   <InputAdornment position="end">
-            //     <SearchIcon className="search-icon" />
-            //   </InputAdornment>
-            // }
-
+            color="primary"
             InputProps={{
               endAdornment: (
                 <InputAdornment position="start">
-                  {/* {!props.type && <ArrowUpwardIcon className="search-icon" />} */}
+
                 </InputAdornment>
               ),
             }}
 
           />
-          {/* <Button icon="pi pi-search" onClick={() => props.buscar()} /> */}
         </div>
       </div>
     </div>

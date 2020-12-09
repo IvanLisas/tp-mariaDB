@@ -18,11 +18,21 @@ class UserService {
 
   async newUser(user_id) { await axios.post(`${REST_SERVER_URL}/newUser`, user_id) }
 
-  async updateUser(user_id) { await axios.put(`${REST_SERVER_URL}/updateUser/`, user_id) }
+  async updateUser(user_id, userData) {
+    const json = await axios.put(`${REST_SERVER_URL}/updateUser/${user_id}`, userData)
+    return User.fromJSON(json.data)
+  }
 
-  //cambiar a delete
+  async updatePassword(user_id, oldPassword, newPassword) {
+    const json = await axios.put(`${REST_SERVER_URL}/updatePassword/${user_id}`, {
+      oldPassword,
+      newPassword,
+    })
+
+
+  }
+
   async deleteUser(user_id) { await axios.put(`${REST_SERVER_URL}/deleteUser/`, user_id) }
-
 
 }
 

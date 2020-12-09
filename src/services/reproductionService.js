@@ -33,6 +33,14 @@ class ReproductionService {
     const json = await axios.put(`${REST_SERVER_URL}/countReproductions/${userID}`, {
       filtros: filtros, orden: orden, limit: limit, offset: offset
     })
+    console.log(json.data)
+    return json.data
+  }
+
+  async mostUsedOs(userID) {
+    const json = await axios.get(
+      `${REST_SERVER_URL}/mostUsedOs/${userID}`
+    )
     return json.data
   }
 

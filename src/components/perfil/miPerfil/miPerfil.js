@@ -1,14 +1,8 @@
 import './miPerfil.css'
 import React, { useEffect, useState, useContext } from 'react'
-import { FormLabel, MenuItem, Select, Snackbar, TextField } from '@material-ui/core'
 import Button from '@material-ui/core/Button'
-import CardContent from '@material-ui/core/CardContent'
 import { Context } from '../../../context/context'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
-import { Form } from '../../form/form'
 import { userService } from '../../../services/userService'
-import { User } from '../../../domain/user'
-import { SnackbarCustom } from '../../snackbar/snackbarCustom'
 import { reproductionService } from '../../../services/reproductionService'
 import { downloadService } from '../../../services/downloadService'
 import { Chart } from 'primereact/chart'
@@ -17,30 +11,32 @@ import AlternateEmailIcon from '@material-ui/icons/AlternateEmail'
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd'
 import CakeIcon from '@material-ui/icons/Cake'
 import Link from '@material-ui/core/Link'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import SpeedIcon from '@material-ui/icons/Speed'
+import GetAppIcon from '@material-ui/icons/GetApp'
+import MovieFilterIcon from '@material-ui/icons/MovieFilter'
+import DevicesIcon from '@material-ui/icons/Devices'
 
 export const MiPerfil = (props) => {
   //Contexto
   const { loggedUser } = useContext(Context)
   const { updateLoggedUser } = useContext(Context)
-  //Perfil
-  // const [username, setUsername] = useState(loggedUser.username)
-  // const [password, setPassword] = useState(loggedUser.password)
-  // const [email, setEmail] = useState(loggedUser.email)
-  // const [name, setName] = useState(loggedUser.name)
-  // const [surname, setSurname] = useState(loggedUser.surname)
-  // const [dni, setDni] = useState(loggedUser.dni)
-  // const [date, setDate] = useState(loggedUser.date)
 
-  //SnackBar
-  const [errorMessage, setErrorMessage] = useState('')
-  const [snackbarOpen, setSnackbarOpen] = useState(false)
+  const [open, setOpen] = React.useState(false)
 
   //Estadisticas
   const [descargasUltimos12Meses, setDescargasUltimos12Meses] = useState([])
   const [reproduccionesUltimos12Meses, setReproduccionesUltimos12Meses] = useState([])
-  const [reproducionesPromedio, setReproducionesPromedio] = useState()
-  const [month, setMonth] = useState()
-  const [year, setYear] = useState()
+  const [speedAverage, setSpeedAverage] = useState()
+  const [mostUsedOs, setMostUsedOs] = useState()
+  const [downloadAverage, setDownloadAverage] = useState()
+  const [reproductionAverage, setReproductionAverage] = useState()
+  const [month] = useState()
+  const [year] = useState()
   const reproductionData = {
     labels: reproduccionesUltimos12Meses.map(r => r.date),
     datasets: [
@@ -98,32 +94,29 @@ export const MiPerfil = (props) => {
     }
   }
 
-
-  const volver = () => props.history.push('/inicio')
-
-  const cambiarEditar = () => setNoEditable(!noEditable)
-
-  const editarPerfil = async () => {
-    await userService.updateUser(new User(loggedUser.username, surname, name, dni, email, password, date))
-    setErrorMessage('Usuario actualizado con exito')
-    setSnackbarOpen(true)
-    setNoEditable(true)
+  const handleClickOpen = () => {
+    setOpen(true)
   }
 
-  const borrarPerfil = async () => {
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+
+
+  const desactivarCuenta = async () => {
     await userService.deleteUser(loggedUser)
     updateLoggedUser(undefined)
     props.history.push('/login')
   }
 
-  const reproductionsByDate = async () => {
-    reproductionService.reproductionsByDate(loggedUser.id, month, year)
-  }
 
   useEffect(async () => {
     setReproduccionesUltimos12Meses(await reproductionService.reproductionsLast12Month(loggedUser.id))
     setDescargasUltimos12Meses(await downloadService.downloadsLast12Months(loggedUser.id))
-    setReproducionesPromedio(await reproductionService.reproductionAverage(loggedUser.id))
+    setSpeedAverage(await downloadService.downloadSpeedAvg(loggedUser.id))
+    setDownloadAverage(await downloadService.downloadsAverage(loggedUser.id))
+    setReproductionAverage(await reproductionService.reproductionAverage(loggedUser.id))
   }, [])
 
   return (
@@ -142,12 +135,16 @@ export const MiPerfil = (props) => {
               <a className='dato'><CakeIcon />20/05/1995</a>
             </div>
             <div className='links-container'>
+              <Link className="link" onClick={() => handleClickOpen()}  >
+                {'Desactivar cuenta'}
+              </Link>
               <Link className="link" onClick={() => props.history.push('/cambiarContraseña')}>
                 {'Cambiar contraseña'}
               </Link>
               <Link className="link" onClick={() => props.history.push('/editarPerfil')}  >
                 {'Editar infomacion personal'}
               </Link>
+
 
             </div>
 
@@ -158,121 +155,51 @@ export const MiPerfil = (props) => {
             </div>
             <div className='estadisticas'>
               <div className='grafico-container'>
-                <h5>Mis descargas en los ultimos 12 meses</h5>
-                <Chart type="bar" data={downloadData} options={options} width='350px' />
+                <h5>Mis descargas en los ultimos 12 meses: {descargasUltimos12Meses.map(r => r.count).reduce((a, b) => a + b, 0)} </h5>
+                <Chart type="bar" data={downloadData} options={options} height width='350px' />
+                <div className='dato'>
+                  <GetAppIcon />Promedio de descargas por mes: {downloadAverage}
+                </div>
+                <div className='dato'>
+                  <SpeedIcon />Promedio de velocidad de descarga: {speedAverage} MB/S
+                </div>
               </div>
               <div className='grafico-container'>
-                <h5>Mis reproducciones en los ultimos 12 meses</h5>
+                <h5>Mis reproducciones en los ultimos 12 meses: {reproduccionesUltimos12Meses.map(r => r.count).reduce((a, b) => a + b, 0)} </h5>
                 <Chart type="bar" data={reproductionData} options={options} width='350px' />
+                <div className='dato'>
+                  <MovieFilterIcon />Promedio de reproducciones por mes: {reproductionAverage}
+                </div>
+                <div className='dato'>
+                  <DevicesIcon />Sistema operativo mas usado: IOS
+                </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{'Desea desactivar su cuenta?'}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Una vez desactivada su cuenta sus archivos seguiran estando en el servidos para futuras descargas, si desea borrar la cuenta contacte con el soporte tecnico.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={desactivarCuenta} color="primary" autoFocus>
+            Aceptar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   )
 }
-
-
-
-
-//   return (
-//     <div className='perfil'>
-
-
-
-//       <div className="card">
-//         <Chart type="pie" data={chartData} />
-//       </div>
-//       Cantidad de reproduciones dado un mes y año
-//       <TextField
-//         variant="outlined"
-//         label="Mes"
-//         id="month"
-//         onChange={(event) => setMonth(event.target.value)}
-//       />
-//       <TextField
-//         variant="outlined"
-//         label="Año"
-//         id="year"
-//         onChange={(event) => setYear(event.target.value)}
-//       />
-//       <Button onClick={() => reproductionsByDate()}>Buscar</Button>
-//       reproducionesPromedio = {reproducionesPromedio}
-//       { console.log(reproducionesPorMes)}
-//       <div className='perfil-container'>
-
-
-//         <Form
-//           username={loggedUser.username}
-//           surname={loggedUser.surname}
-//           email={loggedUser.email}
-//           dni={loggedUser.dni}
-//           date={loggedUser.date}
-//           name={loggedUser.name}
-//           miPerfil={true}
-//           disabled={noEditable}
-//           setPassword={setPassword}
-//           setEmail={setEmail}
-//           setName={setName}
-//           setSurname={setSurname}
-//           setDni={setDni}
-//           setDate={setDate}
-//           title={loggedUser.username}
-//           botonTitle="Editar"
-//           onClick={cambiarEditar}
-//         ></Form>
-//         <div className="boton-container">
-//           {noEditable && <div className="boton">
-//             <Button
-//               fullWidth
-//               variant="contained"
-//               color="primary"
-//               onClick={() => cambiarEditar()}
-//             >
-//               Editar
-//             </Button>
-//           </div>}
-//           {!noEditable && <div className="boton">
-//             <Button
-//               fullWidth
-//               variant="contained"
-//               color="primary"
-//               onClick={() => editarPerfil()}
-//             >
-//               Aceptar
-//             </Button>
-//           </div>}
-//           {!noEditable && <div className="boton">
-//             <Button
-//               fullWidth
-//               variant="contained"
-//               color="primary"
-//               onClick={() => cambiarEditar()}
-//             >
-//               Cancelar
-//             </Button>
-//           </div>}
-
-//         </div>
-//         {!noEditable && <div className="boton-borrar">
-//           <Button
-//             fullWidth
-//             variant="contained"
-//             color="seconday"
-//             onClick={() => borrarPerfil()}
-//           >
-//             Borrar
-//           </Button>
-//           <SnackbarCustom
-//             setSnackbarOpen={setSnackbarOpen}
-//             snackbarOpen={snackbarOpen}
-//             snackbarType='success'
-//             snackbarMessege={errorMessage}
-//             snackbarAutoHideDuration={5000}
-//           />
-//         </div>
-//       </div>
-//     </div>
-//   )
-// }
