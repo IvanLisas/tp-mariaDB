@@ -23,8 +23,9 @@ class DownloadQuery {
 					join file on file.id = download.file_id
  					join action on action.id = download.action_id
 					inner join user on user.id = file.user_id) 
-					where download.user_id = " + user_id + new Filter().create(filtros.filtros) + ' ORDER BY ' +
-				filtros.orden.column + ' ' + filtros.orden.orden
+					where download.user_id = " + user_id + new Filter().create(filtros.filtros) + 
+					' ORDER BY ' + filtros.orden.column + ' ' + filtros.orden.orden + 
+					' limit ' + filtros.limit + ' offset ' + filtros.offset
 			println(query)
 			stmt = c.prepareStatement(query)
 			downloadResult = stmt.executeQuery()
@@ -33,6 +34,38 @@ class DownloadQuery {
 		} finally {
 			if (downloadResult !== null) {
 				downloadResult.close();
+				println("cerrado")
+			}
+
+			if (stmt !== null) {
+				stmt.close();
+			}
+			cx.desconectar(c)
+		}
+	}
+
+	def countDownloands(int user_id, FilterOrden filtros) {
+		var c = cx.conectar();
+
+		var PreparedStatement stmt = null;
+		var ResultSet downloadsCountResult = null;
+
+		try {
+			val query = "SELECT COUNT(*) as count from (download 
+					join file on file.id = download.file_id
+ 					join action on action.id = download.action_id
+					inner join user on user.id = file.user_id) 
+					where download.user_id = " + user_id + new Filter().create(filtros.filtros) +
+					' ORDER BY ' + filtros.orden.column + ' ' + filtros.orden.orden
+
+			println(query)
+			stmt = c.prepareStatement(query)
+			downloadsCountResult = stmt.executeQuery()
+			downloadsCountResult.next
+			downloadsCountResult.getDouble("count")
+		} finally {
+			if (downloadsCountResult !== null) {
+				downloadsCountResult.close();
 				println("cerrado")
 			}
 

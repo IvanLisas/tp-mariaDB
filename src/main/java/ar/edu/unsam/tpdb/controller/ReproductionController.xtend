@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 @CrossOrigin
 @RestController
 class ReproductionController {
-	
+
 	@PutMapping("/searchReproductionsOf/{userId}")
 	def searchReproductionsOf(@PathVariable Integer userId, @RequestBody FilterOrden body) {
 		try {
@@ -50,17 +50,28 @@ class ReproductionController {
 			ResponseEntity.badRequest.body(e.message)
 		}
 	}
-	
-	
+
 	@GetMapping("/reproductionAverage/{user_id}")
 	def reproductionsAverage(@PathVariable Integer user_id) {
 		try {
-			val average = new StatsQuery().actionsAverage(user_id,'reproduction')
+			val average = new StatsQuery().actionsAverage(user_id, 'reproduction')
 			ResponseEntity.ok(average)
 		} catch (SQLException e) {
 			println(e.message)
 			ResponseEntity.badRequest.body(e.message)
 		}
 	}
-	
+
+	@PutMapping("/countReproductions/{userId}")
+	def countReproductions(@PathVariable Integer userId, @RequestBody FilterOrden body) {
+		println(body)
+		try {
+			val downloads = new ReproductionQuery().countReproductions(userId, body)
+			ResponseEntity.ok(downloads)
+		} catch (SQLException e) {
+			println(e.message)
+			ResponseEntity.badRequest.body(e.message)
+		}
+	}
+
 }

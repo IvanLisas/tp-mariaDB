@@ -74,6 +74,18 @@ class DownloadController {
 			ResponseEntity.badRequest.body(e.message)
 		}
 	}
+	
+	@PutMapping("/countDownloands/{userId}")
+	def countDownloands(@PathVariable Integer userId, @RequestBody FilterOrden body) {
+		println(body)
+		try {
+			val downloads = new DownloadQuery().countDownloands(userId, body)
+			ResponseEntity.ok(downloads)
+		} catch (SQLException e) {
+			println(e.message)
+			ResponseEntity.badRequest.body(e.message)
+		}
+	}
 
 // @GetMapping("/allDownloads/{userId}")
 //	def allDownloads(@PathVariable Integer userId) {

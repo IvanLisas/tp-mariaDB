@@ -10,6 +10,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class FilterOrden{
 	List<Filtro> filtros
 	Orden orden
+	int limit
+	int offset
 }
 
 @Accessors
@@ -39,8 +41,4 @@ class Filter {
 		val str = String.join("", resultado);
 		str
 	}
-
 }
-
-
-

@@ -77,7 +77,6 @@ class ActionsCount {
 		while (reproductionResult.next) {
 			reproductionCount.add(new ActionsCount() => [
 				date = Translator.get.translator(reproductionResult.getString("MONTH")) 
-				/* + ' ' + reproductionResult.getInt("year")*/
 				count = reproductionResult.getInt("count")
 			])
 		}
