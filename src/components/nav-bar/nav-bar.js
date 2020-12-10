@@ -21,9 +21,10 @@ import Button from '@material-ui/core/Button'
 export const NavBar = (props) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
-  const isMenuOpen = Boolean(anchorEl)
+
   const { loggedUser } = useContext(Context)
   const { updateLoggedUser } = useContext(Context)
+  const { buscar } = useContext(Context)
 
   const handleProfileMenuOpen = (event) => setAnchorEl(event.currentTarget)
 
@@ -63,12 +64,13 @@ export const NavBar = (props) => {
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder="Buscar"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onChange={(event) => buscar(event.target.value)}
             />
           </div>
           <div className={classes.grow} />

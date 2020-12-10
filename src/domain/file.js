@@ -1,3 +1,9 @@
+import MediaCard from '../components/inicio/extras/mediaCard'
+import MusicCard from '../components/inicio/extras/music'
+import CommentCard from '../components/inicio/extras/commentCard'
+import QueueMusicIcon from '@material-ui/icons/QueueMusic'
+import DescriptionIcon from '@material-ui/icons/Description'
+import VideoLibraryIcon from '@material-ui/icons/VideoLibrary'
 export class File {
   constructor(id, title, extension_type, publish_date, type) {
     this.id = id
@@ -29,12 +35,17 @@ export class Music extends File {
 
   name = () => 'Musica'
 
-  static fromJSON(musicJSON) { return Object.assign(new Music(), musicSON) }
+  static fromJSON(musicJSON) { return Object.assign(new Music(), musicJSON) }
 
+  get card() {
+    return <MusicCard
+      banda={this.title}
+      cancion={this.name()}
+      imagen='/losSultanes.jpg'
+    />
+  }
 }
-import QueueMusicIcon from '@material-ui/icons/QueueMusic'
-import DescriptionIcon from '@material-ui/icons/Description'
-import VideoLibraryIcon from '@material-ui/icons/VideoLibrary'
+
 
 export class Video extends File {
 
@@ -47,6 +58,14 @@ export class Video extends File {
   name = () => 'Video'
 
   static fromJSON(videoJSON) { return Object.assign(new Video(), videoJSON) }
+
+  get card() {
+    return <MediaCard
+      cuerpo={this.name()}
+      titulo={this.title}
+      imagen='/xbox.jpg'
+    />
+  }
 }
 
 export class Document extends File {
@@ -60,5 +79,13 @@ export class Document extends File {
   name = () => 'Documento'
 
   static fromJSON(documentJSON) { return Object.assign(new Document(), documentJSON) }
+
+  get card() {
+    return <CommentCard
+      encabezado={this.name()}
+      titulo={this.title}
+
+    />
+  }
 
 }

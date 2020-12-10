@@ -16,7 +16,7 @@ import TablePagination from '@material-ui/core/TablePagination'
 
 export const TableActions = (props) => {
 
-  const [orden, setOrden] = useState('DESC')
+  const [direction, setDirection] = useState('DESC')
   const [columnSort, setColumnSort] = useState('date_init')
 
   const [tituloBusqueda, setTituloBusqueda] = useState('')
@@ -42,10 +42,10 @@ export const TableActions = (props) => {
     setFechaArrow('sort')
     if (arrow !== 'arrow_upward') {
       setArrow('arrow_upward')
-      setOrden('ASC')
+      setDirection('ASC')
     } else {
       setArrow('arrow_downward')
-      setOrden('DESC')
+      setDirection('DESC')
     }
     setColumnSort(field)
 
@@ -75,7 +75,7 @@ export const TableActions = (props) => {
   useEffect(async () => {
     setPage(0)
     await applyFilters()
-  }, [tituloBusqueda, autorBusqueda, tipoBusqueda, fechaBusqueda, extraCellBusqueda, columnSort, orden, rowsPerPage])
+  }, [tituloBusqueda, autorBusqueda, tipoBusqueda, fechaBusqueda, extraCellBusqueda, columnSort, direction, rowsPerPage])
 
   useEffect(async () => {
     await applyFilters()
@@ -90,7 +90,7 @@ export const TableActions = (props) => {
     filtrosAux.push(new Filtro('date_init', fechaBusqueda))
     await props.buscar(filtrosAux, {
       column: columnSort,
-      orden: orden,
+      direction: direction,
     }, rowsPerPage, (page) * rowsPerPage)
 
   }

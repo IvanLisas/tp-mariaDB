@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Music(props) {
+export default function MusicCard(props) {
   const classes = useStyles()
   const theme = useTheme()
 

@@ -2,17 +2,15 @@ import axios from 'axios'
 import { File } from '../domain/file'
 import { REST_SERVER_URL } from './constants'
 
-export class FileService {
+class FileService {
 
-  async buscar(userID, keyword) {
-    try {
-      const json = await axios.post(`${REST_SERVER_URL}/search/${userID}`,
-        keyword, { headers: { 'Content-Type': 'text/plain' } }
-      )
-      return File.fromJSON(json.data)
-    } catch (err) {
-      console.log(err)
-    }
+
+  async searchFiles(keyword) {
+    if (keyword === '') keyword = ' '
+
+    const json = await axios.put(`${REST_SERVER_URL}/searchFiles/`, keyword, { headers: { 'Content-Type': 'text/plain' } })
+    return json.data.map(file => File.fromJSON(file))
   }
-
 }
+
+export const fileService = new FileService()

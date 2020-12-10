@@ -2,66 +2,60 @@ import './inicio.css'
 import React, { useEffect, useState, useContext } from 'react'
 import Button from '@material-ui/core/Button'
 import CommentCard from './extras/commentCard'
-import Music from './extras/music'
+import MusicCard from './extras/music'
 import ComplexCard from './extras/complexCard'
 import MediaCard from './extras/mediaCard'
+import { Busqueda } from '../busqueda/busqueda'
+import { fileService } from '../../services/fileService'
+import { File } from '../../domain/file'
+import { Context } from '../../context/context'
 
 export const Inicio = (props) => {
 
-  const irADescargas = () => props.history.push('/descargas')
+  const { busqueda } = useContext(Context)
+  // const [busqueda, setBusqueda] = useState(' ')
+  const [files, setFiles] = useState(null)
+  const column1 = []
+  const column2 = []
+  const column3 = []
 
-  const irAReproducciones = () => props.history.push('/reproducciones')
+  useEffect(async () => {
+    setFiles(await fileService.searchFiles(busqueda))
+  }, [busqueda])
 
-  const salir = () => props.history.push('/login')
+  // useEffect(async () => {
+  //   setFiles(await fileService.searchFiles(busqueda))
 
-  const irAPerfil = () => props.history.push('/miperfil')
+  // }, [])
+
+
+
+  const createColumns = () => {
+
+    for (var i = 0; i < files.length - 10; i++) {
+      if (i % 3 == 0) column1.push(files[i])
+      if (i % 3 == 1) column2.push(files[i])
+      if (i % 3 == 2) column3.push(files[i])
+    }
+
+  }
 
   return (
-
-    <div className="inicio">
-      <div className="column">
-        <Music
-          banda='Yuya'
-          cancion='Ilari lari e'
-          imagen='/yuya.jpg'
-
-        />
-        <CommentCard
-          encabezado='Archivo'
-          titulo='Documental National geographic '
-          cuerpo='Segundo episodio sobre '
-          cuerpo2='los Incas'
-        />
-        <Music
-          banda='Los sultanes'
-          cancion='Te voy a dar'
-          imagen='/losSultanes.jpg'
-        />
+    <div>
+      {files && createColumns()}
+      <div className="inicio">
+        {/* {files && files.map(file => file.card)} */}
+        <div className="column">
+          {files && column1.map(file => file.card)}
+        </div>
+        <div className="column">
+          {files && column2.map(file => file.card)}
+        </div>
+        <div className="column">
+          {files && column3.map(file => file.card)}
+        </div>
       </div>
-      <div className="column">
-        <MediaCard
-          cuerpo='Descargar Cyperpunk 2077'
-          titulo='Cyperpunk'
-          imagen='/xbox.jpg'
-        />
-        <CommentCard
-          encabezado='Archivo'
-          titulo='Resultados de la quinela'
-          cuerpo='Un excel con lo que sale mañana'
-          cuerpo2='Si falla no hay rebolso' /></div>
-      <div className="column">
-        <ComplexCard
-          titulo='Chorizo a la pomarola'
-          cuerpo='Receta que nadie se debe perder'
-          imagen='/chorizo.jpg'
-        />
-        <Music
-          banda='Las ketchup'
-          cancion='Asereje'
-          imagen='/asereje.jpg'
-        />  </div>
     </div>
-
   )
 
 }

@@ -3,7 +3,6 @@ import React, { useEffect, useState, useContext } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { Login } from '../components/login/login'
 import { Inicio } from '../components/inicio/inicio'
-
 import { Descargas } from '../components/actions/descargas/descargas'
 import { Reproducciones } from '../components/actions/reproducciones/reproducciones'
 import { Context } from '../context/context'
@@ -12,7 +11,6 @@ import { SingUp } from '../components/singUp/singUp'
 import { MiPerfil } from '../components/perfil/miPerfil/miPerfil'
 import { CambiarContraseña } from '../components/perfil/cambiarContraseña/cambiarContraseña'
 import { EditarPerfil } from '../components/perfil/editarPerfil/editarPerfil'
-import ServerSortingGrid from '../components/demo/demo'
 
 export const MainRoutes = () => {
 
@@ -23,7 +21,6 @@ export const MainRoutes = () => {
       {loggedUser && <Route component={NavBar} />}
 
       <Switch>
-        <Route path="/demo" component={ServerSortingGrid} />
         {loggedUser && <Route path="/miperfil" component={MiPerfil} />}
         {loggedUser && <Route path="/descargas" component={Descargas} />}
         {loggedUser && <Route path="/editarPerfil" component={EditarPerfil} />}
