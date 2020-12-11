@@ -5,6 +5,7 @@ import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+import CardMedia from '@material-ui/core/CardMedia'
 
 const useStyles = makeStyles({
   root: {
@@ -47,6 +48,11 @@ export default function CommentCard(props) {
       <CardActions>
         <Button size="small">Descargar</Button>
       </CardActions>
+      {console.log(props.thumbnail)}
+      <CardMedia
+        className={classes.media}
+        image={props.thumbnail}
+      />
     </Card>
   )
 }

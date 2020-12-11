@@ -117,6 +117,8 @@ export const MiPerfil = (props) => {
     setSpeedAverage(await downloadService.downloadSpeedAvg(loggedUser.id))
     setDownloadAverage(await downloadService.downloadsAverage(loggedUser.id))
     setReproductionAverage(await reproductionService.reproductionAverage(loggedUser.id))
+    setMostUsedOs(await reproductionService.mostUsedOs(loggedUser.id))
+
   }, [])
 
   return (
@@ -171,7 +173,7 @@ export const MiPerfil = (props) => {
                   <MovieFilterIcon />Promedio de reproducciones por mes: {reproductionAverage}
                 </div>
                 <div className='dato'>
-                  <DevicesIcon />Sistema operativo mas usado: IOS
+                  <DevicesIcon />Sistema operativo mas usado: {mostUsedOs}
                 </div>
               </div>
             </div>

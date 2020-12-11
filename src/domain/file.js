@@ -1,16 +1,18 @@
-import MediaCard from '../components/inicio/extras/mediaCard'
-import MusicCard from '../components/inicio/extras/music'
+import VideoCard from '../components/inicio/extras/videoCard'
+import MusicCard from '../components/inicio/extras/musicCard'
 import CommentCard from '../components/inicio/extras/commentCard'
+import ComplexCard from '../components/inicio/extras/complexCard'
 import QueueMusicIcon from '@material-ui/icons/QueueMusic'
 import DescriptionIcon from '@material-ui/icons/Description'
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary'
 export class File {
-  constructor(id, title, extension_type, publish_date, type) {
+  constructor(id, title, extension_type, publish_date, type, thumbnail) {
     this.id = id
     this.title = title
     this.extension_type = extension_type
     this.publish_date = publish_date
     this.type = type
+    this.thumbnail = thumbnail
   }
 
   icon = () => Error('Method \'say()\' must be implemented.')
@@ -40,8 +42,9 @@ export class Music extends File {
   get card() {
     return <MusicCard
       banda={this.title}
-      cancion={this.name()}
-      imagen='/losSultanes.jpg'
+      autor={this.autor}
+      thumbnail={this.thumbnail}
+      id={this.id}
     />
   }
 }
@@ -60,10 +63,10 @@ export class Video extends File {
   static fromJSON(videoJSON) { return Object.assign(new Video(), videoJSON) }
 
   get card() {
-    return <MediaCard
-      cuerpo={this.name()}
+    return <VideoCard
+      autor={this.autor}
       titulo={this.title}
-      imagen='/xbox.jpg'
+      thumbnail={this.thumbnail}
     />
   }
 }
@@ -81,10 +84,11 @@ export class Document extends File {
   static fromJSON(documentJSON) { return Object.assign(new Document(), documentJSON) }
 
   get card() {
-    return <CommentCard
+    return <ComplexCard
       encabezado={this.name()}
       titulo={this.title}
-
+      thumbnail={this.thumbnail}
+      autor={this.autor}
     />
   }
 

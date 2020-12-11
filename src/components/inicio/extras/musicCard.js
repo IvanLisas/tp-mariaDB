@@ -41,14 +41,14 @@ export default function MusicCard(props) {
   const theme = useTheme()
 
   return (
-    <Card className={classes.root}>
+    <Card id={props.id} className={classes.root}>
       <div className={classes.details}>
         <CardContent className={classes.content}>
           <Typography component="h5" variant="h5">
             {props.banda}
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
-            {props.cancion}
+            Por: {props.autor}
           </Typography>
         </CardContent>
         <div className={classes.controls}>
@@ -65,8 +65,7 @@ export default function MusicCard(props) {
       </div>
       <CardMedia
         className={classes.cover}
-        image={props.imagen}
-        title="Te voy a dar"
+        image={props.thumbnail}
       />
     </Card>
   )

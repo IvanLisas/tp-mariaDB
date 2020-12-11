@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   },
 })
 
-export default function MediaCard(props) {
+export default function VideoCard(props) {
   const classes = useStyles()
 
   return (
@@ -25,24 +25,23 @@ export default function MediaCard(props) {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image={props.imagen}
-          title="Contemplative Reptile"
+          image={props.thumbnail}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {props.titulo}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {props.cuerpo}
+            Por: {props.autor}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
         <Button size="small" color="primary">
-          Descargar
+          Reproducir
         </Button>
         <Button size="small" color="primary">
-          Leer mas
+          Compartir
         </Button>
       </CardActions>
     </Card>

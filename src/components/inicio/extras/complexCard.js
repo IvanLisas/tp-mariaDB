@@ -15,6 +15,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import ShareIcon from '@material-ui/icons/Share'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
+import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,8 +52,8 @@ export default function ComplexCard(props) {
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            C
+          <Avatar className={classes.avatar}>
+            {props.titulo[0]}
           </Avatar>
         }
         action={
@@ -61,11 +62,11 @@ export default function ComplexCard(props) {
           </IconButton>
         }
         title={props.titulo}
-        subheader="September 14, 2016"
+        subheader={'Por: ' + props.autor}
       />
       <CardMedia
         className={classes.media}
-        image={props.imagen}
+        image={props.thumbnail}
         title="Paella dish"
       />
       <CardContent>
@@ -74,6 +75,14 @@ export default function ComplexCard(props) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
+
+        <Button size="small" color="primary">
+          Descargar
+        </Button>
+        {/* <Button size="small" color="primary">
+          Compartir
+        </Button> */}
+
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
