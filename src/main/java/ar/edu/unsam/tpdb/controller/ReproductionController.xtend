@@ -66,8 +66,19 @@ class ReproductionController {
 	def countReproductions(@PathVariable Integer userId, @RequestBody FilterOrden body) {
 		println(body)
 		try {
-			val downloads = new ReproductionQuery().countReproductions(userId, body)
-			ResponseEntity.ok(downloads)
+			val reproductions = new StatsQuery().countActions(userId, body,'reproduction')
+			ResponseEntity.ok(reproductions)
+		} catch (SQLException e) {
+			println(e.message)
+			ResponseEntity.badRequest.body(e.message)
+		}
+	}
+	
+	@GetMapping("/mostUsedOs/{userId}")
+	def mostUsedOs(@PathVariable Integer userId) {
+		try {
+			val os = new ReproductionQuery().mostUsedOs(userId)
+			ResponseEntity.ok(os)
 		} catch (SQLException e) {
 			println(e.message)
 			ResponseEntity.badRequest.body(e.message)

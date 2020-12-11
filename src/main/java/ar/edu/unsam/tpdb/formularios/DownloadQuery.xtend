@@ -16,25 +16,25 @@ class DownloadQuery {
 		var c = cx.conectar();
 
 		var PreparedStatement stmt = null;
-		var ResultSet downloadResult = null;
+		var ResultSet rs = null;
 
 		var List<Download> downloads
 		try {
 			val query = "select * from (download 
 					join file on file.id = download.file_id
  					join action on action.id = download.action_id
-					inner join user on user.id = file.user_id) 
-					where download.user_id = " + user_id + new Filter().create(filtros.filtros) + 
-					' ORDER BY ' + filtros.orden.column + ' ' + filtros.orden.orden + 
+					join user on user.id = file.user_id) 
+					where download.user_id = " + user_id + filtros.create() + 
+					' ORDER BY ' + filtros.orden.column + ' ' + filtros.orden.direction + 
 					' limit ' + filtros.limit + ' offset ' + filtros.offset
 			println(query)
 			stmt = c.prepareStatement(query)
-			downloadResult = stmt.executeQuery()
-			downloads = new Download().downloadsFactory(downloadResult)
+			rs = stmt.executeQuery()
+			downloads = new Download().downloadsFactory(rs)
 			downloads
 		} finally {
-			if (downloadResult !== null) {
-				downloadResult.close();
+			if (rs !== null) {
+				rs.close();
 				println("cerrado")
 			}
 
@@ -45,36 +45,6 @@ class DownloadQuery {
 		}
 	}
 
-	def countDownloands(int user_id, FilterOrden filtros) {
-		var c = cx.conectar();
-		var PreparedStatement stmt = null;
-		var ResultSet downloadsCountResult = null;
-
-		try {
-			val query = "SELECT COUNT(*) as count from (download 
-					join file on file.id = download.file_id
- 					join action on action.id = download.action_id
-					inner join user on user.id = file.user_id) 
-					where download.user_id = " + user_id + new Filter().create(filtros.filtros) +
-					' ORDER BY ' + filtros.orden.column + ' ' + filtros.orden.orden
-
-			println(query)
-			stmt = c.prepareStatement(query)
-			downloadsCountResult = stmt.executeQuery()
-			downloadsCountResult.next
-			downloadsCountResult.getDouble("count")
-		} finally {
-			if (downloadsCountResult !== null) {
-				downloadsCountResult.close();
-				println("cerrado")
-			}
-
-			if (stmt !== null) {
-				stmt.close();
-			}
-			cx.desconectar(c)
-		}
-	}
 
 // Promedio de velocidades de descarga
 	def speedAvg(int user_id) {

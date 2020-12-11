@@ -13,24 +13,23 @@ class ReproductionQuery {
 	def searchReproductionOf(int user_id, FilterOrden filtros) {
 		var c = cx.conectar();
 		var PreparedStatement stmt = null;
-		var ResultSet reproductionResult = null;
+		var ResultSet rs = null;
 		var List<Reproduction> reproductions
 		try {
 			val query = "select * from (reproduction 
 					join file on file.id = reproduction.file_id
  					join action on action.id = reproduction.action_id
 					inner join user on user.id = file.user_id) 
-					where reproduction.user_id = " + user_id + new Filter().create(filtros.filtros) + 
-					' ORDER BY ' + filtros.orden.column + ' ' + filtros.orden.orden + 
-					' limit ' + filtros.limit + ' offset ' + filtros.offset
+					where reproduction.user_id = " + user_id + filtros.create() + ' ORDER BY ' + filtros.orden.column +
+				' ' + filtros.orden.direction + ' limit ' + filtros.limit + ' offset ' + filtros.offset
 			println(query)
 			stmt = c.prepareStatement(query)
-			reproductionResult = stmt.executeQuery(query)
-			reproductions = new Reproduction().reproductionsFactory(reproductionResult)
+			rs = stmt.executeQuery(query)
+			reproductions = new Reproduction().reproductionsFactory(rs)
 
 		} finally {
-			if (reproductionResult !== null) {
-				reproductionResult.close();
+			if (rs !== null) {
+				rs.close();
 				println("cerrado")
 			}
 
@@ -41,28 +40,22 @@ class ReproductionQuery {
 		}
 		reproductions
 	}
-	
-	def countReproductions(int user_id, FilterOrden filtros) {
+
+	def mostUsedOs(int user_id) {
 		var c = cx.conectar();
 		var PreparedStatement stmt = null;
-		var ResultSet reproductionResult = null;
-
+		var ResultSet rs = null;
 		try {
-			val query =  "SELECT COUNT(*) as count from (reproduction 
-					join file on file.id = reproduction.file_id
- 					join action on action.id = reproduction.action_id
-					inner join user on user.id = file.user_id) 
-					where reproduction.user_id = " + user_id + new Filter().create(filtros.filtros) + 
-					' ORDER BY ' + filtros.orden.column + ' ' + filtros.orden.orden
-
+			val query = 'SELECT os,  MAX(osCount)
+ 			FROM (SELECT os, COUNT(os) as osCount from reproduction
+ 			where user_id = '+ user_id+ ' GROUP BY os) AS newTable'
 			stmt = c.prepareStatement(query)
-			reproductionResult = stmt.executeQuery()
-			reproductionResult.next
-			reproductionResult.getDouble("count")
-
+			rs = stmt.executeQuery()
+			rs.next
+			rs.getString("os")
 		} finally {
-			if (reproductionResult !== null) {
-				reproductionResult.close();
+			if (rs !== null) {
+				rs.close();
 				println("cerrado")
 			}
 
@@ -71,7 +64,7 @@ class ReproductionQuery {
 			}
 			cx.desconectar(c)
 		}
-		
+
 	}
 
 }

@@ -79,7 +79,7 @@ class DownloadController {
 	def countDownloands(@PathVariable Integer userId, @RequestBody FilterOrden body) {
 		println(body)
 		try {
-			val downloads = new DownloadQuery().countDownloands(userId, body)
+			val downloads = new StatsQuery().countActions(userId, body,'download')
 			ResponseEntity.ok(downloads)
 		} catch (SQLException e) {
 			println(e.message)

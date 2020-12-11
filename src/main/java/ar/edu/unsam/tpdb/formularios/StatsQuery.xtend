@@ -83,11 +83,41 @@ class StatsQuery {
 			averageResult = stmt.executeQuery(query)
 			averageResult.next
 			new DecimalFormat("#.#").format(averageResult.getDouble("average"))
-			
 
 		} finally {
 			if (averageResult !== null) {
 				averageResult.close();
+				println("cerrado")
+			}
+
+			if (stmt !== null) {
+				stmt.close();
+			}
+			cx.desconectar(c)
+		}
+	}
+
+	def countActions(int user_id, FilterOrden filtros, String action) {
+		var c = cx.conectar();
+		var PreparedStatement stmt = null;
+		var ResultSet rs = null;
+
+		try {
+			val query = 'SELECT COUNT(*) as count from (' + action + ' 
+					join file on file.id = ' + action + '.file_id
+ 					join action on action.id = ' + action + '.action_id
+					inner join user on user.id = file.user_id) 
+					where ' + action + '.user_id = ' + user_id + filtros.create() + ' ORDER BY ' +
+				filtros.orden.column + ' ' + filtros.orden.getDirection
+
+			println(query)
+			stmt = c.prepareStatement(query)
+			rs = stmt.executeQuery()
+			rs.next
+			rs.getDouble("count")
+		} finally {
+			if (rs !== null) {
+				rs.close();
 				println("cerrado")
 			}
 

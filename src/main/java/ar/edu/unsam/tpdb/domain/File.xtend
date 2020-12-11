@@ -15,7 +15,8 @@ class File {
 	String publish_date
 	String autor
 	List<String> categories = new ArrayList()
-	
+	String thumbnail
+
 	def fileFactory(ResultSet actionResult) {
 		val _file = new File() => [
 			id = actionResult.getInt("file.id")
@@ -24,10 +25,20 @@ class File {
 			type = actionResult.getString("type")
 			publish_date = actionResult.getString("publish_date")
 			autor = actionResult.getString("user.username")
+			thumbnail = actionResult.getString("thumbnail")
 		]
-		//Hay que cerrar la conexion de las categorias
+		// Hay que cerrar la conexion de las categorias
 //		_file.categories = new CategoryQuery().getCategorysOf(_file.id)
 		_file
 	}
-	
+
+	def fileFactoryList(ResultSet rs) {
+		var List<File> files = new ArrayList()
+
+		while (rs.next) {
+			files.add(fileFactory(rs))
+		}
+		files
+	}
+
 }
