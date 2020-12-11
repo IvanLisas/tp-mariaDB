@@ -3,17 +3,18 @@
      grid-template-columns: 1fr 1fr 1fr;
      grid-template-rows: 0.6fr 1fr 1fr;
      grid-template-areas: "musica card complex" "receta musica complex" "receta musica complex"; */
-     gap: 1rem;
-     padding: 1rem;
+     gap: 2rem;
+     padding: 2rem;
      display: flex;
      /* align-items: center; */
      justify-content: center;
+     color: rgba(255, 255, 255, 0.842);
  }
 
  .column {
      display: flex;
      flex-direction: column;
-     gap: 1rem;
+     gap: 2rem;
  }
 
  .inicio-container {

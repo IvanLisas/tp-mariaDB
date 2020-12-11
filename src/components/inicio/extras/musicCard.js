@@ -12,9 +12,7 @@ import SkipNextIcon from '@material-ui/icons/SkipNext'
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    width: 400,
-    height: 200,
-
+    width: 350,
   },
   details: {
     display: 'flex',
