@@ -27,8 +27,7 @@ class File {
 			autor = actionResult.getString("user.username")
 			thumbnail = actionResult.getString("thumbnail")
 		]
-		// Hay que cerrar la conexion de las categorias
-//		_file.categories = new CategoryQuery().getCategorysOf(_file.id)
+		_file.categories = new CategoryQuery().getCategorysOf(_file.id)
 		_file
 	}
 

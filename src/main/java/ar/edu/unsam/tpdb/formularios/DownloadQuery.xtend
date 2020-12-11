@@ -20,11 +20,12 @@ class DownloadQuery {
 
 		var List<Download> downloads
 		try {
-			val query = "select * from (download 
+			val query = 'select * from (download 
 					join file on file.id = download.file_id
  					join action on action.id = download.action_id
 					join user on user.id = file.user_id) 
-					where download.user_id = " + user_id + filtros.create() + 
+					where download.user_id = ' + user_id +
+					filtros.create() + 
 					' ORDER BY ' + filtros.orden.column + ' ' + filtros.orden.direction + 
 					' limit ' + filtros.limit + ' offset ' + filtros.offset
 			println(query)
