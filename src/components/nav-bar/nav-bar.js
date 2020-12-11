@@ -17,6 +17,7 @@ import MoreIcon from '@material-ui/icons/MoreVert'
 import { Context } from '../../context/context'
 import { NavBarButton } from './nav-bar-button/nav-bar-button'
 import Button from '@material-ui/core/Button'
+import './nav-bar.css'
 
 export const NavBar = (props) => {
   const classes = useStyles()
@@ -57,7 +58,10 @@ export const NavBar = (props) => {
             onClick={() => props.history.push('/inicio')}
             disableElevation
           >
-            Home
+            <span class="material-icons">
+              home
+            </span>
+            {/* Home */}
           </Button>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -75,14 +79,22 @@ export const NavBar = (props) => {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Typography className={classes.title} variant="h6" noWrap>
-              Buen dia {loggedUser.name}
+            <Typography className={classes.title} variant="caption" noWrap>
+              <div className='saludo-container'>
+                <span class="material-icons">
+                  wb_sunny
+                </span>
+                <div>
+                  Buenos día {loggedUser.name}
+                </div>
+
+              </div>
             </Typography>
-            <IconButton aria-label="show new notifications" color="inherit">
+            {/* <IconButton aria-label="show new notifications" color="inherit">
               <Badge badgeContent={0} color="secondary">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
+            </IconButton> */}
           </div>
           <NavBarButton
             irADescargas={irADescargas}
@@ -107,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: 'center',
     fontFamily: 'Roboto',
     fontSize: '1.2rem',
-    marginRight: '0.5rem',
+    marginRight: '3rem',
 
     [theme.breakpoints.up('sm')]: {
       display: 'block',

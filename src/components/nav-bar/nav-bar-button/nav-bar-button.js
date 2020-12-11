@@ -29,7 +29,9 @@ export const NavBarButton = (props) => {
         onClick={handleClick}
         disableElevation
       >
-        Menu
+        <span class="material-icons">
+          list
+</span>
       </Button>
       <StyledMenu
         id="customized-menu"
@@ -106,11 +108,11 @@ const StyledMenu = withStyles({
 
 const StyledMenuItem = withStyles((theme) => ({
   root: {
-    '&:focus': {
-      backgroundColor: theme.palette.primary.main,
-      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-        color: theme.palette.common.white
-      }
-    }
+    // '&:focus': {
+    //   backgroundColor: theme.palette.primary.main,
+    //   '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+    //     color: theme.palette.common.white
+    //   }
+    // }
   }
 }))(MenuItem)

@@ -1,3 +1,6 @@
-.saludo-nav {
-    font-size: 2rem;
+.saludo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
 }

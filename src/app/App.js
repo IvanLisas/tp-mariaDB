@@ -20,12 +20,13 @@ export default function App() {
   return (
 
     <Providers>
-      <ThemeProvider theme={outerTheme}>
-        <BrowserRouter>
-          <MainRoutes />
-        </BrowserRouter>
-      </ThemeProvider>
+
+      <BrowserRouter>
+        <MainRoutes />
+      </BrowserRouter>
+
     </Providers>
 
   )
 }
+

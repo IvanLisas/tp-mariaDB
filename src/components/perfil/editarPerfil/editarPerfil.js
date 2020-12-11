@@ -6,14 +6,16 @@ import { makeStyles } from '@material-ui/core/styles'
 import { userService } from '../../../services/userService'
 import { Context } from '../../../context/context'
 import { User } from '../../../domain/user'
+import { SnackbarCustom } from '../../snackbar/snackbarCustom'
 
 export const EditarPerfil = (props) => {
   const { loggedUser } = useContext(Context)
   const { updateLoggedUser } = useContext(Context)
 
+  const [snackbarOpen, setSnackbarOpen] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const [username, setUsername] = useState(loggedUser.username)
-
   const [email, setEmail] = useState(loggedUser.email)
   const [name, setName] = useState(loggedUser.name)
   const [surname, setSurname] = useState(loggedUser.surname)
@@ -30,7 +32,10 @@ export const EditarPerfil = (props) => {
       updateLoggedUser(await userService.updateUser(loggedUser.id, updatedUser))
       volver()
     }
-    catch (message) { console.log(message) }
+    catch (message) {
+      setErrorMessage('El nombre de usuario ya existe')
+      setSnackbarOpen(true)
+    }
 
   }
 
@@ -119,6 +124,13 @@ export const EditarPerfil = (props) => {
           </Button>
 
         </div>
+        <SnackbarCustom
+          setSnackbarOpen={setSnackbarOpen}
+          snackbarOpen={snackbarOpen}
+          snackbarType='error'
+          snackbarMessege={errorMessage}
+          snackbarAutoHideDuration={5000}
+        />
       </div>
 
     </div>

@@ -23,7 +23,7 @@ export const Login = (props) => {
       updateLoggedUser(await userService.login(username, password))
       props.history.push('/inicio')
     } catch (errorMessage) {
-      setErrorMessage('' + errorMessage)
+      setErrorMessage('Usuario o contraseña no validos')
       setSnackbarOpen(true)
     }
   }
