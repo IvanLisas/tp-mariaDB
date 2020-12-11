@@ -25,6 +25,12 @@ export class File {
     if (fileJSON.type === 'document') return Object.assign(new Document(), fileJSON)
   }
 
+  date_init_format = () => {
+    var chunks = this.publish_date.split(' ')
+    var chunks2 = chunks[0].split('-')
+    return chunks2[2] + '/' + chunks2[1] + '/' + chunks2[0]
+  }
+
 }
 
 export class Music extends File {
@@ -89,6 +95,9 @@ export class Document extends File {
       titulo={this.title}
       thumbnail={this.thumbnail}
       autor={this.autor}
+      extension={this.extension_type}
+      fecha={this.date_init_format()}
+      categories={this.categories}
     />
   }
 

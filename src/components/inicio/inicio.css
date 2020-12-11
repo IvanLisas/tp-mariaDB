@@ -47,3 +47,8 @@
      font-family: "Lobster";
      font-size: 2rem;
  }
+
+ .categorias {
+     display: flex;
+     gap: 0.3rem;
+ }
